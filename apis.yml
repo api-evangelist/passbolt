@@ -1,9 +1,9 @@
 aid: passbolt
 name: Passbolt
 description: >-
-  This document is a raw low-level overview describing the API and its
-  endpoints. For a higher-level overview of the API and some guides on
-  interacting with the different endpoints, please follow the Developer guide. 
+  This document is a raw low-level overview describing the API and its endpoints.
+  For a higher-level overview of the API and some guides on interacting with the different
+  endpoints, please follow the Developer guide.
 type: Index
 position: Consumer
 access: 3rd-Party
@@ -19,10 +19,9 @@ apis:
   - aid: passbolt:passbolt
     name: Passbolt
     description: >-
-      This document is a raw low-level overview describing the API and its
-      endpoints. For a higher-level overview of the API and some guides on
-      interacting with the different endpoints, please follow the Developer
-      guide. 
+      This document is a raw low-level overview describing the API and its endpoints.
+      For a higher-level overview of the API and some guides on interacting with the
+      different endpoints, please follow the Developer guide.
     humanURL: ' https://www.passbolt.com/docs/api/'
     tags:
       - API
