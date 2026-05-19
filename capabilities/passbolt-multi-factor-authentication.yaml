@@ -1,0 +1,137 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Passbolt API — Multi-Factor Authentication
+  description: 'Passbolt API — Multi-Factor Authentication. 3 operations. Lead operation: Information about MFA requirements..
+    Self-contained Naftiko capability covering one Passbolt business surface.'
+  tags:
+  - Passbolt
+  - Multi-Factor Authentication
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PASSBOLT_API_KEY: PASSBOLT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: passbolt-multi-factor-authentication
+    baseUri: https://passbolt.local
+    description: Passbolt API — Multi-Factor Authentication business capability. Self-contained, no shared references.
+    resources:
+    - name: mfa-verify-error.json
+      path: /mfa/verify/error.json
+      operations:
+      - name: mfaverifyerror
+        method: GET
+        description: Information about MFA requirements.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: mfa-verify-mfaProviderName}.json
+      path: /mfa/verify/{mfaProviderName}.json
+      operations:
+      - name: mfaverifycheck
+        method: GET
+        description: Check multi-factor authentication.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: mfaverifyattempt
+        method: POST
+        description: Attempt multi-factor authentication.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.PASSBOLT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: passbolt-multi-factor-authentication-rest
+    port: 8080
+    description: REST adapter for Passbolt API — Multi-Factor Authentication. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/mfa/verify/error-json
+      name: mfa-verify-error-json
+      description: REST surface for mfa-verify-error.json.
+      operations:
+      - method: GET
+        name: mfaverifyerror
+        description: Information about MFA requirements.
+        call: passbolt-multi-factor-authentication.mfaverifyerror
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/mfa/verify/mfaprovidername-json
+      name: mfa-verify-mfaprovidername-json
+      description: REST surface for mfa-verify-mfaProviderName}.json.
+      operations:
+      - method: GET
+        name: mfaverifycheck
+        description: Check multi-factor authentication.
+        call: passbolt-multi-factor-authentication.mfaverifycheck
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: mfaverifyattempt
+        description: Attempt multi-factor authentication.
+        call: passbolt-multi-factor-authentication.mfaverifyattempt
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: passbolt-multi-factor-authentication-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Passbolt API — Multi-Factor Authentication. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: information-about-mfa-requirements
+      description: Information about MFA requirements.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-multi-factor-authentication.mfaverifyerror
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: check-multi-factor-authentication
+      description: Check multi-factor authentication.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-multi-factor-authentication.mfaverifycheck
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: attempt-multi-factor-authentication
+      description: Attempt multi-factor authentication.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: passbolt-multi-factor-authentication.mfaverifyattempt
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,102 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Passbolt API — Healthcheck
+  description: 'Passbolt API — Healthcheck. 2 operations. Lead operation: Get healthcheck information.. Self-contained Naftiko
+    capability covering one Passbolt business surface.'
+  tags:
+  - Passbolt
+  - Healthcheck
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PASSBOLT_API_KEY: PASSBOLT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: passbolt-healthcheck
+    baseUri: https://passbolt.local
+    description: Passbolt API — Healthcheck business capability. Self-contained, no shared references.
+    resources:
+    - name: healthcheck.json
+      path: /healthcheck.json
+      operations:
+      - name: viewhealthcheck
+        method: GET
+        description: Get healthcheck information.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: healthcheck-status.json
+      path: /healthcheck/status.json
+      operations:
+      - name: viewhealthcheckstatus
+        method: GET
+        description: Check if passbolt is up.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.PASSBOLT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: passbolt-healthcheck-rest
+    port: 8080
+    description: REST adapter for Passbolt API — Healthcheck. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/healthcheck-json
+      name: healthcheck-json
+      description: REST surface for healthcheck.json.
+      operations:
+      - method: GET
+        name: viewhealthcheck
+        description: Get healthcheck information.
+        call: passbolt-healthcheck.viewhealthcheck
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/healthcheck/status-json
+      name: healthcheck-status-json
+      description: REST surface for healthcheck-status.json.
+      operations:
+      - method: GET
+        name: viewhealthcheckstatus
+        description: Check if passbolt is up.
+        call: passbolt-healthcheck.viewhealthcheckstatus
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: passbolt-healthcheck-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Passbolt API — Healthcheck. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-healthcheck-information
+      description: Get healthcheck information.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-healthcheck.viewhealthcheck
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: check-if-passbolt-is-up
+      description: Check if passbolt is up.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-healthcheck.viewhealthcheckstatus
+      outputParameters:
+      - type: object
+        mapping: $.

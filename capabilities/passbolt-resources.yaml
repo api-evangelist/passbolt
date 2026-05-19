@@ -1,0 +1,197 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Passbolt API — Resources
+  description: 'Passbolt API — Resources. 5 operations. Lead operation: Get multiple resources.. Self-contained Naftiko capability
+    covering one Passbolt business surface.'
+  tags:
+  - Passbolt
+  - Resources
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PASSBOLT_API_KEY: PASSBOLT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: passbolt-resources
+    baseUri: https://passbolt.local
+    description: Passbolt API — Resources business capability. Self-contained, no shared references.
+    resources:
+    - name: resources.json
+      path: /resources.json
+      operations:
+      - name: indexresources
+        method: GET
+        description: Get multiple resources.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: addresource
+        method: POST
+        description: Create a resource.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: resources-resourceId}.json
+      path: /resources/{resourceId}.json
+      operations:
+      - name: viewresource
+        method: GET
+        description: Get a resource.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateresource
+        method: PUT
+        description: Update a resource.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deleteresource
+        method: DELETE
+        description: Delete a resource.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.PASSBOLT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: passbolt-resources-rest
+    port: 8080
+    description: REST adapter for Passbolt API — Resources. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/resources-json
+      name: resources-json
+      description: REST surface for resources.json.
+      operations:
+      - method: GET
+        name: indexresources
+        description: Get multiple resources.
+        call: passbolt-resources.indexresources
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addresource
+        description: Create a resource.
+        call: passbolt-resources.addresource
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/resources/resourceid-json
+      name: resources-resourceid-json
+      description: REST surface for resources-resourceId}.json.
+      operations:
+      - method: GET
+        name: viewresource
+        description: Get a resource.
+        call: passbolt-resources.viewresource
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateresource
+        description: Update a resource.
+        call: passbolt-resources.updateresource
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteresource
+        description: Delete a resource.
+        call: passbolt-resources.deleteresource
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: passbolt-resources-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Passbolt API — Resources. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-multiple-resources
+      description: Get multiple resources.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-resources.indexresources
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-resource
+      description: Create a resource.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: passbolt-resources.addresource
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-resource
+      description: Get a resource.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-resources.viewresource
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-resource
+      description: Update a resource.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: passbolt-resources.updateresource
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-resource
+      description: Delete a resource.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: passbolt-resources.deleteresource
+      outputParameters:
+      - type: object
+        mapping: $.

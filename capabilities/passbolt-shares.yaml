@@ -1,0 +1,154 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Passbolt API — Shares
+  description: 'Passbolt API — Shares. 3 operations. Lead operation: Get AROs for sharing.. Self-contained Naftiko capability
+    covering one Passbolt business surface.'
+  tags:
+  - Passbolt
+  - Shares
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PASSBOLT_API_KEY: PASSBOLT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: passbolt-shares
+    baseUri: https://passbolt.local
+    description: Passbolt API — Shares business capability. Self-contained, no shared references.
+    resources:
+    - name: share-search-aros.json
+      path: /share/search-aros.json
+      operations:
+      - name: indexsharearos
+        method: GET
+        description: Get AROs for sharing.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: share-simulate-foreignModel-foreignId}.json
+      path: /share/simulate/{foreignModel}/{foreignId}.json
+      operations:
+      - name: updatesharedryrun
+        method: POST
+        description: Simulate sharing a resource or folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: share-foreignModel-foreignId}.json
+      path: /share/{foreignModel}/{foreignId}.json
+      operations:
+      - name: updateshare
+        method: PUT
+        description: Share a resource or folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.PASSBOLT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: passbolt-shares-rest
+    port: 8080
+    description: REST adapter for Passbolt API — Shares. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/share/search-aros-json
+      name: share-search-aros-json
+      description: REST surface for share-search-aros.json.
+      operations:
+      - method: GET
+        name: indexsharearos
+        description: Get AROs for sharing.
+        call: passbolt-shares.indexsharearos
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/share/simulate/{foreignmodel}/foreignid-json
+      name: share-simulate-foreignmodel-foreignid-json
+      description: REST surface for share-simulate-foreignModel-foreignId}.json.
+      operations:
+      - method: POST
+        name: updatesharedryrun
+        description: Simulate sharing a resource or folder.
+        call: passbolt-shares.updatesharedryrun
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/share/{foreignmodel}/foreignid-json
+      name: share-foreignmodel-foreignid-json
+      description: REST surface for share-foreignModel-foreignId}.json.
+      operations:
+      - method: PUT
+        name: updateshare
+        description: Share a resource or folder.
+        call: passbolt-shares.updateshare
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: passbolt-shares-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Passbolt API — Shares. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-aros-sharing
+      description: Get AROs for sharing.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-shares.indexsharearos
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: simulate-sharing-resource-folder
+      description: Simulate sharing a resource or folder.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: passbolt-shares.updatesharedryrun
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: share-resource-folder
+      description: Share a resource or folder.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: passbolt-shares.updateshare
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

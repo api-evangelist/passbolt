@@ -1,0 +1,239 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Passbolt API — Metadata upgrade
+  description: 'Passbolt API — Metadata upgrade. 6 operations. Lead operation: Get Upgradable Folders. Self-contained Naftiko
+    capability covering one Passbolt business surface.'
+  tags:
+  - Passbolt
+  - Metadata upgrade
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PASSBOLT_API_KEY: PASSBOLT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: passbolt-metadata-upgrade
+    baseUri: https://passbolt.local
+    description: Passbolt API — Metadata upgrade business capability. Self-contained, no shared references.
+    resources:
+    - name: metadata-upgrade-folders.json
+      path: /metadata/upgrade/folders.json
+      operations:
+      - name: viewmetadataupgradefolders
+        method: GET
+        description: Get Upgradable Folders
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: upgrademetadatafolders
+        method: POST
+        description: Upgrade a folder
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: metadata-upgrade-resources.json
+      path: /metadata/upgrade/resources.json
+      operations:
+      - name: viewmetadataupgraderesources
+        method: GET
+        description: Get Upgradable Resources
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: upgrademetadataresources
+        method: POST
+        description: Upgrade a Resource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: metadata-upgrade-tags.json
+      path: /metadata/upgrade/tags.json
+      operations:
+      - name: viewmetadataupgradetags
+        method: GET
+        description: Get Upgradable Tags
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: processemetadataupgradetags
+        method: POST
+        description: Upgrade a tag
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.PASSBOLT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: passbolt-metadata-upgrade-rest
+    port: 8080
+    description: REST adapter for Passbolt API — Metadata upgrade. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/metadata/upgrade/folders-json
+      name: metadata-upgrade-folders-json
+      description: REST surface for metadata-upgrade-folders.json.
+      operations:
+      - method: GET
+        name: viewmetadataupgradefolders
+        description: Get Upgradable Folders
+        call: passbolt-metadata-upgrade.viewmetadataupgradefolders
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: upgrademetadatafolders
+        description: Upgrade a folder
+        call: passbolt-metadata-upgrade.upgrademetadatafolders
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/metadata/upgrade/resources-json
+      name: metadata-upgrade-resources-json
+      description: REST surface for metadata-upgrade-resources.json.
+      operations:
+      - method: GET
+        name: viewmetadataupgraderesources
+        description: Get Upgradable Resources
+        call: passbolt-metadata-upgrade.viewmetadataupgraderesources
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: upgrademetadataresources
+        description: Upgrade a Resource
+        call: passbolt-metadata-upgrade.upgrademetadataresources
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/metadata/upgrade/tags-json
+      name: metadata-upgrade-tags-json
+      description: REST surface for metadata-upgrade-tags.json.
+      operations:
+      - method: GET
+        name: viewmetadataupgradetags
+        description: Get Upgradable Tags
+        call: passbolt-metadata-upgrade.viewmetadataupgradetags
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: processemetadataupgradetags
+        description: Upgrade a tag
+        call: passbolt-metadata-upgrade.processemetadataupgradetags
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: passbolt-metadata-upgrade-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Passbolt API — Metadata upgrade. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-upgradable-folders
+      description: Get Upgradable Folders
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-metadata-upgrade.viewmetadataupgradefolders
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upgrade-folder
+      description: Upgrade a folder
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: passbolt-metadata-upgrade.upgrademetadatafolders
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-upgradable-resources
+      description: Get Upgradable Resources
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-metadata-upgrade.viewmetadataupgraderesources
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upgrade-resource
+      description: Upgrade a Resource
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: passbolt-metadata-upgrade.upgrademetadataresources
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-upgradable-tags
+      description: Get Upgradable Tags
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-metadata-upgrade.viewmetadataupgradetags
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upgrade-tag
+      description: Upgrade a tag
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: passbolt-metadata-upgrade.processemetadataupgradetags
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

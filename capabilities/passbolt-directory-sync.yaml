@@ -1,0 +1,102 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Passbolt API — Directory Sync
+  description: 'Passbolt API — Directory Sync. 2 operations. Lead operation: Run the directory synchronization.. Self-contained
+    Naftiko capability covering one Passbolt business surface.'
+  tags:
+  - Passbolt
+  - Directory Sync
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PASSBOLT_API_KEY: PASSBOLT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: passbolt-directory-sync
+    baseUri: https://passbolt.local
+    description: Passbolt API — Directory Sync business capability. Self-contained, no shared references.
+    resources:
+    - name: directorysync-synchronize.json
+      path: /directorysync/synchronize.json
+      operations:
+      - name: runsync
+        method: POST
+        description: Run the directory synchronization.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: directorysync-synchronize-dry-run.json
+      path: /directorysync/synchronize/dry-run.json
+      operations:
+      - name: simulatesync
+        method: GET
+        description: Simulate directory synchronization without making changes.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.PASSBOLT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: passbolt-directory-sync-rest
+    port: 8080
+    description: REST adapter for Passbolt API — Directory Sync. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/directorysync/synchronize-json
+      name: directorysync-synchronize-json
+      description: REST surface for directorysync-synchronize.json.
+      operations:
+      - method: POST
+        name: runsync
+        description: Run the directory synchronization.
+        call: passbolt-directory-sync.runsync
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/directorysync/synchronize/dry-run-json
+      name: directorysync-synchronize-dry-run-json
+      description: REST surface for directorysync-synchronize-dry-run.json.
+      operations:
+      - method: GET
+        name: simulatesync
+        description: Simulate directory synchronization without making changes.
+        call: passbolt-directory-sync.simulatesync
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: passbolt-directory-sync-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Passbolt API — Directory Sync. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: run-directory-synchronization
+      description: Run the directory synchronization.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: passbolt-directory-sync.runsync
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: simulate-directory-synchronization-without-making
+      description: Simulate directory synchronization without making changes.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-directory-sync.simulatesync
+      outputParameters:
+      - type: object
+        mapping: $.

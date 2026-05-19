@@ -1,0 +1,172 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Passbolt API — Comments
+  description: 'Passbolt API — Comments. 4 operations. Lead operation: Get comments for a resource.. Self-contained Naftiko
+    capability covering one Passbolt business surface.'
+  tags:
+  - Passbolt
+  - Comments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PASSBOLT_API_KEY: PASSBOLT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: passbolt-comments
+    baseUri: https://passbolt.local
+    description: Passbolt API — Comments business capability. Self-contained, no shared references.
+    resources:
+    - name: comments-resource-resourceId}.json
+      path: /comments/resource/{resourceId}.json
+      operations:
+      - name: indexcomments
+        method: GET
+        description: Get comments for a resource.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: addcomment
+        method: POST
+        description: Add a comment.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: comments-commentId}.json
+      path: /comments/{commentId}.json
+      operations:
+      - name: updatecomment
+        method: PUT
+        description: Update a comment.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deletecomment
+        method: DELETE
+        description: Delete a comment.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.PASSBOLT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: passbolt-comments-rest
+    port: 8080
+    description: REST adapter for Passbolt API — Comments. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/comments/resource/resourceid-json
+      name: comments-resource-resourceid-json
+      description: REST surface for comments-resource-resourceId}.json.
+      operations:
+      - method: GET
+        name: indexcomments
+        description: Get comments for a resource.
+        call: passbolt-comments.indexcomments
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addcomment
+        description: Add a comment.
+        call: passbolt-comments.addcomment
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/comments/commentid-json
+      name: comments-commentid-json
+      description: REST surface for comments-commentId}.json.
+      operations:
+      - method: PUT
+        name: updatecomment
+        description: Update a comment.
+        call: passbolt-comments.updatecomment
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletecomment
+        description: Delete a comment.
+        call: passbolt-comments.deletecomment
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: passbolt-comments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Passbolt API — Comments. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-comments-resource
+      description: Get comments for a resource.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-comments.indexcomments
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-comment
+      description: Add a comment.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: passbolt-comments.addcomment
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-comment
+      description: Update a comment.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: passbolt-comments.updatecomment
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-comment
+      description: Delete a comment.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: passbolt-comments.deletecomment
+      outputParameters:
+      - type: object
+        mapping: $.

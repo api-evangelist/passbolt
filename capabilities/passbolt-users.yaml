@@ -1,0 +1,229 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Passbolt API — Users
+  description: 'Passbolt API — Users. 6 operations. Lead operation: Get multiple users.. Self-contained Naftiko capability
+    covering one Passbolt business surface.'
+  tags:
+  - Passbolt
+  - Users
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PASSBOLT_API_KEY: PASSBOLT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: passbolt-users
+    baseUri: https://passbolt.local
+    description: Passbolt API — Users business capability. Self-contained, no shared references.
+    resources:
+    - name: users.json
+      path: /users.json
+      operations:
+      - name: indexusers
+        method: GET
+        description: Get multiple users.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: adduser
+        method: POST
+        description: Create a user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: users-userId}.json
+      path: /users/{userId}.json
+      operations:
+      - name: viewuser
+        method: GET
+        description: Get a user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateuser
+        method: PUT
+        description: Update a user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deleteuser
+        method: DELETE
+        description: Delete a user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: users-userId-dry-run.json
+      path: /users/{userId}/dry-run.json
+      operations:
+      - name: dryrundeleteuser
+        method: DELETE
+        description: Dry run a user deletion.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.PASSBOLT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: passbolt-users-rest
+    port: 8080
+    description: REST adapter for Passbolt API — Users. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/users-json
+      name: users-json
+      description: REST surface for users.json.
+      operations:
+      - method: GET
+        name: indexusers
+        description: Get multiple users.
+        call: passbolt-users.indexusers
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: adduser
+        description: Create a user.
+        call: passbolt-users.adduser
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/userid-json
+      name: users-userid-json
+      description: REST surface for users-userId}.json.
+      operations:
+      - method: GET
+        name: viewuser
+        description: Get a user.
+        call: passbolt-users.viewuser
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateuser
+        description: Update a user.
+        call: passbolt-users.updateuser
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteuser
+        description: Delete a user.
+        call: passbolt-users.deleteuser
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/{userid}/dry-run-json
+      name: users-userid-dry-run-json
+      description: REST surface for users-userId-dry-run.json.
+      operations:
+      - method: DELETE
+        name: dryrundeleteuser
+        description: Dry run a user deletion.
+        call: passbolt-users.dryrundeleteuser
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: passbolt-users-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Passbolt API — Users. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-multiple-users
+      description: Get multiple users.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-users.indexusers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-user
+      description: Create a user.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: passbolt-users.adduser
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-user
+      description: Get a user.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-users.viewuser
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-user
+      description: Update a user.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: passbolt-users.updateuser
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-user
+      description: Delete a user.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: passbolt-users.deleteuser
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: dry-run-user-deletion
+      description: Dry run a user deletion.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: passbolt-users.dryrundeleteuser
+      outputParameters:
+      - type: object
+        mapping: $.

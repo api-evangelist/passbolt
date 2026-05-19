@@ -1,0 +1,197 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Passbolt API — Folders
+  description: 'Passbolt API — Folders. 5 operations. Lead operation: Get multiple folders.. Self-contained Naftiko capability
+    covering one Passbolt business surface.'
+  tags:
+  - Passbolt
+  - Folders
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PASSBOLT_API_KEY: PASSBOLT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: passbolt-folders
+    baseUri: https://passbolt.local
+    description: Passbolt API — Folders business capability. Self-contained, no shared references.
+    resources:
+    - name: folders.json
+      path: /folders.json
+      operations:
+      - name: indexfolders
+        method: GET
+        description: Get multiple folders.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: addfolder
+        method: POST
+        description: Create a folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: folders-folderId}.json
+      path: /folders/{folderId}.json
+      operations:
+      - name: viewfolder
+        method: GET
+        description: Get a folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatefolder
+        method: PUT
+        description: Update a folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deletefolder
+        method: DELETE
+        description: Delete a folder.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.PASSBOLT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: passbolt-folders-rest
+    port: 8080
+    description: REST adapter for Passbolt API — Folders. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/folders-json
+      name: folders-json
+      description: REST surface for folders.json.
+      operations:
+      - method: GET
+        name: indexfolders
+        description: Get multiple folders.
+        call: passbolt-folders.indexfolders
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addfolder
+        description: Create a folder.
+        call: passbolt-folders.addfolder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/folders/folderid-json
+      name: folders-folderid-json
+      description: REST surface for folders-folderId}.json.
+      operations:
+      - method: GET
+        name: viewfolder
+        description: Get a folder.
+        call: passbolt-folders.viewfolder
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatefolder
+        description: Update a folder.
+        call: passbolt-folders.updatefolder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletefolder
+        description: Delete a folder.
+        call: passbolt-folders.deletefolder
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: passbolt-folders-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Passbolt API — Folders. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-multiple-folders
+      description: Get multiple folders.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-folders.indexfolders
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-folder
+      description: Create a folder.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: passbolt-folders.addfolder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-folder
+      description: Get a folder.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-folders.viewfolder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-folder
+      description: Update a folder.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: passbolt-folders.updatefolder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-folder
+      description: Delete a folder.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: passbolt-folders.deletefolder
+      outputParameters:
+      - type: object
+        mapping: $.

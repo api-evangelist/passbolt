@@ -1,0 +1,105 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Passbolt API — Metadata types settings
+  description: 'Passbolt API — Metadata types settings. 2 operations. Lead operation: Get metadata types settings. Self-contained
+    Naftiko capability covering one Passbolt business surface.'
+  tags:
+  - Passbolt
+  - Metadata types settings
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PASSBOLT_API_KEY: PASSBOLT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: passbolt-metadata-types-settings
+    baseUri: https://passbolt.local
+    description: Passbolt API — Metadata types settings business capability. Self-contained, no shared references.
+    resources:
+    - name: metadata-types-settings.json
+      path: /metadata/types/settings.json
+      operations:
+      - name: viewmetadatatypessettings
+        method: GET
+        description: Get metadata types settings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: upgrademetadatatypessettings
+        method: POST
+        description: Upgrade a resource types settings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.PASSBOLT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: passbolt-metadata-types-settings-rest
+    port: 8080
+    description: REST adapter for Passbolt API — Metadata types settings. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/metadata/types/settings-json
+      name: metadata-types-settings-json
+      description: REST surface for metadata-types-settings.json.
+      operations:
+      - method: GET
+        name: viewmetadatatypessettings
+        description: Get metadata types settings
+        call: passbolt-metadata-types-settings.viewmetadatatypessettings
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: upgrademetadatatypessettings
+        description: Upgrade a resource types settings
+        call: passbolt-metadata-types-settings.upgrademetadatatypessettings
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: passbolt-metadata-types-settings-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Passbolt API — Metadata types settings. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-metadata-types-settings
+      description: Get metadata types settings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-metadata-types-settings.viewmetadatatypessettings
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upgrade-resource-types-settings
+      description: Upgrade a resource types settings
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: passbolt-metadata-types-settings.upgrademetadatatypessettings
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

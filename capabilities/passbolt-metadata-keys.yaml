@@ -1,0 +1,239 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Passbolt API — Metadata keys
+  description: 'Passbolt API — Metadata keys. 6 operations. Lead operation: Get metadata keys.. Self-contained Naftiko capability
+    covering one Passbolt business surface.'
+  tags:
+  - Passbolt
+  - Metadata keys
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PASSBOLT_API_KEY: PASSBOLT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: passbolt-metadata-keys
+    baseUri: https://passbolt.local
+    description: Passbolt API — Metadata keys business capability. Self-contained, no shared references.
+    resources:
+    - name: metadata-keys.json
+      path: /metadata/keys.json
+      operations:
+      - name: indexmetadatakeys
+        method: GET
+        description: Get metadata keys.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: addmetadatakey
+        method: POST
+        description: Create a metadata key.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: metadata-keys-settings.json
+      path: /metadata/keys/settings.json
+      operations:
+      - name: indexmetadatakeyssettings
+        method: GET
+        description: Get metadata keys settings.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatemetadatakeyssettings
+        method: POST
+        description: Update metadata keys settings.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: metadata-keys-metadataKeyId}.json
+      path: /metadata/keys/{metadataKeyId}.json
+      operations:
+      - name: updatemetadatakey
+        method: PUT
+        description: Mark a metadata key as expired.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deletemetadatakey
+        method: DELETE
+        description: Delete a metadata key.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.PASSBOLT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: passbolt-metadata-keys-rest
+    port: 8080
+    description: REST adapter for Passbolt API — Metadata keys. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/metadata/keys-json
+      name: metadata-keys-json
+      description: REST surface for metadata-keys.json.
+      operations:
+      - method: GET
+        name: indexmetadatakeys
+        description: Get metadata keys.
+        call: passbolt-metadata-keys.indexmetadatakeys
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addmetadatakey
+        description: Create a metadata key.
+        call: passbolt-metadata-keys.addmetadatakey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/metadata/keys/settings-json
+      name: metadata-keys-settings-json
+      description: REST surface for metadata-keys-settings.json.
+      operations:
+      - method: GET
+        name: indexmetadatakeyssettings
+        description: Get metadata keys settings.
+        call: passbolt-metadata-keys.indexmetadatakeyssettings
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: updatemetadatakeyssettings
+        description: Update metadata keys settings.
+        call: passbolt-metadata-keys.updatemetadatakeyssettings
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/metadata/keys/metadatakeyid-json
+      name: metadata-keys-metadatakeyid-json
+      description: REST surface for metadata-keys-metadataKeyId}.json.
+      operations:
+      - method: PUT
+        name: updatemetadatakey
+        description: Mark a metadata key as expired.
+        call: passbolt-metadata-keys.updatemetadatakey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletemetadatakey
+        description: Delete a metadata key.
+        call: passbolt-metadata-keys.deletemetadatakey
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: passbolt-metadata-keys-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Passbolt API — Metadata keys. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-metadata-keys
+      description: Get metadata keys.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-metadata-keys.indexmetadatakeys
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-metadata-key
+      description: Create a metadata key.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: passbolt-metadata-keys.addmetadatakey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-metadata-keys-settings
+      description: Get metadata keys settings.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: passbolt-metadata-keys.indexmetadatakeyssettings
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-metadata-keys-settings
+      description: Update metadata keys settings.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: passbolt-metadata-keys.updatemetadatakeyssettings
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: mark-metadata-key-expired
+      description: Mark a metadata key as expired.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: passbolt-metadata-keys.updatemetadatakey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-metadata-key
+      description: Delete a metadata key.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: passbolt-metadata-keys.deletemetadatakey
+      outputParameters:
+      - type: object
+        mapping: $.
