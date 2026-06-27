@@ -31,65 +31,65 @@ apis:
     url: https://www.passbolt.com/docs/api/
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/passbolt/refs/heads/main/openapi/passbolt-openapi.yaml
-  - type: SignUp
+  - type: Signup
     url: https://www.passbolt.com/pricing
   - type: TermsOfService
     url: https://www.passbolt.com/terms
   - type: License
     url: https://www.gnu.org/licenses/agpl-3.0.html
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-authentication-gpgauth.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-authentication-jwt.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-avatars.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-comments.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-directory-sync.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-favorites.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-folders.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-gpg-keys.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-groups.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-healthcheck.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-metadata-keys.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-metadata-private-keys.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-metadata-rotate-key.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-metadata-session-key.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-metadata-types-settings.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-metadata-upgrade.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-move.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-multi-factor-authentication.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-permissions.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-resource-types.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-resources.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-roles.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-secrets.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-settings.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-shares.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-tags.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/passbolt-users.yaml
 common:
 - type: LinkedIn
