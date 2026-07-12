@@ -1,0 +1,25 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/passbolt-openapi.yaml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - cookie
+schemes:
+- name: bearerHttpAuthentication
+  type: http
+  scheme: Bearer
+  bearerFormat: JWT
+  description: Bearer token using a JWT
+  sources:
+  - openapi/passbolt-openapi.yaml
+- name: gpgCookieAuthentication
+  type: apiKey
+  in: cookie
+  parameter: passbolt_session
+  description: Session-based authentication. Note that a CSRF token needs to be provided through
+    a header named `X-CSRF-Token`.
+  sources:
+  - openapi/passbolt-openapi.yaml

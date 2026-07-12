@@ -92,6 +92,12 @@ apis:
   - type: X-NaftikoCapability
     url: capabilities/passbolt-users.yaml
 common:
+- type: VulnerabilityDisclosure
+  url: security/passbolt-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/passbolt-domain-security.yml
+- type: Authentication
+  url: authentication/passbolt-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/passbolt
 - type: Website
@@ -100,6 +106,8 @@ common:
   url: https://www.passbolt.com/docs/
 - type: SourceCode
   url: https://github.com/passbolt
+- url: https://www.passbolt.com/blog
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

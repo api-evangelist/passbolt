@@ -1,0 +1,23 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.passbolt.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 13 01:31:29 2026 GMT
+  hsts: null
+- host: passbolt.local
+  https: false
+domains:
+- domain: passbolt.com
+  dnssec: true
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+- domain: passbolt.local
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false
