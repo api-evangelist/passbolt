@@ -1,0 +1,235 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Move API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Move
+  description: Move a folder or a resource across folders.
+paths:
+  /move/{foreignModel}/{foreignId}.json:
+    put:
+      summary: Move an element.
+      operationId: moveElement
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request PUT \\\n  --url {{API_BASE_URL}}/move/folder/162e4717-59a2-439b-86c6-fc651e989939.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"folder_parent_id\": \"58cd7e9d-1c27-4f67-9266-4156dea94e80\"\n  }'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/move/folder/162e4717-59a2-439b-86c6-fc651e989939.json';\nconst options = {\n  method: 'PUT',\n  headers: {Authorization: 'Bearer {{JWT_TOKEN}}'},\n  body: '{\"folder_parent_id\":\"58cd7e9d-1c27-4f67-9266-4156dea94e80\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/move/folder/162e4717-59a2-439b-86c6-fc651e989939.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"PUT\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'folder_parent_id' => '58cd7e9d-1c27-4f67-9266-4156dea94e80'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      security:
+      - bearerHttpAuthentication: []
+      parameters:
+      - $ref: '#/components/parameters/moveForeignModel'
+      - $ref: '#/components/parameters/foreignId'
+      tags:
+      - Move
+      responses:
+        '200':
+          $ref: '#/components/responses/nullBody'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+      requestBody:
+        $ref: '#/components/requestBodies/move'
+components:
+  responses:
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+  parameters:
+    moveForeignModel:
+      name: foreignModel
+      description: Type for the foreign model being moved.
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - resource
+        - folder
+    foreignId:
+      name: foreignId
+      description: ID for the foreign element being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  requestBodies:
+    move:
+      description: The target parent folder ID
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/move'
+  schemas:
+    move:
+      type: object
+      required:
+      - folder_parent_id
+      properties:
+        folder_parent_id:
+          type: string
+          format: uuid
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

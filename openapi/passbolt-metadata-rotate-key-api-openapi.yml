@@ -1,0 +1,1098 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata rotate key API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Metadata rotate key
+  description: Gather information about metadata keys that needs to be rotated
+paths:
+  /metadata/rotate-key/folders.json:
+    get:
+      summary: Get folders with expired keys
+      description: See the folders that are using an expired key that needs to/can be rotated. Only administrators can query this endpoint.
+      security:
+      - bearerHttpAuthentication: []
+      operationId: viewMetadataRotateKeyFolders
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata rotate key
+      responses:
+        '200':
+          $ref: '#/components/responses/indexAndAddMetadataRotateKey'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+        '404':
+          $ref: '#/components/responses/notFound'
+    post:
+      summary: Rotate expired metadata keys for folders
+      description: Rotate the metadata of a given set of folders
+      operationId: rotateMetadataExpiredKeysFolders
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: 'curl --request POST \
+
+          --url {{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json \
+
+          --header ''Authorization: Bearer {{JWT_TOKEN}}''
+
+          --header ''content-type: application/json'' \
+
+          --data ''[{
+
+          "id": "97f5415f-2e09-4171-a99e-1908e876662a",
+
+          "metadata_key_id": "9d9a6672-35d6-4d0f-a807-b90edf25c275",
+
+          "metadata_key_type": "shared_key",
+
+          "metadata": "-----BEGIN PGP MESSAGE-----",
+
+          "modified": "2025-02-18T15:52:17+00:00",
+
+          "modified_by": "ae48ed02-54ea-4be4-9ae8-229bf8c04739"
+
+          }]''
+
+          '
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json';\nconst options = {\nmethod: 'POST',\nheaders: {\n  authorization: 'Bearer {{JWT_TOKEN}}',\n  'content-type': 'application/json'\n  },\n  body: '[{\"id\":\"97f5415f-2e09-4171-a99e-1908e876662a\",\"metadata_key_id\":\"9d9a6672-35d6-4d0f-a807-b90edf25c275\",\"metadata_key_type\":\"shared_key\",\"metadata\":\"-----BEGIN PGP MESSAGE-----\",\"modified\":\"2025-02-18T15:52:17+00:00\",\"modified_by\":\"ae48ed02-54ea-4be4-9ae8-229bf8c04739\"}]'\n  };\n\n    try {\n    const response = await fetch(url, options);\n    const data = await response.json();\n    console.log(data);\n  } catch (error) {\n    console.error(error);\n  }\n"
+      - lang: PHP
+        source: "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\nCURLOPT_URL => \"{{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json\",\nCURLOPT_RETURNTRANSFER => true,\nCURLOPT_ENCODING => \"\",\nCURLOPT_MAXREDIRS => 10,\nCURLOPT_TIMEOUT => 30,\nCURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\nCURLOPT_CUSTOMREQUEST => \"POST\",\nCURLOPT_POSTFIELDS => json_encode([\n[\n  'id' => '97f5415f-2e09-4171-a99e-1908e876662a',\n  'metadata_key_id' => '9d9a6672-35d6-4d0f-a807-b90edf25c275',\n  'metadata_key_type' => 'shared_key',\n  'metadata' => '-----BEGIN PGP MESSAGE-----',\n  'modified' => '2025-02-18T15:52:17+00:00',\n  'modified_by' => 'ae48ed02-54ea-4be4-9ae8-229bf8c04739'\n]\n]),\nCURLOPT_HTTPHEADER => [\n\"authorization: Bearer {{JWT_TOKEN}}\",\n\"content-type: application/json\"\n],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\necho \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata rotate key
+      responses:
+        '200':
+          $ref: '#/components/responses/indexAndAddMetadataRotateKey'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          $ref: '#/components/responses/tooManyUpdatedEntities'
+      requestBody:
+        $ref: '#/components/requestBodies/rotateMetadataKeyUpgrade'
+  /metadata/rotate-key/resources.json:
+    get:
+      summary: Get resources with expired keys
+      description: See the resources that are using an expired key that needs to/can be rotated. Only administrators can query this endpoint.
+      security:
+      - bearerHttpAuthentication: []
+      operationId: viewMetadataRotateKeyResources
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata rotate key
+      responses:
+        '200':
+          $ref: '#/components/responses/indexAndAddMetadataRotateKeyResources'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+    post:
+      summary: Rotate expired metadata keys for resources
+      description: Rotate the metadata of a given set of resources
+      operationId: rotateMetadataExpiredKeys
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: 'curl --request POST \
+
+          --url {{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json \
+
+          --header ''Authorization: Bearer {{JWT_TOKEN}}''
+
+          --header ''content-type: application/json'' \
+
+          --data ''[{
+
+          "id": "97f5415f-2e09-4171-a99e-1908e876662a",
+
+          "metadata_key_id": "9d9a6672-35d6-4d0f-a807-b90edf25c275",
+
+          "metadata_key_type": "shared_key",
+
+          "metadata": "-----BEGIN PGP MESSAGE-----",
+
+          "modified": "2025-02-18T15:52:17+00:00",
+
+          "modified_by": "ae48ed02-54ea-4be4-9ae8-229bf8c04739"
+
+          }]''
+
+          '
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json';\nconst options = {\nmethod: 'POST',\nheaders: {\n  authorization: 'Bearer {{JWT_TOKEN}}',\n  'content-type': 'application/json'\n  },\n  body: '[{\"id\":\"97f5415f-2e09-4171-a99e-1908e876662a\",\"metadata_key_id\":\"9d9a6672-35d6-4d0f-a807-b90edf25c275\",\"metadata_key_type\":\"shared_key\",\"metadata\":\"-----BEGIN PGP MESSAGE-----\",\"modified\":\"2025-02-18T15:52:17+00:00\",\"modified_by\":\"ae48ed02-54ea-4be4-9ae8-229bf8c04739\"}]'\n  };\n\n    try {\n    const response = await fetch(url, options);\n    const data = await response.json();\n    console.log(data);\n  } catch (error) {\n    console.error(error);\n  }\n"
+      - lang: PHP
+        source: "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\nCURLOPT_URL => \"{{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json\",\nCURLOPT_RETURNTRANSFER => true,\nCURLOPT_ENCODING => \"\",\nCURLOPT_MAXREDIRS => 10,\nCURLOPT_TIMEOUT => 30,\nCURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\nCURLOPT_CUSTOMREQUEST => \"POST\",\nCURLOPT_POSTFIELDS => json_encode([\n[\n  'id' => '97f5415f-2e09-4171-a99e-1908e876662a',\n  'metadata_key_id' => '9d9a6672-35d6-4d0f-a807-b90edf25c275',\n  'metadata_key_type' => 'shared_key',\n  'metadata' => '-----BEGIN PGP MESSAGE-----',\n  'modified' => '2025-02-18T15:52:17+00:00',\n  'modified_by' => 'ae48ed02-54ea-4be4-9ae8-229bf8c04739'\n]\n]),\nCURLOPT_HTTPHEADER => [\n\"authorization: Bearer {{JWT_TOKEN}}\",\n\"content-type: application/json\"\n],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\necho \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata rotate key
+      responses:
+        '200':
+          $ref: '#/components/responses/indexAndAddMetadataRotateKeyResources'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/error'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          $ref: '#/components/responses/tooManyUpdatedEntities'
+      requestBody:
+        $ref: '#/components/requestBodies/rotateMetadataKeyUpgrade'
+  /metadata/rotate-key/tags.json:
+    get:
+      summary: Get tags with expired keys
+      description: '> *This endpoint is available since version 5.1.*
+
+
+        See the tags that are using an expired key that needs to/can be rotated. Only administrators can query this endpoint.
+
+        '
+      security:
+      - bearerHttpAuthentication: []
+      operationId: viewMetadataRotateKeyTags
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata rotate key
+      responses:
+        '200':
+          $ref: '#/components/responses/indexAndAddMetadataRotateKeyTags'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+    post:
+      summary: Rotate expired metadata keys for tags
+      description: '> *This endpoint is available since version 5.1.*
+
+
+        Rotate the metadata key of a given set of tags.
+
+        '
+      operationId: rotateMetadataKeysTags
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: 'curl --request POST \
+
+          --url {{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json \
+
+          --header ''Authorization: Bearer {{JWT_TOKEN}}''
+
+          --header ''content-type: application/json'' \
+
+          --data ''[{
+
+          "id": "97f5415f-2e09-4171-a99e-1908e876662a",
+
+          "metadata_key_id": "9d9a6672-35d6-4d0f-a807-b90edf25c275",
+
+          "metadata_key_type": "shared_key",
+
+          "metadata": "-----BEGIN PGP MESSAGE-----",
+
+          "modified": "2025-02-18T15:52:17+00:00",
+
+          "modified_by": "ae48ed02-54ea-4be4-9ae8-229bf8c04739"
+
+          }]''
+
+          '
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json';\nconst options = {\nmethod: 'POST',\nheaders: {\n  authorization: 'Bearer {{JWT_TOKEN}}',\n  'content-type': 'application/json'\n  },\n  body: '[{\"id\":\"97f5415f-2e09-4171-a99e-1908e876662a\",\"metadata_key_id\":\"9d9a6672-35d6-4d0f-a807-b90edf25c275\",\"metadata_key_type\":\"shared_key\",\"metadata\":\"-----BEGIN PGP MESSAGE-----\",\"modified\":\"2025-02-18T15:52:17+00:00\",\"modified_by\":\"ae48ed02-54ea-4be4-9ae8-229bf8c04739\"}]'\n  };\n\n    try {\n    const response = await fetch(url, options);\n    const data = await response.json();\n    console.log(data);\n  } catch (error) {\n    console.error(error);\n  }\n"
+      - lang: PHP
+        source: "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\nCURLOPT_URL => \"{{API_BASE_URL}}/metadata/rotate-key/{{MODEL}}.json\",\nCURLOPT_RETURNTRANSFER => true,\nCURLOPT_ENCODING => \"\",\nCURLOPT_MAXREDIRS => 10,\nCURLOPT_TIMEOUT => 30,\nCURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\nCURLOPT_CUSTOMREQUEST => \"POST\",\nCURLOPT_POSTFIELDS => json_encode([\n[\n  'id' => '97f5415f-2e09-4171-a99e-1908e876662a',\n  'metadata_key_id' => '9d9a6672-35d6-4d0f-a807-b90edf25c275',\n  'metadata_key_type' => 'shared_key',\n  'metadata' => '-----BEGIN PGP MESSAGE-----',\n  'modified' => '2025-02-18T15:52:17+00:00',\n  'modified_by' => 'ae48ed02-54ea-4be4-9ae8-229bf8c04739'\n]\n]),\nCURLOPT_HTTPHEADER => [\n\"authorization: Bearer {{JWT_TOKEN}}\",\n\"content-type: application/json\"\n],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\necho \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata rotate key
+      responses:
+        '200':
+          $ref: '#/components/responses/indexAndAddMetadataRotateKeyTags'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+        '404':
+          $ref: '#/components/responses/notFound'
+      requestBody:
+        $ref: '#/components/requestBodies/rotateMetadataKeyUpgradeTags'
+components:
+  schemas:
+    e2eeMetadataBasedId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: uuid
+    groupsUsersIndexAndView:
+      type: object
+      required:
+      - id
+      - group_id
+      - user_id
+      - is_admin
+      - created
+      properties:
+        id:
+          type: string
+          format: uuid
+        group_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        is_admin:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+    e2eeMetadataBased:
+      type: object
+      required:
+      - metadata
+      - metadata_key_id
+      - metadata_key_type
+      properties:
+        metadata:
+          type: string
+        metadata_key_id:
+          type: string
+          format: uuid
+        metadata_key_type:
+          type: string
+          enum:
+          - user_key
+          - shared_key
+    userIndexAndView:
+      type: object
+      required:
+      - id
+      - role_id
+      - username
+      - active
+      - deleted
+      - created
+      - modified
+      - disabled
+      properties:
+        is_mfa_enabled:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        role_id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        active:
+          type: boolean
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        disabled:
+          type: string
+          format: date-time
+          x-nullable: true
+        profile:
+          type: object
+          required:
+          - id
+          - user_id
+          - first_name
+          - last_name
+          - created
+          - modified
+          - avatar
+          properties:
+            id:
+              type: string
+              format: uuid
+            user_id:
+              type: string
+              format: uuid
+            first_name:
+              type: string
+            last_name:
+              type: string
+            created:
+              type: string
+              format: date-time
+            modified:
+              type: string
+              format: date-time
+            avatar:
+              type: object
+              required:
+              - url
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                profile_id:
+                  type: string
+                  format: uuid
+                created:
+                  type: string
+                  format: date-time
+                modified:
+                  type: string
+                  format: date-time
+                url:
+                  type: object
+                  required:
+                  - medium
+                  - small
+                  properties:
+                    medium:
+                      type: string
+                      format: url
+                    small:
+                      type: string
+                      format: url
+        groups_users:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        gpgkey:
+          $ref: '#/components/schemas/gpgkey'
+          x-nullable: true
+        role:
+          $ref: '#/components/schemas/role'
+        missing_metadata_key_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        last_logged_in:
+          type: string
+          format: date-time
+          x-nullable: true
+    groupIndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - deleted
+      - created
+      - modified
+      - created_by
+      - modified_by
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        my_group_user:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        groups_users:
+          type: array
+          items:
+            $ref: '#/components/schemas/groupsUsersIndexAndView'
+        user_count:
+          type: integer
+    e2eeMetadataBasedCommon:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedId'
+      - type: object
+        required:
+        - created
+        - modified
+        - created_by
+        - modified_by
+        - personal
+        - folder_parent_id
+        properties:
+          created:
+            type: string
+            format: date-time
+          modified:
+            type: string
+            format: date-time
+          created_by:
+            type: string
+            format: uuid
+          modified_by:
+            type: string
+            format: uuid
+          personal:
+            type: boolean
+          folder_parent_id:
+            type: string
+            format: uuid
+            x-nullable: true
+          modifier:
+            $ref: '#/components/schemas/userIndexAndView'
+          creator:
+            $ref: '#/components/schemas/userIndexAndView'
+          permission:
+            $ref: '#/components/schemas/permissionIndexAndView'
+          permissions:
+            type: array
+            items:
+              $ref: '#/components/schemas/permissionIndexAndView'
+    error:
+      type: object
+      required:
+      - mfa_providers
+      properties:
+        mfa_providers:
+          type: array
+          items:
+            type: string
+            enum:
+            - totp
+            - yubikey
+    headerWithPagination:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      - pagination
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+        pagination:
+          type: object
+          required:
+          - count
+          - page
+          - limit
+          properties:
+            count:
+              type: integer
+            page:
+              type: integer
+            limit:
+              type: integer
+              x-nullable: true
+    e2eeMetadataBasedIdModifiedModifiedBy:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedId'
+      - type: object
+        required:
+        - modified
+        - modified_by
+        properties:
+          modified:
+            type: string
+            format: date-time
+          modified_by:
+            type: string
+            format: uuid
+    tagV5MetadataRotateKey:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: uuid
+    gpgkey:
+      type: object
+      required:
+      - id
+      - user_id
+      - armored_key
+      - bits
+      - uid
+      - key_id
+      - fingerprint
+      - type
+      - expires
+      - key_created
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        armored_key:
+          type: string
+        bits:
+          type: integer
+        uid:
+          type: string
+        key_id:
+          type: string
+        fingerprint:
+          type: string
+        type:
+          type: string
+          enum:
+          - RSA
+          - ECC
+        expires:
+          type: string
+          format: date-time
+          x-nullable: true
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    permissionIndexAndView:
+      type: object
+      required:
+      - id
+      - aco
+      - aco_foreign_key
+      - aro
+      - aro_foreign_key
+      - type
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        aco:
+          type: string
+          enum:
+          - Resource
+          - Folder
+        aco_foreign_key:
+          type: string
+          format: uuid
+        aro:
+          type: string
+          enum:
+          - User
+          - Group
+        aro_foreign_key:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/permissionLevel'
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+          x-nullable: true
+        group:
+          $ref: '#/components/schemas/groupIndexAndView'
+          x-nullable: true
+    permissionLevel:
+      description: '* `1` - Read
+
+        * `7` - Update
+
+        * `15` - Owner
+
+        '
+      type: integer
+      enum:
+      - 1
+      - 7
+      - 15
+    role:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          enum:
+          - admin
+          - guest
+          - user
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    resourceMetadataRotateKey:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
+      - type: object
+        required:
+        - resource_type_id
+        properties:
+          resource_type_id:
+            type: string
+            format: uuid
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+  responses:
+    tooManyUpdatedEntities:
+      description: One or more entities were updated
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: One or more entities were updated.
+                  url: <API ENDPOINT URL>
+                  code: 409
+                body: ''
+    error:
+      description: MFA is required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/error'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: MFA authentication is required.
+                  url: /mfa/verify/error.json
+                  code: 403
+                body:
+                  mfa_providers:
+                  - totp
+    accessRestrictedToAdministrators:
+      description: Access restricted
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Access restricted to administrators.
+                  url: <API ENDPOINT URL>
+                  code: 403
+                body: ''
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    indexAndAddMetadataRotateKeyTags:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/headerWithPagination'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/tagV5MetadataRotateKey'
+          examples:
+            base:
+              value:
+                header:
+                  id: 26c1344a-22ef-4c49-90a0-130a9c82a648
+                  status: success
+                  servertime: 1740143504
+                  action: c5969bdd-018f-552b-b20d-01636766a81f
+                  message: The operation was successful.
+                  url: /metadata/rotate-key/tags.json
+                  code: 200
+                  pagination:
+                    count: 0
+                    page: 1
+                    limit: 20
+                body:
+                - id: ae60d89c-f13b-4fb1-b2dc-c8dc806cac88
+                  metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: 0194fec1-65fa-7b6f-935a-9541c1c13281
+                  metadata_key_type: shared_key
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+    indexAndAddMetadataRotateKeyResources:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/headerWithPagination'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/resourceMetadataRotateKey'
+          examples:
+            base:
+              value:
+                header:
+                  id: 26c1344a-22ef-4c49-90a0-130a9c82a648
+                  status: success
+                  servertime: 1740143504
+                  action: c5969bdd-018f-552b-b20d-01636766a81f
+                  message: The operation was successful.
+                  url: /metadata/rotate-key/resources.json
+                  code: 200
+                  pagination:
+                    count: 0
+                    page: 1
+                    limit: 20
+                body:
+                - id: ae60d89c-f13b-4fb1-b2dc-c8dc806cac88
+                  metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: 0194fec1-65fa-7b6f-935a-9541c1c13281
+                  metadata_key_type: shared_key
+                  modified: '2024-07-08T08:06:25+00:00'
+                  created: '2024-07-08T08:06:25+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  resource_type_id: a28a04cd-6f53-518a-967c-9963bf9cec51
+                  deleted: false
+                  expired: null
+                  folder_parent_id: null
+                  personal: true
+    indexAndAddMetadataRotateKey:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/headerWithPagination'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/e2eeMetadataBasedCommon'
+          examples:
+            base:
+              value:
+                header:
+                  id: 26c1344a-22ef-4c49-90a0-130a9c82a648
+                  status: success
+                  servertime: 1740143504
+                  action: c5969bdd-018f-552b-b20d-01636766a81f
+                  message: The operation was successful.
+                  url: /metadata/rotate-key/{{MODEL}}.json
+                  code: 200
+                  pagination:
+                    count: 0
+                    page: 1
+                    limit: 20
+                body:
+                - id: ae60d89c-f13b-4fb1-b2dc-c8dc806cac88
+                  metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: 0194fec1-65fa-7b6f-935a-9541c1c13281
+                  metadata_key_type: shared_key
+                  modified: '2024-07-08T08:06:25+00:00'
+                  created: '2024-07-08T08:06:25+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  deleted: false
+                  expired: null
+                  folder_parent_id: null
+                  personal: true
+  requestBodies:
+    rotateMetadataKeyUpgradeTags:
+      description: The tags you want to rotate the metadata key
+      required: true
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/tagV5MetadataRotateKey'
+          examples:
+            base:
+              value:
+              - id: 97f5415f-2e09-4171-a99e-1908e876662a
+                metadata_key_id: 9d9a6672-35d6-4d0f-a807-b90edf25c275
+                metadata_key_type: shared_key
+                metadata: '-----BEGIN PGP MESSAGE-----'
+    rotateMetadataKeyUpgrade:
+      description: The object you want to rotate the metadata key
+      required: true
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/e2eeMetadataBasedIdModifiedModifiedBy'
+          examples:
+            base:
+              value:
+              - id: 97f5415f-2e09-4171-a99e-1908e876662a
+                metadata_key_id: 9d9a6672-35d6-4d0f-a807-b90edf25c275
+                metadata_key_type: shared_key
+                metadata: '-----BEGIN PGP MESSAGE-----'
+                modified: '2025-02-18T15:52:17+00:00'
+                modified_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

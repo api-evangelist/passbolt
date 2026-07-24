@@ -1,0 +1,671 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata keys API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Metadata keys
+  description: Manipulate metadata keys.
+paths:
+  /metadata/keys.json:
+    get:
+      summary: Get metadata keys.
+      operationId: indexMetadataKeys
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/metadata/keys.json \\\n  --header 'authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/keys.json';\nconst options = {method: 'GET', headers: {authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/keys.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      parameters:
+      - $ref: '#/components/parameters/filterDeleted'
+      - $ref: '#/components/parameters/filterExpired'
+      - $ref: '#/components/parameters/containMetadataPrivateKeys'
+      tags:
+      - Metadata keys
+      responses:
+        '200':
+          $ref: '#/components/responses/addAndIndex'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+    post:
+      summary: Create a metadata key.
+      operationId: addMetadataKey
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n  --url {{API_BASE_URL}}/metadata/keys.json \\\n  --header 'authorization: Bearer {{JWT_TOKEN}}' \\\n  --header 'content-type: application/json' \\\n  --data '{\n    \"fingerprint\": \"17B5913BC13128674F2A6F31C79A1AB152C3C573\",\n    \"armored_key\": \"-----BEGIN PGP PUBLIC KEY BLOCK-----\",\n    \"metadata_private_keys\": [\n      {\n        \"user_id\": null,\n        \"data\": \"-----BEGIN PGP MESSAGE-----\"\n      },\n      {\n        \"user_id\": \"5ea1c453-749b-43ca-8606-b85d63ab137f\",\n        \"data\": \"-----BEGIN PGP MESSAGE-----\"\n      }\n    ]\n  }'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/keys.json';\nconst options = {\n  method: 'POST',\n  headers: {authorization: 'Bearer {{JWT_TOKEN}}', 'content-type': 'application/json'},\n  body: '{\"fingerprint\":\"17B5913BC13128674F2A6F31C79A1AB152C3C573\",\"armored_key\":\"-----BEGIN PGP PUBLIC KEY BLOCK-----\",\"metadata_private_keys\":[{\"user_id\":null,\"data\":\"-----BEGIN PGP MESSAGE-----\"},{\"user_id\":\"5ea1c453-749b-43ca-8606-b85d63ab137f\",\"data\":\"-----BEGIN PGP MESSAGE-----\"}]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/keys.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'fingerprint' => '17B5913BC13128674F2A6F31C79A1AB152C3C573',\n    'armored_key' => '-----BEGIN PGP PUBLIC KEY BLOCK-----',\n    'metadata_private_keys' => [\n        [\n                'user_id' => null,\n                'data' => '-----BEGIN PGP MESSAGE-----'\n        ],\n        [\n                'user_id' => '5ea1c453-749b-43ca-8606-b85d63ab137f',\n                'data' => '-----BEGIN PGP MESSAGE-----'\n        ]\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"authorization: Bearer {{JWT_TOKEN}}\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata keys
+      responses:
+        '200':
+          $ref: '#/components/responses/addAndIndex'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+      requestBody:
+        $ref: '#/components/requestBodies/metadataKeyAdd'
+  /metadata/keys/{metadataKeyId}.json:
+    put:
+      summary: Mark a metadata key as expired.
+      operationId: updateMetadataKey
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request PUT \\\n  --url {{API_BASE_URL}}/metadata/keys/2e5d88cb-9b04-4010-806c-a449315ae4d5.json \\\n  --header 'authorization: Bearer {{JWT_TOKEN}}' \\\n  --header 'content-type: application/json' \\\n  --data '{\n    \"fingerprint\": \"17B5913BC13128674F2A6F31C79A1AB152C3C573\",\n    \"armored_key\": \"-----BEGIN PGP PUBLIC KEY BLOCK-----\",\n    \"expired\": \"2025-02-25T09:00:00+00:00\"\n  }'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/keys/2e5d88cb-9b04-4010-806c-a449315ae4d5.json';\nconst options = {\n  method: 'PUT',\n  headers: {authorization: 'Bearer {{JWT_TOKEN}}', 'content-type': 'application/json'},\n  body: '{\"fingerprint\":\"17B5913BC13128674F2A6F31C79A1AB152C3C573\",\"armored_key\":\"-----BEGIN PGP PUBLIC KEY BLOCK-----\",\"expired\":\"2025-02-25T09:00:00+00:00\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/keys/2e5d88cb-9b04-4010-806c-a449315ae4d5.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"PUT\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'fingerprint' => '17B5913BC13128674F2A6F31C79A1AB152C3C573',\n    'armored_key' => '-----BEGIN PGP PUBLIC KEY BLOCK-----',\n    'expired' => '2025-02-25T09:00:00+00:00'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"authorization: Bearer {{JWT_TOKEN}}\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      parameters:
+      - $ref: '#/components/parameters/metadataKeyId'
+      tags:
+      - Metadata keys
+      responses:
+        '200':
+          $ref: '#/components/responses/nullBody'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+        '404':
+          $ref: '#/components/responses/notFound'
+      requestBody:
+        $ref: '#/components/requestBodies/metadataKeyUpdate'
+    delete:
+      summary: Delete a metadata key.
+      operationId: deleteMetadataKey
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request DELETE \\\n  --url {{API_BASE_URL}}/metadata/keys/6c598bc2-8354-4d47-8844-37bae9fed02f.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/keys/6c598bc2-8354-4d47-8844-37bae9fed02f.json';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/keys/6c598bc2-8354-4d47-8844-37bae9fed02f.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata keys
+      parameters:
+      - $ref: '#/components/parameters/metadataKeyId'
+      responses:
+        '200':
+          $ref: '#/components/responses/nullBody'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /metadata/keys/settings.json:
+    get:
+      summary: Get metadata keys settings.
+      operationId: indexMetadataKeysSettings
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/metadata/keys/settings.json \\\n  --header 'authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/keys/settings.json';\nconst options = {method: 'GET', headers: {authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/keys/settings.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata keys
+      responses:
+        '200':
+          $ref: '#/components/responses/indexAndUpdateSettings'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+    post:
+      summary: Update metadata keys settings.
+      operationId: updateMetadataKeysSettings
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n  --url {{API_BASE_URL}}/metadata/keys/settings.json \\\n  --header 'authorization: Bearer {{JWT_TOKEN}}' \\\n  --header 'content-type: application/json' \\\n  --data '{\n    \"allow_usage_of_personal_keys\": true,\n    \"zero_knowledge_key_share\": false\n  }'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/keys/settings.json';\nconst options = {\n  method: 'POST',\n  headers: {authorization: 'Bearer {{JWT_TOKEN}}', 'content-type': 'application/json'},\n  body: '{\"allow_usage_of_personal_keys\":true,\"zero_knowledge_key_share\":false}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/keys/settings.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'allow_usage_of_personal_keys' => null,\n    'zero_knowledge_key_share' => null\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"authorization: Bearer {{JWT_TOKEN}}\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata keys
+      requestBody:
+        $ref: '#/components/requestBodies/updateMetadataKeysSettings'
+      responses:
+        '200':
+          $ref: '#/components/responses/indexAndUpdateSettings'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+components:
+  schemas:
+    e2eeDataUserIdMetadataKeyId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataUserId'
+      - type: object
+        required:
+        - metadata_key_id
+        properties:
+          metadata_key_id:
+            type: string
+            format: uuid
+    metadataKeysSettingsUpdate:
+      allOf:
+      - $ref: '#/components/schemas/metadataKeysSettingsIndex'
+      - type: object
+        properties:
+          metadata_private_keys:
+            type: array
+            items:
+              $ref: '#/components/schemas/e2eeDataUserIdMetadataKeyId'
+    e2eeIdCreatedDataModifiedUserId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataUserId'
+      - type: object
+        required:
+        - id
+        - created
+        - modified
+        properties:
+          id:
+            type: string
+            format: uuid
+          created:
+            type: string
+            format: date-time
+          modified:
+            type: string
+            format: date-time
+    metadataKeyAdd:
+      type: object
+      required:
+      - armored_key
+      - fingerprint
+      - metadata_private_keys
+      properties:
+        armored_key:
+          type: string
+        fingerprint:
+          type: string
+        metadata_private_keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/e2eeDataUserId'
+    metadataPrivateKeysShortIndex:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataUserId'
+      - type: object
+        required:
+        - created_by
+        - modified_by
+        properties:
+          created_by:
+            type: string
+            format: uuid
+            x-nullable: true
+          modified_by:
+            type: string
+            format: uuid
+            x-nullable: true
+          user_id:
+            x-nullable: false
+    e2eeDataUserId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataOnly'
+      - type: object
+        required:
+        - user_id
+        properties:
+          user_id:
+            type: string
+            format: uuid
+            x-nullable: true
+    metadataPrivateKeysIndexAndView:
+      allOf:
+      - $ref: '#/components/schemas/metadataPrivateKeysShortIndex'
+      - type: object
+        required:
+        - id
+        - metadata_key_id
+        - created
+        - modified
+        properties:
+          id:
+            type: string
+            format: uuid
+          metadata_key_id:
+            type: string
+            format: uuid
+          created:
+            type: string
+            format: date-time
+          modified:
+            type: string
+            format: date-time
+    metadataKeysIndexAndView:
+      allOf:
+      - $ref: '#/components/schemas/metadataKeyUpdate'
+      - $ref: '#/components/schemas/e2eeIdCreatedDataModifiedUserId'
+      - type: object
+        required:
+        - deleted
+        - created_by
+        - modified_by
+        properties:
+          user_id:
+            x-nullable: false
+          deleted:
+            type: string
+            format: date-time
+            x-nullable: true
+          created_by:
+            type: string
+            format: uuid
+            x-nullable: true
+          modified_by:
+            type: string
+            format: uuid
+            x-nullable: true
+          metadata_private_keys:
+            type: array
+            items:
+              $ref: '#/components/schemas/metadataPrivateKeysIndexAndView'
+    metadataKeyUpdate:
+      required:
+      - fingerprint
+      - armored_key
+      - expired
+      properties:
+        fingerprint:
+          type: string
+        armored_key:
+          type: string
+        expired:
+          type: string
+          format: date-time
+    e2eeDataOnly:
+      required:
+      - data
+      properties:
+        data:
+          type: string
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+    metadataKeysSettingsIndex:
+      type: object
+      required:
+      - allow_usage_of_personal_keys
+      - zero_knowledge_key_share
+      properties:
+        allow_usage_of_personal_keys:
+          type: boolean
+        zero_knowledge_key_share:
+          type: boolean
+  responses:
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+    accessRestrictedToAdministrators:
+      description: Access restricted
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Access restricted to administrators.
+                  url: <API ENDPOINT URL>
+                  code: 403
+                body: ''
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    addAndIndex:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/metadataKeysIndexAndView'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1739979997
+                  action: e38db0b5-838d-5f43-8609-92a25843e9d3
+                  message: OK
+                  url: /metadata/keys.json?contain%5Bmetadata_private_keys%5D=1
+                  code: 200
+                body:
+                - id: 2e5d88cb-9b04-4010-806c-a449315ae4d5
+                  fingerprint: 17B5913BC13128674F2A6F31C79A1AB152C3C573
+                  armored_key: '-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+
+                    '
+                  created: '2025-02-03T09:10:47+00:00'
+                  modified: '2025-02-03T09:10:47+00:00'
+                  created_by: 5ea1c453-749b-43ca-8606-b85d63ab137f
+                  modified_by: 5ea1c453-749b-43ca-8606-b85d63ab137f
+                  expired: null
+                  deleted: null
+                  metadata_private_keys:
+                  - metadata_key_id: 2e5d88cb-9b04-4010-806c-a449315ae4d5
+                    user_id: 5ea1c453-749b-43ca-8606-b85d63ab137f
+                    data: '-----BEGIN PGP MESSAGE-----
+
+
+                      '
+                    created: '2025-02-03T09:10:47+00:00'
+                    modified: '2025-02-03T09:10:47+00:00'
+                    created_by: 5ea1c453-749b-43ca-8606-b85d63ab137f
+                    modified_by: 5ea1c453-749b-43ca-8606-b85d63ab137f
+    indexAndUpdateSettings:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/metadataKeysSettingsIndex'
+          examples:
+            base:
+              value:
+                header:
+                  id: 1911b18b-cf68-48cf-b69f-ec9dba39aff4
+                  status: success
+                  servertime: 1740413047
+                  action: b20e3cc2-e4ea-5b42-804b-7edc9878ef3d
+                  message: The operation was successful.
+                  url: /metadata/keys/settings.json
+                  code: 200
+                body:
+                  allow_usage_of_personal_keys: true
+                  zero_knowledge_key_share: false
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+  requestBodies:
+    metadataKeyAdd:
+      description: The metadata key you want to create
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/metadataKeyAdd'
+          examples:
+            base:
+              value:
+                fingerprint: 17B5913BC13128674F2A6F31C79A1AB152C3C573
+                armored_key: '-----BEGIN PGP PUBLIC KEY BLOCK-----'
+                metadata_private_keys:
+                - user_id: null
+                  data: '-----BEGIN PGP MESSAGE-----'
+                - user_id: 5ea1c453-749b-43ca-8606-b85d63ab137f
+                  data: '-----BEGIN PGP MESSAGE-----'
+    metadataKeyUpdate:
+      description: The metadata key you want to update
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/metadataKeyUpdate'
+          examples:
+            base:
+              value:
+                fingerprint: 17B5913BC13128674F2A6F31C79A1AB152C3C573
+                armored_key: '-----BEGIN PGP PUBLIC KEY BLOCK-----'
+                expired: '2025-02-25T09:00:00+00:00'
+    updateMetadataKeysSettings:
+      description: The metadata key settings you want to update
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/metadataKeysSettingsUpdate'
+          examples:
+            base:
+              value:
+                allow_usage_of_personal_keys: true
+                zero_knowledge_key_share: false
+  parameters:
+    containMetadataPrivateKeys:
+      name: contain[metadata_private_keys]
+      description: Add metadata private keys in response.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    metadataKeyId:
+      name: metadataKeyId
+      description: The metadata key identifier being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    filterDeleted:
+      name: filter[deleted]
+      description: Filter for deleted elements.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    filterExpired:
+      name: filter[expired]
+      description: Filter for expired elements.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

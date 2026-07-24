@@ -1,0 +1,450 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Authentication (GPGAuth) API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Authentication (GPGAuth)
+  description: 'The legacy authentication method, using the GPGAuth protocol.
+
+
+    Find more [here](https://www.passbolt.com/docs/development/authentication).
+
+    '
+paths:
+  /auth/is-authenticated.json:
+    get:
+      summary: Check authentication status.
+      description: Can be used as a session keep-alive.
+      operationId: viewAuthIsAuthenticated
+      security:
+      - gpgCookieAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/auth/is-authenticated.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/auth/is-authenticated.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/auth/is-authenticated.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Authentication (GPGAuth)
+      responses:
+        '200':
+          $ref: '#/components/responses/nullBody'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+  /auth/login.json:
+    post:
+      summary: Log in.
+      operationId: authLogin
+      security: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n  --url {{API_BASE_URL}}/auth/login.json \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"data\": {\n    \"gpg_auth\": {\n      \"keyid\": \"5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59\",\n      \"user_token_result\": \"gpgauthv1.3.0|36|10e2074b-f610-42be-8525-100d4e68c481|gpgauthv1.3.0\"\n    }\n  }\n}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/auth/login.json';\nconst options = {\n  method: 'POST',\n  body: '{\"data\":{\"gpg_auth\":{\"keyid\":\"5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59\",\"user_token_result\":\"gpgauthv1.3.0|36|10e2074b-f610-42be-8525-100d4e68c481|gpgauthv1.3.0\"}}}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/auth/login.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'data' => [\n      'gpg_auth' => [\n        'keyid' => '5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59',\n        'user_token_result' => 'gpgauthv1.3.0|36|10e2074b-f610-42be-8525-100d4e68c481|gpgauthv1.3.0'\n      ]\n    ]\n  ]),\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Authentication (GPGAuth)
+      requestBody:
+        $ref: '#/components/requestBodies/authGpg_login'
+      responses:
+        '200':
+          $ref: '#/components/responses/authGpg_login'
+        '400':
+          $ref: '#/components/responses/badRequest'
+  /auth/logout.json:
+    post:
+      summary: Log out.
+      operationId: authLogout
+      security:
+      - gpgCookieAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/auth/logout.json\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/auth/logout.json';\nconst options = {method: 'POST'};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/auth/logout.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Authentication (GPGAuth)
+      responses:
+        '200':
+          $ref: '#/components/responses/nullBody'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/missingCsrfToken'
+  /auth/verify.json:
+    get:
+      summary: Get the server's public PGP key.
+      description: Can be used to validate data signature.
+      operationId: viewAuthVerify
+      security: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/auth/verify.json\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/auth/verify.json';\nconst options = {method: 'GET'};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/auth/verify.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Authentication (GPGAuth)
+      responses:
+        '200':
+          $ref: '#/components/responses/verify'
+    post:
+      summary: Verify the server's identity.
+      operationId: checkAuthVerify
+      security: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n  --url {{API_BASE_URL}}/auth/verify.json \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"data\": {\n    \"gpg_auth\": {\n      \"keyid\": \"5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59\",\n      \"server_verify_token\": \"-----BEGIN PGP MESSAGE-----\"\n    }\n  }\n}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/auth/verify.json';\nconst options = {\n  method: 'POST',\n  body: '{\"data\":{\"gpg_auth\":{\"keyid\":\"5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59\",\"server_verify_token\":\"-----BEGIN PGP MESSAGE-----\"}}}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/auth/verify.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'data' => [\n      'gpg_auth' => [\n        'keyid' => '5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59',\n        'server_verify_token' => '-----BEGIN PGP MESSAGE-----'\n      ]\n    ]\n  ]),\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Authentication (GPGAuth)
+      requestBody:
+        $ref: '#/components/requestBodies/verify'
+      responses:
+        '200':
+          $ref: '#/components/responses/stage0'
+        '400':
+          $ref: '#/components/responses/badRequest'
+components:
+  requestBodies:
+    verify:
+      description: The user's key fingerprint and an encrypted challenge token.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/login'
+          examples:
+            base:
+              value:
+                data:
+                  gpg_auth:
+                    keyid: 5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59
+                    server_verify_token: '-----BEGIN PGP MESSAGE-----'
+    authGpg_login:
+      description: The user's key fingerprint and challenge data when required.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/login'
+          examples:
+            stage1:
+              summary: Obtain a challenge token
+              value:
+                data:
+                  gpg_auth:
+                    keyid: 5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59
+            stage2:
+              summary: Verify client's identity
+              value:
+                data:
+                  gpg_auth:
+                    keyid: 5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59
+                    user_token_result: gpgauthv1.3.0|36|10e2074b-f610-42be-8525-100d4e68c481|gpgauthv1.3.0
+  responses:
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    verify:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/verify'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /auth/verify.json
+                  code: 200
+                body:
+                  fingerprint: 5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59
+                  keydata: '-----BEGIN PUBLIC KEY-----'
+    stage0:
+      description: Operation is successful. The decrypted challenge is sent via a header.
+      headers:
+        X-GPGAuth-Verify-Response:
+          schema:
+            type: string
+            example: gpgauthv1.3.0|36|10e2074b-f610-42be-8525-100d4e68c481|gpgauthv1.3.0
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /auth/verify.json
+                  code: 200
+                body: null
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    authGpg_login:
+      description: Operation is successful. Additional data is sent through cookie and headers.
+      headers:
+        X-GPGAuth-Progress:
+          schema:
+            type: string
+            enum:
+            - stage1
+            - stage2
+            - complete
+        X-GPGAuth-User-Auth-Token:
+          schema:
+            type: string
+        X-GPGAuth-Authenticated:
+          schema:
+            type: boolean
+        Set-Cookie:
+          schema:
+            type: string
+            example: passbolt_session=9vknm8fkbqpgj8i1mnk4st332e; HttpOnly
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /auth/login.json
+                  code: 200
+                body: null
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+    missingCsrfToken:
+      description: CSRF token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: Missing or incorrect CSRF cookie type.
+                  url: /auth/logout.json
+                  code: 403
+                body: ''
+  schemas:
+    login:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - gpg_auth
+          properties:
+            gpg_auth:
+              type: object
+              required:
+              - keyid
+              properties:
+                keyid:
+                  type: string
+                server_verify_token:
+                  type: string
+                  description: Used for server key verification.
+                user_token_result:
+                  type: string
+                  description: Used for client key verification.
+    verify:
+      type: object
+      required:
+      - fingerprint
+      - keydata
+      properties:
+        fingerprint:
+          type: string
+        keydata:
+          type: string
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

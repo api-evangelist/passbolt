@@ -1,0 +1,580 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Resource types API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Resource types
+  description: 'Resource-types are used for describing how and what data is stored for a resource and its associated secrets.
+
+    '
+paths:
+  /resource-types.json:
+    get:
+      summary: Get multiple resource types.
+      operationId: resourceTypesIndex
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/resource-types.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/resource-types.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/resource-types.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Resource types
+      parameters:
+      - $ref: '#/components/parameters/containResourcesCount'
+      - $ref: '#/components/parameters/filterIsDeleted'
+      responses:
+        '200':
+          $ref: '#/components/responses/resourceTypes_index'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+  /resource-types/{resourceTypeId}.json:
+    get:
+      summary: Get a resource type.
+      operationId: viewResourceType
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/resource-types/43051c9f-7122-4887-81e8-3b390cf0f04a.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/resource-types/43051c9f-7122-4887-81e8-3b390cf0f04a.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/resource-types/43051c9f-7122-4887-81e8-3b390cf0f04a.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Resource types
+      parameters:
+      - $ref: '#/components/parameters/resourceTypeId'
+      responses:
+        '200':
+          $ref: '#/components/responses/resourceTypes_view'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+    delete:
+      summary: Delete a resource type.
+      operationId: deleteResourceType
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request DELETE \\\n  --url {{API_BASE_URL}}/resource-types/43051c9f-7122-4887-81e8-3b390cf0f04a.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/resource-types/43051c9f-7122-4887-81e8-3b390cf0f04a.json';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/resource-types/43051c9f-7122-4887-81e8-3b390cf0f04a.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Resource types
+      parameters:
+      - $ref: '#/components/parameters/resourceTypeId'
+      responses:
+        '200':
+          $ref: '#/components/responses/nullBody'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+        '404':
+          $ref: '#/components/responses/notFound'
+    put:
+      summary: Update resource type.
+      operationId: updateResourceType
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request PUT \\\n  --url {{API_BASE_URL}}/resource-types/05ba5c75-504d-5ad6-819a-83af68867d86.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n  --header 'content-type: application/json' \\\n  --data '{\n  \"deleted\": null\n }'\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\nCURLOPT_URL => \"{{API_BASE_URL}}/resource-types/05ba5c75-504d-5ad6-819a-83af68867d86.json\",\nCURLOPT_RETURNTRANSFER => true,\nCURLOPT_ENCODING => \"\",\nCURLOPT_MAXREDIRS => 10,\nCURLOPT_TIMEOUT => 30,\nCURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\nCURLOPT_CUSTOMREQUEST => \"PUT\",\nCURLOPT_POSTFIELDS => json_encode([\n'deleted' => null\n]),\nCURLOPT_HTTPHEADER => [\n  \"Authorization: Bearer {{JWT_TOKEN}}\"\n  \"content-type: application/json\"\n],\n]);\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\necho \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/resource-types/05ba5c75-504d-5ad6-819a-83af68867d86.json';\nconst options = {\nmethod: 'PUT',\nheaders: {\n  authorization: 'Bearer {{JWT_TOKEN}',\n  'content-type': 'application/json'\n},\nbody: '{\"deleted\":null}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      tags:
+      - Resource types
+      parameters:
+      - $ref: '#/components/parameters/resourceTypeId'
+      responses:
+        '200':
+          $ref: '#/components/responses/emptyStringBody'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+        '404':
+          $ref: '#/components/responses/notFound'
+      requestBody:
+        $ref: '#/components/requestBodies/resourceUpdate'
+components:
+  schemas:
+    resourceTypeUpdate:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+          x-nullable: true
+    resourceType:
+      type: object
+      required:
+      - id
+      - slug
+      - name
+      - description
+      - definition
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        slug:
+          type: string
+          description: '* `password-string` - The original passbolt resource type, where the secret is a non empty string.
+
+            * `password-and-description` - A resource with the password and the description encrypted.
+
+            * `totp` - A resource with standalone TOTP fields.
+
+            * `password-description-totp` - A resource with encrypted password, description and TOTP fields.
+
+            * `v5-default-with-totp` - The new default resource type with a TOTP introduced with v5.
+
+            * `v5-password-string (Deprecated)` - The original passbolt resource type, kept for backward compatibility reasons.
+
+            * `v5-totp-standalone` - The new standalone TOTP resource type introduced with v5.
+
+            * `v5-default` - The new default resource type introduced with v5.
+
+            '
+          enum:
+          - password-string
+          - password-and-description
+          - totp
+          - password-description-totp
+          - v5-default-with-totp
+          - v5-password-string (Deprecated)
+          - v5-totp-standalone
+          - v5-default
+        name:
+          type: string
+        description:
+          type: string
+        definition:
+          type: object
+          description: Schema for the expected data for this kind of resources.
+        deleted:
+          type: string
+          x-nullable: true
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+    resourceTypeIndex:
+      allOf:
+      - $ref: '#/components/schemas/resourceType'
+      - type: object
+        required:
+        - default
+        properties:
+          default:
+            type: boolean
+          resources_count:
+            type: integer
+  responses:
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    resourceTypes_index:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/resourceTypeIndex'
+          examples:
+            resourceTypes:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /resource-types.json
+                  code: 200
+                body:
+                - id: 669f8c64-242a-59fb-92fc-81f660975fd3
+                  slug: password-and-description
+                  name: Password with description
+                  description: A resource with the password and the description encrypted.
+                  definition:
+                    resource:
+                      type: object
+                      required:
+                      - name
+                      properties:
+                        name:
+                          type: string
+                          maxLength: 255
+                        username:
+                          anyOf:
+                          - type: string
+                            maxLength: 255
+                          - type: 'null'
+                        uri:
+                          anyOf:
+                          - type: string
+                            maxLength: 1024
+                          - type: 'null'
+                    secret:
+                      type: object
+                      required:
+                      - password
+                      properties:
+                        password:
+                          type: string
+                          maxLength: 4096
+                        description:
+                          anyOf:
+                          - type: string
+                            maxLength: 10000
+                          - type: null
+                  deleted: null
+                  created: '2024-07-08T08:06:25+00:00'
+                  modified: '2024-07-08T08:06:25+00:00'
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+    accessRestrictedToAdministrators:
+      description: Access restricted
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Access restricted to administrators.
+                  url: <API ENDPOINT URL>
+                  code: 403
+                body: ''
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+    resourceTypes_view:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/resourceType'
+          examples:
+            resourceType:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /resource-types/669f8c64-242a-59fb-92fc-81f660975fd3.json
+                  code: 200
+                body:
+                  id: 669f8c64-242a-59fb-92fc-81f660975fd3
+                  slug: password-and-description
+                  name: Password with description
+                  description: A resource with the password and the description encrypted.
+                  definition:
+                    resource:
+                      type: object
+                      required:
+                      - name
+                      properties:
+                        name:
+                          type: string
+                          maxLength: 255
+                        username:
+                          anyOf:
+                          - type: string
+                            maxLength: 255
+                          - type: 'null'
+                        uri:
+                          anyOf:
+                          - type: string
+                            maxLength: 1024
+                          - type: 'null'
+                    secret:
+                      type: object
+                      required:
+                      - password
+                      properties:
+                        password:
+                          type: string
+                          maxLength: 4096
+                        description:
+                          anyOf:
+                          - type: string
+                            maxLength: 10000
+                          - type: null
+                  created: '2024-07-08T08:06:25+00:00'
+                  modified: '2024-07-08T08:06:25+00:00'
+    emptyStringBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: ''
+  parameters:
+    filterIsDeleted:
+      name: filter[is-deleted]
+      description: Only return deleted elements.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containResourcesCount:
+      name: contain[resources_count]
+      description: Get the number of count of resources associated to this type of resource.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    resourceTypeId:
+      name: resourceTypeId
+      description: ID for the resource type being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  requestBodies:
+    resourceUpdate:
+      description: The resource types you want to update
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/resourceTypeUpdate'
+          examples:
+            base:
+              value:
+                deleted: null
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

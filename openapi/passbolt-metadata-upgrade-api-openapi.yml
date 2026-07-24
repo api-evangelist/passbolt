@@ -1,0 +1,1372 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata upgrade API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Metadata upgrade
+  description: Upgrading elements to the new v5 metadata format
+paths:
+  /metadata/upgrade/folders.json:
+    get:
+      summary: Get Upgradable Folders
+      description: '> *Encrypted metadata for this item is not supported on all clients.*
+
+
+        Retrieves a list of folders that are eligible for an upgrade to v5 format. Results are paginated and the page size is fixed at 20.
+
+        '
+      security:
+      - bearerHttpAuthentication: []
+      operationId: viewMetadataUpgradeFolders
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/metadata/upgrade/folders.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/upgrade/folders.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/upgrade/folders.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata upgrade
+      parameters:
+      - $ref: '#/components/parameters/filterIsShared'
+      - $ref: '#/components/parameters/containPermission'
+      responses:
+        '200':
+          $ref: '#/components/responses/upgradeMetadataFolders'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+    post:
+      summary: Upgrade a folder
+      description: '> *Encrypted metadata for this item is not supported on all clients.*
+
+
+        Upgrade folders that are eligible for an upgrade to v5 format.
+
+        '
+      operationId: upgradeMetadataFolders
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n--url {{API_BASE_URL}}/metadata/upgrade/folders.json \\\n--header 'authorization: Bearer {{JWT_TOKEN}}' \\\n--header 'content-type: application/json' \\\n--data '[{\n\"id\": \"0e840721-58ea-4649-b603-2d9cf4f2213c\",\n\"metadata_key_id\": \"9d9a6672-35d6-4d0f-a807-b90edf25c275\",\n\"metadata_key_type\": \"shared_key\",\n\"metadata\": \"-----BEGIN PGP MESSAGE-----\",\n\"modified\": \"2025-02-18T15:52:17+00:00\",\n\"modified_by\": \"ae48ed02-54ea-4be4-9ae8-229bf8c04739\"\n }]'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/upgrade/folders.json';\nconst options = {\nmethod: 'POST',\nheaders: {\n  authorization: 'Bearer {{JWT_TOKEN}}',\n  'content-type': 'application/json'\n},\nbody: '[{\"id\":\"0e840721-58ea-4649-b603-2d9cf4f2213c\",\"metadata_key_id\":\"9d9a6672-35d6-4d0f-a807-b90edf25c275\",\"metadata_key_type\":\"shared_key\",\"metadata\":\"-----BEGIN PGP MESSAGE-----\",\"modified\":\"2025-02-18T15:52:17+00:00\",\"modified_by\":\"ae48ed02-54ea-4be4-9ae8-229bf8c04739\"}]'\n};\n\n  try {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\nCURLOPT_URL => \"{{API_BASE_URL}}/metadata/upgrade/folders.json\",\nCURLOPT_RETURNTRANSFER => true,\nCURLOPT_ENCODING => \"\",\nCURLOPT_MAXREDIRS => 10,\nCURLOPT_TIMEOUT => 30,\nCURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\nCURLOPT_CUSTOMREQUEST => \"POST\",\nCURLOPT_POSTFIELDS => json_encode([\n[\n  'id' => '0e840721-58ea-4649-b603-2d9cf4f2213c',\n  'metadata_key_id' => '9d9a6672-35d6-4d0f-a807-b90edf25c275',\n  'metadata_key_type' => 'shared_key',\n  'metadata' => '-----BEGIN PGP MESSAGE-----',\n  'modified' => '2025-02-18T15:52:17+00:00',\n  'modified_by' => 'ae48ed02-54ea-4be4-9ae8-229bf8c04739'\n]\n ]),\n    CURLOPT_HTTPHEADER => [\n    \"authorization: Bearer {{JWT_TOKEN}}\",\n    \"content-type: application/json\"\n  ],\n  ]);\n\n  $response = curl_exec($curl);\n  $err = curl_error($curl);\n\n  curl_close($curl);\n\n  if ($err) {\n  echo \"cURL Error #:\" . $err;\n  } else {\n    echo $response;\n  }\n"
+      tags:
+      - Metadata upgrade
+      parameters:
+      - $ref: '#/components/parameters/containPermissions'
+      responses:
+        '200':
+          $ref: '#/components/responses/upgradeMetadataFolders'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          $ref: '#/components/responses/entityWasUpdated'
+      requestBody:
+        $ref: '#/components/requestBodies/upgradeMetadataFolders'
+  /metadata/upgrade/resources.json:
+    get:
+      summary: Get Upgradable Resources
+      description: Retrieves a list of resources that are eligible for an upgrade to v5 format. Results are paginated and the page size is fixed at 20.
+      security:
+      - bearerHttpAuthentication: []
+      operationId: viewMetadataUpgradeResources
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/metadata/upgrade/resources.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/upgrade/resources.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/upgrade/resources.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata upgrade
+      parameters:
+      - $ref: '#/components/parameters/filterIsShared'
+      responses:
+        '200':
+          $ref: '#/components/responses/upgradeMetadataResources'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+    post:
+      summary: Upgrade a Resource
+      description: Upgrade resources that are eligible for an upgrade to v5 format.
+      operationId: upgradeMetadataResources
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n--url {{API_BASE_URL}}/metadata/upgrade/resources.json \\\n--header 'authorization: Bearer {{JWT_TOKEN}}' \\\n--header 'content-type: application/json' \\\n--data '[{\n\"id\": \"97f5415f-2e09-4171-a99e-1908e876662a\",\n\"metadata_key_id\": \"9d9a6672-35d6-4d0f-a807-b90edf25c275\",\n\"metadata_key_type\": \"shared_key\",\n\"metadata\": \"-----BEGIN PGP MESSAGE-----\",\n\"modified\": \"2025-02-18T15:52:17+00:00\",\n\"modified_by\": \"ae48ed02-54ea-4be4-9ae8-229bf8c04739\"\n }]'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/upgrade/resources.json';\nconst options = {\nmethod: 'POST',\nheaders: {\n  authorization: 'Bearer {{JWT_TOKEN}}',\n  'content-type': 'application/json'\n},\nbody: '[{\"id\":\"97f5415f-2e09-4171-a99e-1908e876662a\",\"metadata_key_id\":\"9d9a6672-35d6-4d0f-a807-b90edf25c275\",\"metadata_key_type\":\"shared_key\",\"metadata\":\"-----BEGIN PGP MESSAGE-----\",\"modified\":\"2025-02-18T15:52:17+00:00\",\"modified_by\":\"ae48ed02-54ea-4be4-9ae8-229bf8c04739\"}]'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\nCURLOPT_URL => \"{{API_BASE_URL}}/metadata/upgrade/resources.json\",\nCURLOPT_RETURNTRANSFER => true,\nCURLOPT_ENCODING => \"\",\nCURLOPT_MAXREDIRS => 10,\nCURLOPT_TIMEOUT => 30,\nCURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\nCURLOPT_CUSTOMREQUEST => \"POST\",\nCURLOPT_POSTFIELDS => json_encode([\n[\n  'id' => '97f5415f-2e09-4171-a99e-1908e876662a',\n  'metadata_key_id' => '9d9a6672-35d6-4d0f-a807-b90edf25c275',\n  'metadata_key_type' => 'shared_key',\n  'metadata' => '-----BEGIN PGP MESSAGE-----',\n  'modified' => '2025-02-18T15:52:17+00:00',\n  'modified_by' => 'ae48ed02-54ea-4be4-9ae8-229bf8c04739'\n]\n]),\n  CURLOPT_HTTPHEADER => [\n  \"authorization: {{JWT_TOKEN}}\",\n  \"content-type: application/json\"\n],\n]);\n\n  $response = curl_exec($curl);\n  $err = curl_error($curl);\n\n  curl_close($curl);\n\n  if ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata upgrade
+      parameters:
+      - $ref: '#/components/parameters/filterIsShared'
+      - $ref: '#/components/parameters/containPermissions'
+      responses:
+        '200':
+          $ref: '#/components/responses/upgradeMetadataResources'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          $ref: '#/components/responses/dateDoesntMatch'
+      requestBody:
+        $ref: '#/components/requestBodies/upgradeMetadataResources'
+  /metadata/upgrade/tags.json:
+    get:
+      summary: Get Upgradable Tags
+      description: '> *This endpoint is available since version 5.1.*
+
+
+        > *Encrypted metadata for this item is not supported on all clients.*
+
+
+        Retrieves a list of tags that are eligible for an upgrade to v5 format. Results are paginated and the page size is fixed at 20.
+
+        '
+      security:
+      - bearerHttpAuthentication: []
+      operationId: viewMetadataUpgradeTags
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/metadata/upgrade/tags.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/upgrade/tags.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/upgrade/tags.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata upgrade
+      parameters:
+      - $ref: '#/components/parameters/filterIsShared'
+      responses:
+        '200':
+          $ref: '#/components/responses/upgradeMetadataTags'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+    post:
+      summary: Upgrade a tag
+      description: '> *This endpoint is available since version 5.1.*
+
+
+        > *Encrypted metadata for this item is not supported on all clients.*
+
+
+        Upgrade tags that are eligible for an upgrade to v5 format.
+
+        '
+      operationId: processeMetadataUpgradeTags
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n  --url {{API_BASE_URL}}/metadata/upgrade/tags.json \\\n  --header 'authorization: Bearer {{JWT_TOKEN}}' \\\n  --header 'content-type: application/json' \\\n  --data '[\n    {\n      \"id\": \"52ca9f92-4115-4759-a965-89e6b41b36fd\",\n      \"metadata_key_id\": \"edf0a845-94ea-4281-8d45-7d64fa06e894\",\n      \"metadata_key_type\": \"shared_key\",\n      \"metadata\": \"-----BEGIN PGP MESSAGE-----\"\n    }\n  ]'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/upgrade/tags.json';\nconst options = {\n  method: 'POST',\n  headers: {authorization: 'Bearer {{JWT_TOKEN}}', 'content-type': 'application/json'},\n  body: '[{\"id\":\"52ca9f92-4115-4759-a965-89e6b41b36fd\",\"metadata_key_id\":\"edf0a845-94ea-4281-8d45-7d64fa06e894\",\"metadata_key_type\":\"shared_key\",\"metadata\":\"-----BEGIN PGP MESSAGE-----\"}]'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/upgrade/tags.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    [\n        'id' => '52ca9f92-4115-4759-a965-89e6b41b36fd',\n        'metadata_key_id' => 'edf0a845-94ea-4281-8d45-7d64fa06e894',\n        'metadata_key_type' => 'shared_key',\n        'metadata' => '-----BEGIN PGP MESSAGE-----'\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"authorization: Bearer {{JWT_TOKEN}}\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\nif ($err) {\necho \"cURL Error #:\" . $err;\n} else {\necho $response;\n}\n"
+      tags:
+      - Metadata upgrade
+      parameters:
+      - $ref: '#/components/parameters/filterIsShared'
+      responses:
+        '200':
+          $ref: '#/components/responses/upgradeMetadataTags'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+        '404':
+          $ref: '#/components/responses/notFound'
+      requestBody:
+        $ref: '#/components/requestBodies/upgradeMetadataTags'
+components:
+  schemas:
+    e2eeMetadataBasedId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: uuid
+    folderV5IndexAndView:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
+      - type: object
+        properties:
+          children_resources:
+            type: array
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/resourceV4IndexAndView'
+              - $ref: '#/components/schemas/resourceV5IndexAndView'
+          children_folders:
+            type: array
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/folderV4IndexAndView'
+              - $ref: '#/components/schemas/folderV5IndexAndView'
+    resourceV5IndexAndView:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
+      - type: object
+        required:
+        - resource_type_id
+        - expired
+        properties:
+          resource_type_id:
+            type: string
+            format: uuid
+          expired:
+            type: string
+            format: date-time
+            x-nullable: true
+          favorite:
+            $ref: '#/components/schemas/favorite'
+          secrets:
+            type: array
+            items:
+              type: string
+          resource_type:
+            $ref: '#/components/schemas/resourceType'
+    groupsUsersIndexAndView:
+      type: object
+      required:
+      - id
+      - group_id
+      - user_id
+      - is_admin
+      - created
+      properties:
+        id:
+          type: string
+          format: uuid
+        group_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        is_admin:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+    role:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          enum:
+          - admin
+          - guest
+          - user
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    tagV5:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedId'
+      - type: object
+        required:
+        - is_shared
+        properties:
+          is_shared:
+            type: boolean
+    e2eeMetadataBased:
+      type: object
+      required:
+      - metadata
+      - metadata_key_id
+      - metadata_key_type
+      properties:
+        metadata:
+          type: string
+        metadata_key_id:
+          type: string
+          format: uuid
+        metadata_key_type:
+          type: string
+          enum:
+          - user_key
+          - shared_key
+    secretIndex:
+      type: object
+      required:
+      - id
+      - user_id
+      - resource_id
+      - data
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        resource_id:
+          type: string
+          format: uuid
+        data:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    userIndexAndView:
+      type: object
+      required:
+      - id
+      - role_id
+      - username
+      - active
+      - deleted
+      - created
+      - modified
+      - disabled
+      properties:
+        is_mfa_enabled:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        role_id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        active:
+          type: boolean
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        disabled:
+          type: string
+          format: date-time
+          x-nullable: true
+        profile:
+          type: object
+          required:
+          - id
+          - user_id
+          - first_name
+          - last_name
+          - created
+          - modified
+          - avatar
+          properties:
+            id:
+              type: string
+              format: uuid
+            user_id:
+              type: string
+              format: uuid
+            first_name:
+              type: string
+            last_name:
+              type: string
+            created:
+              type: string
+              format: date-time
+            modified:
+              type: string
+              format: date-time
+            avatar:
+              type: object
+              required:
+              - url
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                profile_id:
+                  type: string
+                  format: uuid
+                created:
+                  type: string
+                  format: date-time
+                modified:
+                  type: string
+                  format: date-time
+                url:
+                  type: object
+                  required:
+                  - medium
+                  - small
+                  properties:
+                    medium:
+                      type: string
+                      format: url
+                    small:
+                      type: string
+                      format: url
+        groups_users:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        gpgkey:
+          $ref: '#/components/schemas/gpgkey'
+          x-nullable: true
+        role:
+          $ref: '#/components/schemas/role'
+        missing_metadata_key_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        last_logged_in:
+          type: string
+          format: date-time
+          x-nullable: true
+    groupIndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - deleted
+      - created
+      - modified
+      - created_by
+      - modified_by
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        my_group_user:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        groups_users:
+          type: array
+          items:
+            $ref: '#/components/schemas/groupsUsersIndexAndView'
+        user_count:
+          type: integer
+    e2eeMetadataBasedCommon:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedId'
+      - type: object
+        required:
+        - created
+        - modified
+        - created_by
+        - modified_by
+        - personal
+        - folder_parent_id
+        properties:
+          created:
+            type: string
+            format: date-time
+          modified:
+            type: string
+            format: date-time
+          created_by:
+            type: string
+            format: uuid
+          modified_by:
+            type: string
+            format: uuid
+          personal:
+            type: boolean
+          folder_parent_id:
+            type: string
+            format: uuid
+            x-nullable: true
+          modifier:
+            $ref: '#/components/schemas/userIndexAndView'
+          creator:
+            $ref: '#/components/schemas/userIndexAndView'
+          permission:
+            $ref: '#/components/schemas/permissionIndexAndView'
+          permissions:
+            type: array
+            items:
+              $ref: '#/components/schemas/permissionIndexAndView'
+    headerWithPagination:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      - pagination
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+        pagination:
+          type: object
+          required:
+          - count
+          - page
+          - limit
+          properties:
+            count:
+              type: integer
+            page:
+              type: integer
+            limit:
+              type: integer
+              x-nullable: true
+    e2eeMetadataBasedIdModifiedModifiedBy:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedId'
+      - type: object
+        required:
+        - modified
+        - modified_by
+        properties:
+          modified:
+            type: string
+            format: date-time
+          modified_by:
+            type: string
+            format: uuid
+    resourceV4IndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - username
+      - uri
+      - description
+      - deleted
+      - created
+      - created_by
+      - modified_by
+      - resource_type_id
+      - expired
+      - folder_parent_id
+      - personal
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        username:
+          type: string
+        uri:
+          type: string
+        description:
+          type: string
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        resource_type_id:
+          type: string
+          format: uuid
+        expired:
+          type: string
+          format: date-time
+          x-nullable: true
+        folder_parent_id:
+          type: string
+          format: uuid
+          x-nullable: true
+        personal:
+          type: boolean
+        favorite:
+          $ref: '#/components/schemas/favorite'
+        modifier:
+          $ref: '#/components/schemas/userIndexAndView'
+        creator:
+          $ref: '#/components/schemas/userIndexAndView'
+        secrets:
+          type: array
+          items:
+            $ref: '#/components/schemas/secretIndex'
+        resource_type:
+          $ref: '#/components/schemas/resourceType'
+        permission:
+          $ref: '#/components/schemas/permissionIndexAndView'
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/permissionIndexAndView'
+    tagLegacy:
+      type: object
+      required:
+      - id
+      - slug
+      - is_shared
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+          x-nullable: true
+        slug:
+          type: string
+        is_shared:
+          type: boolean
+    gpgkey:
+      type: object
+      required:
+      - id
+      - user_id
+      - armored_key
+      - bits
+      - uid
+      - key_id
+      - fingerprint
+      - type
+      - expires
+      - key_created
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        armored_key:
+          type: string
+        bits:
+          type: integer
+        uid:
+          type: string
+        key_id:
+          type: string
+        fingerprint:
+          type: string
+        type:
+          type: string
+          enum:
+          - RSA
+          - ECC
+        expires:
+          type: string
+          format: date-time
+          x-nullable: true
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    permissionIndexAndView:
+      type: object
+      required:
+      - id
+      - aco
+      - aco_foreign_key
+      - aro
+      - aro_foreign_key
+      - type
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        aco:
+          type: string
+          enum:
+          - Resource
+          - Folder
+        aco_foreign_key:
+          type: string
+          format: uuid
+        aro:
+          type: string
+          enum:
+          - User
+          - Group
+        aro_foreign_key:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/permissionLevel'
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+          x-nullable: true
+        group:
+          $ref: '#/components/schemas/groupIndexAndView'
+          x-nullable: true
+    permissionLevel:
+      description: '* `1` - Read
+
+        * `7` - Update
+
+        * `15` - Owner
+
+        '
+      type: integer
+      enum:
+      - 1
+      - 7
+      - 15
+    resourceType:
+      type: object
+      required:
+      - id
+      - slug
+      - name
+      - description
+      - definition
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        slug:
+          type: string
+          description: '* `password-string` - The original passbolt resource type, where the secret is a non empty string.
+
+            * `password-and-description` - A resource with the password and the description encrypted.
+
+            * `totp` - A resource with standalone TOTP fields.
+
+            * `password-description-totp` - A resource with encrypted password, description and TOTP fields.
+
+            * `v5-default-with-totp` - The new default resource type with a TOTP introduced with v5.
+
+            * `v5-password-string (Deprecated)` - The original passbolt resource type, kept for backward compatibility reasons.
+
+            * `v5-totp-standalone` - The new standalone TOTP resource type introduced with v5.
+
+            * `v5-default` - The new default resource type introduced with v5.
+
+            '
+          enum:
+          - password-string
+          - password-and-description
+          - totp
+          - password-description-totp
+          - v5-default-with-totp
+          - v5-password-string (Deprecated)
+          - v5-totp-standalone
+          - v5-default
+        name:
+          type: string
+        description:
+          type: string
+        definition:
+          type: object
+          description: Schema for the expected data for this kind of resources.
+        deleted:
+          type: string
+          x-nullable: true
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    folderV4IndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - created
+      - modified
+      - created_by
+      - modified_by
+      - folder_parent_id
+      - personal
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        folder_parent_id:
+          type: string
+          format: uuid
+          x-nullable: true
+        personal:
+          type: boolean
+        modifier:
+          $ref: '#/components/schemas/userIndexAndView'
+        creator:
+          $ref: '#/components/schemas/userIndexAndView'
+        permission:
+          $ref: '#/components/schemas/permissionIndexAndView'
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/permissionIndexAndView'
+        children_resources:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/resourceV4IndexAndView'
+            - $ref: '#/components/schemas/resourceV5IndexAndView'
+        children_folders:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/folderV4IndexAndView'
+            - $ref: '#/components/schemas/folderV5IndexAndView'
+    favorite:
+      type: object
+      required:
+      - id
+      - user_id
+      - foreign_key
+      - foreign_model
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        foreign_key:
+          type: string
+          format: uuid
+        foreign_model:
+          type: string
+          enum:
+          - Resource
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+  requestBodies:
+    upgradeMetadataResources:
+      description: The resources you want to upgrade the metadata for to v5 format
+      required: true
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/e2eeMetadataBasedIdModifiedModifiedBy'
+          examples:
+            base:
+              value:
+              - id: 97f5415f-2e09-4171-a99e-1908e876662a
+                metadata_key_id: 9d9a6672-35d6-4d0f-a807-b90edf25c275
+                metadata_key_type: shared_key
+                metadata: '-----BEGIN PGP MESSAGE-----'
+                modified: '2025-02-18T15:52:17+00:00'
+                modified_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
+    upgradeMetadataFolders:
+      description: The folders you want to upgrade the metadata for to v5 format
+      required: true
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/e2eeMetadataBasedIdModifiedModifiedBy'
+          examples:
+            base:
+              value:
+              - id: 0e840721-58ea-4649-b603-2d9cf4f2213c
+                metadata_key_id: 9d9a6672-35d6-4d0f-a807-b90edf25c275
+                metadata_key_type: shared_key
+                metadata: '-----BEGIN PGP MESSAGE-----'
+                modified: '2025-02-18T15:52:17+00:00'
+                modified_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
+    upgradeMetadataTags:
+      description: The tags you want to upgrade the metadata for to v5 format
+      required: true
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/tagV5'
+          examples:
+            base:
+              value:
+              - id: 97f5415f-2e09-4171-a99e-1908e876662a
+                metadata_key_id: 9d9a6672-35d6-4d0f-a807-b90edf25c275
+                metadata_key_type: shared_key
+                metadata: '-----BEGIN PGP MESSAGE-----'
+  responses:
+    upgradeMetadataResources:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/headerWithPagination'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/resourceV4IndexAndView'
+          examples:
+            base:
+              value:
+                header:
+                  id: 2b6024fb-2915-47e6-84e6-8988217b14e7
+                  status: success
+                  servertime: 1740046035
+                  action: 8d061841-cef0-509a-8ee3-de91c7390d99
+                  message: The operation was successful.
+                  url: /metadata/upgrade/resources.json
+                  code: 200
+                  pagination:
+                    count: 2
+                    page: 1
+                    limit: 20
+                body:
+                - id: 97f5415f-2e09-4171-a99e-1908e876662a
+                  name: password v4 format
+                  username: anakin
+                  uri: https://passbolt.com
+                  description: null
+                  deleted: false
+                  expired: null
+                  created: '2025-02-19T10:34:07+00:00'
+                  modified: '2025-02-19T10:34:07+00:00'
+                  created_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
+                  modified_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
+                  resource_type_id: a28a04cd-6f53-518a-967c-9963bf9cec51
+    upgradeMetadataTags:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/headerWithPagination'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/tagLegacy'
+          examples:
+            base:
+              value:
+                header:
+                  id: 2b6024fb-2915-47e6-84e6-8988217b14e7
+                  status: success
+                  servertime: 1740046035
+                  action: 8d061841-cef0-509a-8ee3-de91c7390d99
+                  message: The operation was successful.
+                  url: /metadata/upgrade/resources.json
+                  code: 200
+                  pagination:
+                    count: 1
+                    page: 1
+                    limit: 20
+                body:
+                - id: 97f5415f-2e09-4171-a99e-1908e876662b
+                  user_id: null
+                  slug: important tag in v4 format
+                  is_shared: true
+    accessRestrictedToAdministrators:
+      description: Access restricted
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Access restricted to administrators.
+                  url: <API ENDPOINT URL>
+                  code: 403
+                body: ''
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    entityWasUpdated:
+      description: Entity was updated
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: Entity <MODEL> was updated.
+                  url: <API ENDPOINT URL>
+                  code: 409
+                body: ''
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+    upgradeMetadataFolders:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/headerWithPagination'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/folderV4IndexAndView'
+          examples:
+            base:
+              value:
+                header:
+                  id: 2b6024fb-2915-47e6-84e6-8988217b14e7
+                  status: success
+                  servertime: 1740046035
+                  action: 8d061841-cef0-509a-8ee3-de91c7390d99
+                  message: The operation was successful.
+                  url: /metadata/upgrade/folders.json
+                  code: 200
+                  pagination:
+                    count: 2
+                    page: 1
+                    limit: null
+                body:
+                - personal: true
+                  id: 27605bac-8aa8-4fe4-a80b-486d8b76c748
+                  name: folder v4 format
+                  created: '2025-02-19T13:50:53+00:00'
+                  modified: '2025-02-19T14:36:51+00:00'
+                  created_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
+                  modified_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
+                  folder_parent_id: null
+    dateDoesntMatch:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The provided modified date does not match.
+                  url: <API ENDPOINT URL>
+                  code: 409
+                body: ''
+  parameters:
+    filterIsShared:
+      name: filter[is-shared]
+      description: Only return shared items.
+      in: query
+      required: false
+      schema:
+        type: boolean
+    containPermissions:
+      name: contain[permissions]
+      description: Add permissions to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containPermission:
+      name: contain[permission]
+      description: Add permission to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

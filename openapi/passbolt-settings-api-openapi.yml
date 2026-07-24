@@ -1,0 +1,359 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Settings API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Settings
+  description: Retrieve the server settings
+paths:
+  /settings.json:
+    get:
+      summary: Get the server settings.
+      operationId: indexSettings
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: 'curl --request GET \
+
+          --url {{API_BASE_URL}}/settings.json
+
+          '
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/settings.json';\nconst options = {method: 'GET'};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/settings.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Settings
+      responses:
+        '200':
+          $ref: '#/components/responses/settings_index'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+components:
+  schemas:
+    index:
+      type: object
+      required:
+      - app
+      - passbolt
+      properties:
+        app:
+          type: object
+          properties:
+            url:
+              type: string
+            locale:
+              type: string
+        passbolt:
+          type: object
+          properties:
+            legal:
+              type: object
+              properties:
+                privacy_policy:
+                  type: object
+                  properties:
+                    url:
+                      type: string
+                      x-nullable: true
+                terms:
+                  type: object
+                  properties:
+                    url:
+                      type: string
+            edition:
+              type: string
+            plugins:
+              type: object
+              properties:
+                jwtAuthentication:
+                  type: object
+                  properties:
+                    enabled:
+                      type: boolean
+                accountRecoveryRequestHelp:
+                  type: object
+                  properties:
+                    enabled:
+                      type: boolean
+                accountRecovery:
+                  type: object
+                  properties:
+                    enabled:
+                      type: boolean
+                selfRegistration:
+                  type: object
+                  properties:
+                    enabled:
+                      type: boolean
+                sso:
+                  type: object
+                  properties:
+                    enabled:
+                      type: boolean
+                mfaPolicies:
+                  type: object
+                  properties:
+                    enabled:
+                      type: boolean
+                ssoRecover:
+                  type: object
+                  properties:
+                    enabled:
+                      type: boolean
+                userPassphrasePolicies:
+                  type: object
+                  properties:
+                    enabled:
+                      type: boolean
+                inFormIntegration:
+                  type: object
+                  properties:
+                    enabled:
+                      type: boolean
+                metadata:
+                  type: object
+                  properties:
+                    version:
+                      type: string
+                    enabled:
+                      type: boolean
+                locale:
+                  type: object
+                  properties:
+                    options:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          locale:
+                            type: string
+                          label:
+                            type: string
+                rememberMe:
+                  type: object
+                  properties:
+                    options:
+                      type: object
+                      properties:
+                        '300':
+                          type: string
+                        '900':
+                          type: string
+                        '1800':
+                          type: string
+                        '3600':
+                          type: string
+                        '-1':
+                          type: string
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+  responses:
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    settings_index:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/index'
+          examples:
+            base:
+              value:
+                header:
+                  id: 2103c923-6b0c-42f9-b23f-0cceda9a2963
+                  status: success
+                  servertime: 1740993528
+                  action: bef9f3ca-86ef-5c6a-9b38-320e03ceb5df
+                  message: The operation was successful.
+                  url: /settings.json
+                  code: 200
+                  pagination:
+                    count: 2
+                    page: 1
+                    limit: null
+                body:
+                  app:
+                    url: https://{API_BASE_URL}
+                    locale: en-UK
+                  passbolt:
+                    legal:
+                      privacy_policy:
+                        url: ''
+                      terms:
+                        url: https://www.passbolt.com/terms
+                    edition: pro
+                    plugins:
+                      jwtAuthentication:
+                        enabled: true
+                      accountRecoveryRequestHelp:
+                        enabled: true
+                      accountRecovery:
+                        enabled: true
+                      selfRegistration:
+                        enabled: true
+                      sso:
+                        enabled: true
+                      mfaPolicies:
+                        enabled: true
+                      ssoRecover:
+                        enabled: true
+                      userPassPhrasePolicies:
+                        enabled: true
+                      inFormIntegration:
+                        enabled: true
+                      metadata:
+                        version: 1.0.0
+                        enabled: true
+                      locale:
+                        options:
+                        - locale: de-DE
+                          label: Deutsch
+                        - locale: en-UK
+                          label: English
+                        - locale: en-ES
+                          label: Español
+                        - locale: fr-FR
+                          label: Français
+                        - locale: it-IT
+                          label: Italiano (beta)
+                        - locale: ja-JP
+                          label: 日本語
+                        - locale: ko-KR
+                          label: 한국어 (beta)
+                        - locale: lt-LT
+                          label: Lietuvių
+                        - locale: nl-NL
+                          label: Nederlands
+                        - locale: pl-PL
+                          label: Polski
+                        - locale: pt-PR
+                          label: Português Brasil (beta)
+                        - locale: ro-RO
+                          label: Română (beta)
+                        - locale: ru-RU
+                          label: Pусский (beta)
+                        - locale: sv-SE
+                          label: Svenska
+                      rememberMe:
+                        options:
+                          '300': 5 minutes
+                          '900': 15 minutes
+                          '1800': 30 minutes
+                          '3600': 1 hour
+                          '-1': Until I log out
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

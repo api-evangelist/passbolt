@@ -1,0 +1,879 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Shares API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Shares
+  description: 'Share resources and folders to users with an exhaustive permission system.
+
+    '
+paths:
+  /share/{foreignModel}/{foreignId}.json:
+    put:
+      summary: Share a resource or folder.
+      operationId: updateShare
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request PUT \\\n--url {{API_BASE_URL}}/share/resource/42968631-0c51-4405-9f2d-c6700c5057be.json \\\n--header 'Authorization: Bearer {{JWT_TOKEN}}' \\\n--header 'Content-Type: application/json' \\\n--data '{\n  \"permissions\": [\n    {\n      \"id\": \"540174b9-90db-458c-ae90-e9a1912cc656\",\n      \"type\": 7\n    }\n  ]\n}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/share/resource/42968631-0c51-4405-9f2d-c6700c5057be.json';\nconst options = {\n  method: 'PUT',\n  headers: {Authorization: 'Bearer {{JWT_TOKEN}}'},\n  body: '{\"permissions\":[{\"id\":\"540174b9-90db-458c-ae90-e9a1912cc656\",\"type\":7}]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/share/resource/42968631-0c51-4405-9f2d-c6700c5057be.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"PUT\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'permissions' => [\n      [\n        'id' => '540174b9-90db-458c-ae90-e9a1912cc656',\n        'type' => 7\n      ]\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      parameters:
+      - $ref: '#/components/parameters/sharesForeignModel'
+      - $ref: '#/components/parameters/foreignId'
+      tags:
+      - Shares
+      requestBody:
+        $ref: '#/components/requestBodies/shareUpdate'
+      responses:
+        '200':
+          $ref: '#/components/responses/nullBody'
+        '400':
+          $ref: '#/components/responses/updateError'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /share/search-aros.json:
+    get:
+      summary: Get AROs for sharing.
+      operationId: indexShareAros
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/share/search-aros.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/share/search-aros.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/share/search-aros.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      parameters:
+      - $ref: '#/components/parameters/filterSearch'
+      - $ref: '#/components/parameters/containGroupsUsers'
+      - $ref: '#/components/parameters/containGpgkey'
+      - $ref: '#/components/parameters/containRole'
+      tags:
+      - Shares
+      responses:
+        '200':
+          $ref: '#/components/responses/arosIndex'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /share/simulate/{foreignModel}/{foreignId}.json:
+    post:
+      summary: Simulate sharing a resource or folder.
+      operationId: updateShareDryRun
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n\n  --url {{API_BASE_URL}}/share/simulate/resource/42968631-0c51-4405-9f2d-c6700c5057be.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"permissions\": [\n      {\n        \"id\": \"540174b9-90db-458c-ae90-e9a1912cc656\",\n        \"delete\": true\n      }\n    ]\n  }'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/share/simulate/resource/42968631-0c51-4405-9f2d-c6700c5057be.json';\nconst options = {\n  method: 'POST',\n  headers: {Authorization: 'Bearer {{JWT_TOKEN}}'},\n  body: '{\"permissions\":[{\"id\":\"540174b9-90db-458c-ae90-e9a1912cc656\",\"delete\":true}]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/share/simulate/resource/42968631-0c51-4405-9f2d-c6700c5057be.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'permissions' => [\n        [\n                'id' => '540174b9-90db-458c-ae90-e9a1912cc656',\n                'delete' => True\n        ]\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      parameters:
+      - $ref: '#/components/parameters/sharesForeignModel'
+      - $ref: '#/components/parameters/foreignId'
+      tags:
+      - Shares
+      requestBody:
+        $ref: '#/components/requestBodies/shareUpdateDryRun'
+      responses:
+        '200':
+          $ref: '#/components/responses/updateDryRun'
+        '400':
+          $ref: '#/components/responses/updateError'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+components:
+  schemas:
+    groupsUsersIndexAndView:
+      type: object
+      required:
+      - id
+      - group_id
+      - user_id
+      - is_admin
+      - created
+      properties:
+        id:
+          type: string
+          format: uuid
+        group_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        is_admin:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+    shareUpdateError:
+      type: object
+      properties:
+        permissions:
+          type: array
+          items:
+            type: object
+            properties:
+              aco_forein_key:
+                type: object
+                properties:
+                  permission_unique:
+                    type: string
+                  aco_exists:
+                    type: string
+                  _existsIn:
+                    type: string
+              aro_forein_key:
+                type: object
+                properties:
+                  aro_exists:
+                    type: string
+                  _existsIn:
+                    type: string
+    shareUpdate:
+      type: object
+      properties:
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/permissionUpdate'
+        secrets:
+          description: Not required on simulation.
+          type: array
+          items:
+            $ref: '#/components/schemas/secretAdd'
+    permissionUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        aro:
+          type: string
+          enum:
+          - User
+          - Group
+        aro_foreign_key:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/permissionLevel'
+        delete:
+          type: boolean
+        is_new:
+          type: boolean
+    userIndexAndView:
+      type: object
+      required:
+      - id
+      - role_id
+      - username
+      - active
+      - deleted
+      - created
+      - modified
+      - disabled
+      properties:
+        is_mfa_enabled:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        role_id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        active:
+          type: boolean
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        disabled:
+          type: string
+          format: date-time
+          x-nullable: true
+        profile:
+          type: object
+          required:
+          - id
+          - user_id
+          - first_name
+          - last_name
+          - created
+          - modified
+          - avatar
+          properties:
+            id:
+              type: string
+              format: uuid
+            user_id:
+              type: string
+              format: uuid
+            first_name:
+              type: string
+            last_name:
+              type: string
+            created:
+              type: string
+              format: date-time
+            modified:
+              type: string
+              format: date-time
+            avatar:
+              type: object
+              required:
+              - url
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                profile_id:
+                  type: string
+                  format: uuid
+                created:
+                  type: string
+                  format: date-time
+                modified:
+                  type: string
+                  format: date-time
+                url:
+                  type: object
+                  required:
+                  - medium
+                  - small
+                  properties:
+                    medium:
+                      type: string
+                      format: url
+                    small:
+                      type: string
+                      format: url
+        groups_users:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        gpgkey:
+          $ref: '#/components/schemas/gpgkey'
+          x-nullable: true
+        role:
+          $ref: '#/components/schemas/role'
+        missing_metadata_key_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        last_logged_in:
+          type: string
+          format: date-time
+          x-nullable: true
+    groupIndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - deleted
+      - created
+      - modified
+      - created_by
+      - modified_by
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        my_group_user:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        groups_users:
+          type: array
+          items:
+            $ref: '#/components/schemas/groupsUsersIndexAndView'
+        user_count:
+          type: integer
+    shareUpdateDryRun:
+      type: object
+      required:
+      - added
+      - removed
+      properties:
+        added:
+          type: array
+          items:
+            type: object
+            properties:
+              User:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+        removed:
+          type: array
+          items:
+            type: object
+            properties:
+              User:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+    secretAdd:
+      type: object
+      required:
+      - data
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        data:
+          type: string
+        resource_id:
+          type: string
+          format: uuid
+    shareAros:
+      oneOf:
+      - $ref: '#/components/schemas/userIndexAndView'
+      - $ref: '#/components/schemas/groupIndexAndView'
+    gpgkey:
+      type: object
+      required:
+      - id
+      - user_id
+      - armored_key
+      - bits
+      - uid
+      - key_id
+      - fingerprint
+      - type
+      - expires
+      - key_created
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        armored_key:
+          type: string
+        bits:
+          type: integer
+        uid:
+          type: string
+        key_id:
+          type: string
+        fingerprint:
+          type: string
+        type:
+          type: string
+          enum:
+          - RSA
+          - ECC
+        expires:
+          type: string
+          format: date-time
+          x-nullable: true
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    permissionLevel:
+      description: '* `1` - Read
+
+        * `7` - Update
+
+        * `15` - Owner
+
+        '
+      type: integer
+      enum:
+      - 1
+      - 7
+      - 15
+    role:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          enum:
+          - admin
+          - guest
+          - user
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+  responses:
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+    arosIndex:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/shareAros'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /share/search-aros.json
+                  code: 200
+                body:
+                - id: c48863da-32d3-48cd-9d47-de2891386423
+                  role_id: c2f96fb1-611d-466d-80fb-e82beba5ed87
+                  username: ada@passbolt.com
+                  active: true
+                  deleted: false
+                  created: '2024-08-08T12:08:58+00:00'
+                  modified: '2024-08-08T12:14:38+00:00'
+                  disabled: null
+                  groups_users:
+                  - id: 95accfa0-5c2c-47af-ba63-dd9efb46f99b
+                    group_id: 8fa37ef6-f167-4342-8e1c-3488439cf7d1
+                    user_id: c48863da-32d3-48cd-9d47-de2891386423
+                    is_admin: false
+                    created: '2024-08-08T12:25:40+00:00'
+                  profile:
+                    id: 4d9e9297-b1ec-4aa1-af1c-c6693c3ffe36
+                    user_id: c48863da-32d3-48cd-9d47-de2891386423
+                    first_name: Ada
+                    last_name: Lovelace
+                    created: '2024-08-08T12:08:58+00:00'
+                    modified: '2024-08-08T12:08:58+00:00'
+                    avatar:
+                      url:
+                        medium: https://passbolt.local/img/avatar/user_medium.png
+                        small: https://passbolt.local/img/avatar/user.png
+                  gpgkey:
+                    id: 6f0f6eb6-ed74-4cb0-8872-3e96ee17b6f9
+                    user_id: c48863da-32d3-48cd-9d47-de2891386423
+                    armored_key: '-----BEGIN PGP PUBLIC KEY BLOCK-----'
+                    bits: 3072
+                    uid: Ada Lovelace <ada@passbolt.com>
+                    key_id: 08EF12596BC6B07B
+                    fingerprint: C4D0E64738F9956CDACC6D4808EF12596BC6B07B
+                    type: RSA
+                    expires: null
+                    key_created: '2024-08-08T12:13:42+00:00'
+                    deleted: false
+                    created: '2024-08-08T12:14:38+00:00'
+                    modified: '2024-08-08T12:14:38+00:00'
+                  role:
+                    id: c2f96fb1-611d-466d-80fb-e82beba5ed87
+                    name: user
+                    description: Logged in user
+                    created: '2012-07-04T13:39:25+00:00'
+                    modified: '2012-07-04T13:39:25+00:00'
+                  last_logged_in: null
+                - user_count: 1
+                  id: 8fa37ef6-f167-4342-8e1c-3488439cf7d1
+                  name: Groupe B
+                  deleted: false
+                  created: '2024-07-22T16:01:07+00:00'
+                  modified: '2024-07-22T16:01:07+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    updateDryRun:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/shareUpdateDryRun'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /share/simulate/resource/42968631-0c51-4405-9f2d-c6700c5057be.json
+                  code: 200
+                body:
+                  changes:
+                    added: []
+                    removed:
+                    - User:
+                        id: c48863da-32d3-48cd-9d47-de2891386423
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+    updateError:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/shareUpdateError'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: Resource metadata key type is invalid.
+                  url: /share/resource/42968631-0c51-4405-9f2d-c6700c5057be.json
+                  code: 400
+                body:
+                  permissions:
+                    aco_foreign_key:
+                      permission_unique: A permission already exists for the given access control object and access request object.
+  parameters:
+    containRole:
+      name: contain[role]
+      description: Add role to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containGpgkey:
+      name: contain[gpgkey]
+      description: Add GPG key data to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    foreignId:
+      name: foreignId
+      description: ID for the foreign element being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    sharesForeignModel:
+      name: foreignModel
+      description: Type for the foreign model being shared.
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - resource
+        - folder
+    containGroupsUsers:
+      name: contain[groups_users]
+      description: Add group users to groups in response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    filterSearch:
+      name: filter[search]
+      description: Filter using a keyword or a string.
+      in: query
+      required: false
+      schema:
+        type: string
+  requestBodies:
+    shareUpdate:
+      description: The permissions you want to apply
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/shareUpdate'
+          examples:
+            addUser:
+              summary: Adding a read permission for a user
+              value:
+                permissions:
+                - aro: User
+                  aro_foreign_key: c48863da-32d3-48cd-9d47-de2891386423
+                  type: 1
+                  is_new: true
+                secrets:
+                - data: '-----BEGIN PGP MESSAGE-----'
+                  user_id: c48863da-32d3-48cd-9d47-de2891386423
+            deleteUser:
+              summary: Removing a permission for a user
+              value:
+                permissions:
+                - aro: User
+                  aro_foreign_key: c48863da-32d3-48cd-9d47-de2891386423
+                  delete: true
+                secrets: []
+            updatePermissionLevel:
+              summary: Update a permission level
+              value:
+                permissions:
+                - id: 540174b9-90db-458c-ae90-e9a1912cc656
+                  type: 7
+            everythingAtOnce:
+              summary: Multiple operations at the same time
+              value:
+                permissions:
+                - aro: User
+                  aro_foreign_key: c48863da-32d3-48cd-9d47-de2891386423
+                  type: 1
+                  is_new: true
+                - id: 540174b9-90db-458c-ae90-e9a1912cc656
+                  type: 7
+                secrets:
+                - data: '-----BEGIN PGP MESSAGE-----'
+                  user_id: c48863da-32d3-48cd-9d47-de2891386423
+    shareUpdateDryRun:
+      description: The permissions you want to apply
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/shareUpdate'
+          examples:
+            deleteUser:
+              value:
+                permissions:
+                - id: 540174b9-90db-458c-ae90-e9a1912cc656
+                  delete: true
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

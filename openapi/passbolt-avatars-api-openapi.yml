@@ -1,0 +1,78 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Avatars API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Avatars
+  description: Query avatar images.
+paths:
+  /avatars/view/{avatarId}/{avatarFormat}:
+    get:
+      summary: Get an avatar as an image.
+      description: When the avatar doesn't exist, a placeholder image is returned instead.
+      operationId: viewAvatar
+      security: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/avatars/view/8ef95b32-e2a3-4b58-827c-dd67e68cfb49/medium.jpg\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/avatars/view/8ef95b32-e2a3-4b58-827c-dd67e68cfb48/medium.jpg';\nconst options = {method: 'GET'};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/avatars/view/8ef95b32-e2a3-4b58-827c-dd67e68cfb48/medium.jpg\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Avatars
+      parameters:
+      - $ref: '#/components/parameters/avatarId'
+      - $ref: '#/components/parameters/avatarFormat'
+      responses:
+        '200':
+          $ref: '#/components/responses/view'
+components:
+  responses:
+    view:
+      description: Operation is successful
+      content:
+        image/jpeg:
+          schema:
+            type: string
+            format: binary
+  parameters:
+    avatarFormat:
+      name: avatarFormat
+      description: Format for the avatar being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - medium.jpg
+        - small.jpg
+    avatarId:
+      name: avatarId
+      description: ID for the avatar being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

@@ -1,0 +1,500 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Authentication (JWT) API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Authentication (JWT)
+  description: 'JWT-based authentication is the preferred way to interact with the Passbolt API. Find more [here](https://www.passbolt.com/docs/development)
+
+    '
+paths:
+  /auth/jwt/jwks.json:
+    get:
+      summary: Get the JWKs server information.
+      operationId: viewAuthJwtJwks
+      security: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/auth/jwt/jwks.json\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/auth/jwt/jwks.json';\nconst options = {method: 'GET'};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/auth/jwt/jwks.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Authentication (JWT)
+      responses:
+        '200':
+          $ref: '#/components/responses/jwks'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /auth/jwt/login.json:
+    post:
+      summary: Login.
+      operationId: authJwtLogin
+      security: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n  --url {{API_BASE_URL}}/auth/jwt/login.json \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"user_id\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n    \"challenge\": \"-----BEGIN PGP MESSAGE-----\"\n  }'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/auth/jwt/login.json';\nconst options = {\n  method: 'POST',\n  body: '{\"user_id\":\"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\"challenge\":\"-----BEGIN PGP MESSAGE-----\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/auth/jwt/login.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'user_id' => '8bb80df5-700c-48ce-b568-85a60fc3c8f2',\n    'challenge' => '-----BEGIN PGP MESSAGE-----'\n  ]),\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Authentication (JWT)
+      requestBody:
+        $ref: '#/components/requestBodies/login'
+      responses:
+        '200':
+          $ref: '#/components/responses/login'
+        '400':
+          $ref: '#/components/responses/badRequest'
+  /auth/jwt/logout.json:
+    post:
+      summary: Logout.
+      operationId: authJwtLogout
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n  --url {{API_BASE_URL}}/auth/jwt/logout.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"refresh_token\": \"ad71952e-7842-599e-a19e-3a82e6974b23\"\n  }'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/auth/jwt/logout.json';\nconst options = {\n  method: 'POST',\n  headers: {Authorization: 'Bearer {{JWT_TOKEN}}'},\n  body: '{\"refresh_token\":\"ad71952e-7842-599e-a19e-3a82e6974b23\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/auth/jwt/logout.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'refresh_token' => 'ad71952e-7842-599e-a19e-3a82e6974b23'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Authentication (JWT)
+      requestBody:
+        $ref: '#/components/requestBodies/logout'
+      responses:
+        '200':
+          $ref: '#/components/responses/nullBody'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+  /auth/jwt/refresh.json:
+    post:
+      summary: Refresh access token.
+      operationId: authJwtRefresh
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n  --url {{API_BASE_URL}}/auth/jwt/refresh.json \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"user_id\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n    \"refresh_token\": \"f8cea352-6bd3-4944-9523-20b31272bef0\"\n  }'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/auth/jwt/refresh.json';\nconst options = {\n  method: 'POST',\n  body: '{\"user_id\":\"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\"refresh_token\":\"f8cea352-6bd3-4944-9523-20b31272bef0\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/auth/jwt/refresh.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'user_id' => '8bb80df5-700c-48ce-b568-85a60fc3c8f2',\n    'refresh_token' => 'f8cea352-6bd3-4944-9523-20b31272bef0'\n  ]),\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Authentication (JWT)
+      requestBody:
+        $ref: '#/components/requestBodies/refresh'
+      responses:
+        '200':
+          $ref: '#/components/responses/refresh'
+        '400':
+          $ref: '#/components/responses/badRequest'
+  /auth/jwt/rsa.json:
+    get:
+      summary: Get the JWT RSA server information.
+      operationId: viewAuthJwtRsa
+      description: 'This is not the key to use when encrypting the JWT login challenge.
+
+        '
+      security: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/auth/jwt/rsa.json\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/auth/jwt/rsa.json';\nconst options = {method: 'GET'};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/auth/jwt/rsa.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Authentication (JWT)
+      responses:
+        '200':
+          $ref: '#/components/responses/rsa'
+        '404':
+          $ref: '#/components/responses/notFound'
+components:
+  requestBodies:
+    login:
+      description: The user and refresh token for session identification.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/loginRequest'
+          examples:
+            base:
+              value:
+                user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                challenge: '-----BEGIN PGP MESSAGE-----'
+    logout:
+      description: The session associated to the refresh token you want to revoke.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/logout'
+          examples:
+            revokeOneSession:
+              summary: Only revoke this session.
+              value:
+                refresh_token: ad71952e-7842-599e-a19e-3a82e6974b23
+            revokeAllSessions:
+              summary: Empty body to revoke all sessions.
+              value: null
+    refresh:
+      description: The user and refresh token for session identification.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/refreshRequest'
+          examples:
+            base:
+              value:
+                user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                refresh_token: f8cea352-6bd3-4944-9523-20b31272bef0
+  schemas:
+    logout:
+      type: object
+      properties:
+        refresh_token:
+          type: string
+          format: uuid
+    refreshRequest:
+      type: object
+      required:
+      - refresh_token
+      - user_id
+      properties:
+        refresh_token:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+    rsa:
+      type: object
+      required:
+      - keydata
+      properties:
+        keydata:
+          type: string
+    loginResponse:
+      type: object
+      required:
+      - challenge
+      properties:
+        challenge:
+          type: string
+    refreshResponse:
+      type: object
+      required:
+      - access_token
+      properties:
+        access_token:
+          type: string
+          format: uuid
+    loginRequest:
+      type: object
+      required:
+      - user_id
+      - challenge
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        challenge:
+          type: string
+          description: '`gpg_encrypt(gpg_sign(challenge_message, user_key), server_key)`'
+    jwk:
+      type: object
+      required:
+      - kty
+      - alg
+      - use
+      - e
+      - n
+      properties:
+        kty:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        e:
+          type: string
+        n:
+          type: string
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+  responses:
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+    login:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/loginResponse'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /auth/jwt/login.json
+                  code: 200
+                body:
+                  challenge: '-----BEGIN PGP MESSAGE-----'
+    rsa:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/rsa'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /auth/jwt/rsa.json
+                  code: 200
+                body:
+                  keydata: '-----BEGIN PUBLIC KEY-----'
+    refresh:
+      description: Operation is successful. A new refresh token is set via a cookie.
+      headers:
+        Set-Cookie:
+          schema:
+            type: string
+            example: refresh_token=12c9392a-ac65-4ccb-b4b3-2c1854ae66dd; HttpOnly
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/refreshResponse'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /auth/jwt/refresh.json
+                  code: 200
+                body:
+                  access_token: 90c0d69c-a508-4cb6-a26c-799e52147ac0
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+    jwks:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - keys
+            properties:
+              keys:
+                type: array
+                items:
+                  $ref: '#/components/schemas/jwk'
+          examples:
+            base:
+              value:
+                keys:
+                - kty: RSA
+                  alg: RS256
+                  use: sig
+                  e: AQAB
+                  n: sP0CpKdQJF8KgPD9GOLiCssOhi8qHXp0TyyqkWNGWcZD3JTKuuWJhNn...
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

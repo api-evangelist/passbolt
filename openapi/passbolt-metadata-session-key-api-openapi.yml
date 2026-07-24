@@ -1,0 +1,471 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata session key API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Metadata session key
+  description: Gather information on the saved encrypted session keys cache
+paths:
+  /metadata/session-keys.json:
+    get:
+      summary: Get session keys.
+      description: Get a list of available encrypted session keys in cache for the given user.
+      security:
+      - bearerHttpAuthentication: []
+      operationId: viewMetadataSessionKeys
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/metadata/session-keys.json \\\n  --header 'authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/session-keys.json';\nconst options = {method: 'GET', headers: {authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/session-keys.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata session key
+      responses:
+        '200':
+          $ref: '#/components/responses/metadataSessionKey_index'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+    post:
+      summary: Add a session key.
+      security:
+      - bearerHttpAuthentication: []
+      operationId: addMetadataSessionKey
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n  --url {{API_BASE_URL}}/metadata/session-keys.json \\\n  --header 'authorization: Bearer {{JWT_TOKEN}}' \\\n  --header 'content-type: application/json' \\\n  --data '{\n    \"data\": \"-----BEGIN PGP MESSAGE-----\"\n  }'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/session-keys.json';\nconst options = {\n  method: 'POST',\n  headers: {authorization: 'Bearer {{JWT_TOKEN}}', 'content-type': 'application/json'},\n  body: '{\"data\":\"-----BEGIN PGP MESSAGE-----\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/session-keys.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'data' => '-----BEGIN PGP MESSAGE-----'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"authorization: Bearer {{JWT_TOKEN}}\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata session key
+      requestBody:
+        $ref: '#/components/requestBodies/add'
+      responses:
+        '200':
+          $ref: '#/components/responses/metadataSessionKey_add'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+  /metadata/session-key/{sessionKeyId}.json:
+    post:
+      summary: Update a given session-key entry.
+      operationId: updateMetadataSessionKey
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n--url {{API_BASE_URL}}/metadata/session-keys/1771fe31-2702-427d-9c03-640711c00c71.json \\\n--header 'Authorization: Bearer {{JWT_TOKEN}}' \\\n--header 'Content-Type: application/json' \\\n--data '{\n  \"data\": \"-----BEGIN PGP MESSAGE-----\",\n  \"modified\": \"2025-02-18T15:52:17+00:00\",\n}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/session-keys/1771fe31-2702-427d-9c03-640711c00c71.json';\nconst options = {\n  method: 'PUT',\n  headers: {Authorization: 'Bearer {{JWT_TOKEN}}'},\n  body: '{\"data\": \"-----BEGIN PGP MESSAGE-----\", \"modified\": \"2025-02-18T15:52:17+00:00\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/session-keys/1771fe31-2702-427d-9c03-640711c00c71.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"PUT\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'data' => '-----BEGIN PGP MESSAGE-----',\n    'modified' => '2025-02-18T15:52:17+00:00',\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      security:
+      - bearerHttpAuthentication: []
+      parameters:
+      - $ref: '#/components/parameters/sessionKeyId'
+      tags:
+      - Metadata session key
+      responses:
+        '200':
+          $ref: '#/components/responses/metadataSessionKey_update'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          $ref: '#/components/responses/modifiedDateIsNotMatching'
+      requestBody:
+        $ref: '#/components/requestBodies/update'
+    delete:
+      summary: Delete a given session-key entry.
+      operationId: deleteSessionKey
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request DELETE \\\n  --url {{API_BASE_URL}}/metadata/session-keys/9edeffa4-a4fb-4e6a-b5f8-1ffc3f408335.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/metadata/session-keys/9edeffa4-a4fb-4e6a-b5f8-1ffc3f408335.json';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/metadata/session-keys/9edeffa4-a4fb-4e6a-b5f8-1ffc3f408335.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Metadata session key
+      parameters:
+      - $ref: '#/components/parameters/sessionKeyId'
+      responses:
+        '200':
+          $ref: '#/components/responses/nullBody'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+components:
+  responses:
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    modifiedDateIsNotMatching:
+      description: The modified date is not equal to the persisted session key one
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 409
+                body: ''
+    metadataSessionKey_index:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/metadataSessionKeyIndexAndView'
+          examples:
+            base:
+              value:
+                header:
+                  id: 26c1344a-22ef-4c49-90a0-130a9c82a648
+                  status: success
+                  servertime: 1740143504
+                  action: c5969bdd-018f-552b-b20d-01636766a81f
+                  message: The operation was successful.
+                  url: /metadata/session-keys.json
+                  code: 200
+                body:
+                - id: 922216c5-fa6c-4487-9e4c-b2a9215f7f17
+                  user_id: bf5dc039-314d-4ac1-938f-c1ad8331e28a
+                  data: '-----BEGIN PGP MESSAGE-----'
+                  created: '2025-01-18T15:52:17+00:00'
+                  modified: '2025-02-18T15:52:17+00:00'
+    metadataSessionKey_update:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/e2eeDataModified'
+          examples:
+            base:
+              value:
+                header:
+                  id: 26c1344a-22ef-4c49-90a0-130a9c82a648
+                  status: success
+                  servertime: 1740143504
+                  action: c5969bdd-018f-552b-b20d-01636766a81f
+                  message: The operation was successful.
+                  url: /metadata/session-keys/16c1344a-33ae-4c49-90a0-130a9c82a091
+                  code: 200
+                body:
+                  data: '----BEGIN PGP MESSAGE-----'
+                  modified: '2025-02-18T15:52:17+00:00'
+    metadataSessionKey_add:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/metadataSessionKeyIndexAndView'
+          examples:
+            base:
+              value:
+                header:
+                  id: 26c1344a-22ef-4c49-90a0-130a9c82a648
+                  status: success
+                  servertime: 1740143504
+                  action: c36e894d-ed63-5434-aa70-4b777f9fdf32
+                  message: The operation was successful.
+                  url: /metadata/session-keys.json
+                  code: 200
+                body:
+                  id: 5ea1c453-749b-43ca-8606-b85d63ab137f
+                  user_id: bf5dc039-314d-4ac1-938f-c1ad8331e28a
+                  data: '-----BEGIN PGP MESSAGE-----'
+                  created: '2025-03-05T14:22:33+00:00'
+                  modified: '2025-03-05T14:22:33+00:00'
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+  schemas:
+    metadataSessionKeyIndexAndView:
+      allOf:
+      - $ref: '#/components/schemas/e2eeIdCreatedDataModifiedUserId'
+      - type: object
+        properties:
+          user_id:
+            x-nullable: false
+    e2eeDataModified:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataOnly'
+      - type: object
+        required:
+        - modified
+        properties:
+          modified:
+            type: string
+            format: date-time
+    e2eeDataUserId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataOnly'
+      - type: object
+        required:
+        - user_id
+        properties:
+          user_id:
+            type: string
+            format: uuid
+            x-nullable: true
+    e2eeDataOnly:
+      required:
+      - data
+      properties:
+        data:
+          type: string
+    e2eeIdCreatedDataModifiedUserId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataUserId'
+      - type: object
+        required:
+        - id
+        - created
+        - modified
+        properties:
+          id:
+            type: string
+            format: uuid
+          created:
+            type: string
+            format: date-time
+          modified:
+            type: string
+            format: date-time
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+  parameters:
+    sessionKeyId:
+      name: sessionKeyId
+      description: ID for the session key being manipulated
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  requestBodies:
+    update:
+      description: The metadata session key you want to update
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/e2eeDataModified'
+          examples:
+            base:
+              value:
+                data: '----BEGIN PGP MESSAGE-----'
+                modified: '2025-02-18T15:52:17+00:00'
+    add:
+      description: The metadata session key you want to add
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/e2eeDataOnly'
+          examples:
+            base:
+              value:
+                data: '-----BEGIN PGP MESSAGE-----'
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

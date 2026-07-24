@@ -1,0 +1,566 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Healthcheck API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Healthcheck
+  description: Gather data about the passbolt instance's health.
+paths:
+  /healthcheck.json:
+    get:
+      summary: Get healthcheck information.
+      description: Only administrators can query this endpoint.
+      security:
+      - bearerHttpAuthentication: []
+      operationId: viewHealthcheck
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/healthcheck.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/healthcheck.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/healthcheck.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Healthcheck
+      responses:
+        '200':
+          $ref: '#/components/responses/healthcheck'
+        '403':
+          $ref: '#/components/responses/authenticationRequired'
+  /healthcheck/status.json:
+    get:
+      summary: Check if passbolt is up.
+      operationId: viewHealthcheckStatus
+      security: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/healthcheck/status.json\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/healthcheck/status.json';\nconst options = {method: 'GET'};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/healthcheck/status.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Healthcheck
+      responses:
+        '200':
+          $ref: '#/components/responses/status'
+components:
+  schemas:
+    healthcheck:
+      type: object
+      required:
+      - environment
+      - configFile
+      - core
+      - ssl
+      - smtpSettings
+      - gpg
+      - application
+      - database
+      properties:
+        environment:
+          type: object
+          required:
+          - gnupg
+          - info
+          - phpVersion
+          - nextMinPhpVersion
+          - pcre
+          - mbstring
+          - intl
+          - image
+          - tmpWritable
+          - logWritable
+          properties:
+            gnupg:
+              type: boolean
+            info:
+              type: object
+              required:
+              - phpVersion
+              properties:
+                phpVersion:
+                  type: string
+            phpVersion:
+              type: boolean
+            nextMinPhpVersion:
+              type: boolean
+            pcre:
+              type: boolean
+            mbstring:
+              type: boolean
+            intl:
+              type: boolean
+            image:
+              type: boolean
+            tmpWritable:
+              type: boolean
+            logWritable:
+              type: boolean
+        configFile:
+          type: object
+          required:
+          - app
+          - passbolt
+          properties:
+            app:
+              type: boolean
+            passbolt:
+              type: boolean
+        core:
+          type: object
+          required:
+          - cache
+          - debugDisabled
+          - salt
+          - info
+          - fullBaseUrl
+          - validFullBaseUrl
+          - fullBaseUrlReachable
+          properties:
+            cache:
+              type: boolean
+            debugDisabled:
+              type: boolean
+            salt:
+              type: boolean
+            info:
+              type: object
+              required:
+              - fullBaseUrl
+              properties:
+                fullBaseUrl:
+                  type: string
+            fullBaseUrl:
+              type: boolean
+            validFullBaseUrl:
+              type: boolean
+            fullBaseUrlReachable:
+              type: boolean
+        ssl:
+          type: object
+          required:
+          - info
+          - peerValid
+          - hostValid
+          - notSelfSigned
+          properties:
+            info:
+              type: string
+            peerValid:
+              type: boolean
+            hostValid:
+              type: boolean
+            notSelfSigned:
+              type: boolean
+        smtpSettings:
+          type: object
+          required:
+          - isEnabled
+          - errorMessage
+          - source
+          - isInDb
+          - areEndpointsDisabled
+          - customSslOptions
+          properties:
+            isEnabled:
+              type: boolean
+            errorMessage:
+              type: boolean
+            source:
+              type: string
+            isInDb:
+              type: boolean
+            areEndpointsDisabled:
+              type: boolean
+            customSslOptions:
+              type: boolean
+        gpg:
+          type: object
+          required:
+          - lib
+          - gpgHome
+          - gpgHomeWritable
+          - gpgKeyNotDefault
+          - gpgKeyPublicBlock
+          - gpgKeyPrivateBlock
+          - gpgKeyPublicReadable
+          - gpgKeyPrivateReadable
+          - gpgKeyPrivateFingerprint
+          - gpgKeyPublic
+          - gpgKeyPrivate
+          - gpgKey
+          - info
+          - gpgKeyPublicFingerprint
+          - gpgKeyPublicInKeyring
+          - gpgKeyPublicEmail
+          - canEncrypt
+          - canSign
+          - canEncryptSign
+          - canDecrypt
+          - canDecryptVerify
+          - canVerify
+          - isPublicServerKeyGopengpgCompatible
+          - isPrivateServerKeyGopengpgCompatible
+          properties:
+            lib:
+              type: boolean
+            gpgHome:
+              type: boolean
+            gpgHomeWritable:
+              type: boolean
+            gpgKeyPublicBlock:
+              type: boolean
+            gpgKeyPrivateBlock:
+              type: boolean
+            gpgKeyPublicReadable:
+              type: boolean
+            gpgKeyPrivateReadable:
+              type: boolean
+            gpgKeyPrivateFingerprint:
+              type: boolean
+            gpgKeyPublic:
+              type: boolean
+            gpgKeyPrivate:
+              type: boolean
+            gpgKey:
+              type: boolean
+            info:
+              type: object
+              required:
+              - gpgKeyPrivate
+              - gpgHome
+              properties:
+                gpgKeyPrivate:
+                  type: string
+                gpgHome:
+                  type: string
+            gpgKeyPublicFingerprint:
+              type: boolean
+            gpgKeyPublicInKeyring:
+              type: boolean
+            gpgKeyPublicEmail:
+              type: boolean
+            canEncrypt:
+              type: boolean
+            canSign:
+              type: boolean
+            canEncryptSign:
+              type: boolean
+            canDecrypt:
+              type: boolean
+            canDecryptVerify:
+              type: boolean
+            canVerify:
+              type: boolean
+            isPublicServerKeyGopengpgCompatible:
+              type: boolean
+            isPrivateServerKeyGopengpgCompatible:
+              type: boolean
+        application:
+          type: object
+          required:
+          - configPath
+          - info
+          - latestVersion
+          - sslForce
+          - sslFullBaseUrl
+          - seleniumDisabled
+          - robotsIndexDisabled
+          - registrationClosed
+          - hostAvailabilityCheckEnabled
+          - jsProd
+          - emailNotificationEnabled
+          - schema
+          properties:
+            configPath:
+              type: string
+            info:
+              type: object
+              required:
+              - remoteVersion
+              - currentVersion
+              properties:
+                remoteVersion:
+                  type: string
+                currentVersion:
+                  type: string
+            latestVersion:
+              type: boolean
+            sslForce:
+              type: boolean
+            sslFullBaseUrl:
+              type: boolean
+            seleniumDisabled:
+              type: boolean
+            robotsIndexDisabled:
+              type: boolean
+            registrationClosed:
+              type: object
+              required:
+              - isSelfRegistrationPluginEnabled
+              - selfRegistrationProvider
+              - isRegistrationPublicRemovedFromPassbolt
+              properties:
+                isSelfRegistrationPluginEnabled:
+                  type: boolean
+                selfRegistrationProvider:
+                  type: string
+                  x-nullable: true
+                isRegistrationPublicRemovedFromPassbolt:
+                  type: boolean
+            hostAvailabilityCheckEnabled:
+              type: boolean
+            jsProd:
+              type: boolean
+            emailNotificationEnabled:
+              type: boolean
+            schema:
+              type: boolean
+        database:
+          type: object
+          required:
+          - supportedBackend
+          - connect
+          - info
+          - tablesCount
+          - defaultContent
+          properties:
+            supportedBackend:
+              type: boolean
+            connect:
+              type: boolean
+            info:
+              type: object
+              required:
+              - tablesCount
+              properties:
+                tablesCount:
+                  type: integer
+            tablesCount:
+              type: boolean
+            defaultContent:
+              type: boolean
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+  responses:
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    status:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: OK
+                  url: /healthcheck/status.json
+                  code: 200
+                body: OK
+    healthcheck:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/healthcheck'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /healthcheck.json
+                  code: 200
+                body:
+                  environment:
+                    gnupg: true
+                    info:
+                      phpVersion: 8.2.20
+                    phpVersion: true
+                    nextMinPhpVersion: true
+                    pcre: true
+                    mbstring: true
+                    intl: true
+                    image: true
+                    tmpWritable: true
+                    logWritable: true
+                  configFile:
+                    app: true
+                    passbolt: false
+                  core:
+                    cache: true
+                    debugDisabled: false
+                    salt: true
+                    info:
+                      fullBaseUrl: https://passbolt.localhost
+                    fullBaseUrl: true
+                    validFullBaseUrl: true
+                    fullBaseUrlReachable: true
+                  ssl:
+                    info: 'cURL Error (60) SSL certificate problem: self-signed certificate'
+                    peerValid: false
+                    hostValid: false
+                    notSelfSigned: false
+                  smtpSettings:
+                    isEnabled: true
+                    errorMessage: false
+                    source: env variables
+                    isInDb: false
+                    areEndpointsDisabled: false
+                    customSslOptions: true
+                  gpg:
+                    lib: true
+                    gpgHome: true
+                    gpgHomeWritable: true
+                    gpgKeyNotDefault: true
+                    gpgKeyPublicBlock: true
+                    gpgKeyPrivateBlock: true
+                    gpgKeyPublicReadable: true
+                    gpgKeyPrivateReadable: true
+                    gpgKeyPrivateFingerprint: true
+                    gpgKeyPublic: true
+                    gpgKeyPrivate: true
+                    gpgKey: true
+                    info:
+                      gpgKeyPrivate: /etc/passbolt/gpg/serverkey_private.asc
+                      gpgHome: /var/lib/passbolt/.gnupg
+                    gpgKeyPublicFingerprint: true
+                    gpgKeyPublicInKeyring: true
+                    gpgKeyPublicEmail: true
+                    canEncrypt: true
+                    canSign: true
+                    canEncryptSign: true
+                    canDecrypt: true
+                    canDecryptVerify: true
+                    canVerify: true
+                    isPublicServerKeyGopengpgCompatible: true
+                    isPrivateServerKeyGopengpgCompatible: true
+                  applications:
+                    configPath: /etc/passbolt/passbolt.php
+                    info:
+                      remoteVersion: 4.9.1
+                      currentVersion: 4.9.0
+                    latestVersion: false
+                    sslForce: false
+                    sslFullBaseUrl: true
+                    seleniumDisabled: true
+                    robotsIndexDisabled: true
+                    registrationClosed:
+                      isSelfRegistrationPluginEnabled: true
+                      selfRegistrationProvider: null
+                      isRegistrationPublicRemovedFromPassbolt: true
+                    hostAvailabilityCheckEnabled: false
+                    jsProd: true
+                    emailNotificationEnabled: false
+                    schema: true
+                  database:
+                    supportedBackend: true
+                    connect: true
+                    info:
+                      tablesCount: 31
+                    tablesCount: true
+                    defaultContent: true
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

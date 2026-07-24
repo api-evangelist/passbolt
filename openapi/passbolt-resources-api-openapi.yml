@@ -1,0 +1,1388 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Resources API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Resources
+  description: 'A resource holds the metadata for its secrets.
+
+    '
+paths:
+  /resources.json:
+    get:
+      summary: Get multiple resources.
+      operationId: indexResources
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/resources.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/resources.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/resources.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Resources
+      parameters:
+      - $ref: '#/components/parameters/containCreator'
+      - $ref: '#/components/parameters/containFavorite'
+      - $ref: '#/components/parameters/containModifier'
+      - $ref: '#/components/parameters/containSecret'
+      - $ref: '#/components/parameters/containResourceType'
+      - $ref: '#/components/parameters/containPermission'
+      - $ref: '#/components/parameters/containPermissions'
+      - $ref: '#/components/parameters/containPermissionsUserProfile'
+      - $ref: '#/components/parameters/containPermissionsGroup'
+      - $ref: '#/components/parameters/filterIsFavorite'
+      - $ref: '#/components/parameters/filterIsSharedWithGroup'
+      - $ref: '#/components/parameters/filterIsOwnedByMe'
+      - $ref: '#/components/parameters/filterIsSharedWithMe'
+      - $ref: '#/components/parameters/filterHasId'
+      - $ref: '#/components/parameters/filterHasParent'
+      - $ref: '#/components/parameters/filterMetadataKeyType'
+      responses:
+        '200':
+          $ref: '#/components/responses/resources_index'
+        '400':
+          $ref: '#/components/responses/metadataKeyTypeFilterNotValid'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+    post:
+      summary: Create a resource.
+      operationId: addResource
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n  --url {{API_BASE_URL}}/resources.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"metadata\": \"-----BEGIN PGP MESSAGE-----\",\n    \"metadata_key_id\": \"9d9a6672-35d6-4d0f-a807-b90edf25c275\",\n    \"metadata_key_type\": \"shared_key\",\n    \"expired\": null,\n    \"folder_parent_id\": null,\n    \"resource_type_id\": \"dd1f723d-0d1e-513f-8218-4055dc0530d0\",\n    \"secrets\": [\"-----BEGIN PGP MESSAGE-----\"]\n  }'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/resources.json';\nconst options = {\n  method: 'POST',\n  headers: {Authorization: 'Bearer {{JWT_TOKEN}}', 'Content-Type': 'application/json'},\n  body: JSON.stringify({\n    metadata: \"-----BEGIN PGP MESSAGE-----\",\n    metadata_key_id: \"9d9a6672-35d6-4d0f-a807-b90edf25c275\",\n    metadata_key_type: \"shared_key\",\n    expired: null,\n    personal: true,\n    folder_parent_id: null,\n    resource_type_id: \"dd1f723d-0d1e-513f-8218-4055dc0530d0\",\n    secrets: [\"-----BEGIN PGP MESSAGE-----\"]\n  })\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/resources.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    \"metadata\" => \"-----BEGIN PGP MESSAGE-----\",\n    \"metadata_key_id\" => \"9d9a6672-35d6-4d0f-a807-b90edf25c275\",\n    \"metadata_key_type\" => \"shared_key\",\n    \"expired\" => null,\n    \"folder_parent_id\" => null,\n    \"resource_type_id\" => \"dd1f723d-0d1e-513f-8218-4055dc0530d0\",\n    \"secrets\" => [\n        \"-----BEGIN PGP MESSAGE-----\"\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\",\n    \"Content-Type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n?>\n"
+      tags:
+      - Resources
+      responses:
+        '200':
+          $ref: '#/components/responses/resources_addAndUpdate'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+      requestBody:
+        $ref: '#/components/requestBodies/resourceAddAndUpdate'
+  /resources/{resourceId}.json:
+    get:
+      summary: Get a resource.
+      operationId: viewResource
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/resources/ae60d89c-f13b-4fb1-b2dc-c8dc806cac88.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/resources/ae60d89c-f13b-4fb1-b2dc-c8dc806cac88.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/resources/ae60d89c-f13b-4fb1-b2dc-c8dc806cac88.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Resources
+      parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/containCreator'
+      - $ref: '#/components/parameters/containFavorite'
+      - $ref: '#/components/parameters/containModifier'
+      - $ref: '#/components/parameters/containSecret'
+      - $ref: '#/components/parameters/containResourceType'
+      - $ref: '#/components/parameters/containPermission'
+      - $ref: '#/components/parameters/containPermissions'
+      - $ref: '#/components/parameters/containPermissionsUserProfile'
+      - $ref: '#/components/parameters/containPermissionsGroup'
+      responses:
+        '200':
+          $ref: '#/components/responses/resources_view'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+    put:
+      summary: Update a resource.
+      description: 'If the password you are updating has been shared with 7 users, the `secrets` key will need to be an array of 7 objects.
+
+
+        You must encrypt and sign the new plaintext passwords using the recipient public key and the current user secret key. You can then create a list which include one object per user: the `data` key holds the encrypted plaintext password and `user_id` holds the user UUID.
+
+        '
+      operationId: updateResource
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request PUT \\\n--url {{API_BASE_URL}}/resources/43051c9f-7122-4887-81e8-3b390cf0f04a.json \\\n--header 'Authorization: Bearer {{JWT_TOKEN}}' \\\n--header 'Content-Type: application/json' \\\n--data '{\n  \"metadata\": \"-----BEGIN PGP MESSAGE-----\",\n  \"metadata_key_id\": \"0194fec1-65fa-7b6f-935a-9541c1c13281\",\n  \"metadata_key_type\": \"shared_key\",\n  \"resource_type_id\": \"4bd2c10d-58bd-4ce3-9082-2513dee924ff\",\n  \"secrets\": [{\n    \"id\": \"f1b79505-2371-422f-88d8-9c6326806b3d\",\n    \"data\": \"-----BEGIN PGP MESSAGE-----\"\n  }]\n}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/resources/43051c9f-7122-4887-81e8-3b390cf0f04a.json';\nconst options = {\n  method: 'PUT',\n  headers: {Authorization: 'Bearer {{JWT_TOKEN}}'},\n  body: '{\"metadata\":\"-----BEGIN PGP MESSAGE-----\",\"metadata_key_id\":\"0194fec1-65fa-7b6f-935a-9541c1c13281\",\"metadata_key_type\":\"shared_key\",\"resource_type_id\":\"4bd2c10d-58bd-4ce3-9082-2513dee924ff\",\"secrets\":[{\"id\":\"f1b79505-2371-422f-88d8-9c6326806b3d\",\"data\":\"-----BEGIN PGP MESSAGE-----\"}]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/resources/43051c9f-7122-4887-81e8-3b390cf0f04a.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"PUT\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'metadata' => '-----BEGIN PGP MESSAGE-----',\n    'metadata_key_id' => '0194fec1-65fa-7b6f-935a-9541c1c13281',\n    'metadata_key_type' => 'shared_key',\n    'resource_type_id' => 'a28a04cd-6f53-518a-967c-9963bf9cec51',\n    'secrets' => [\n        [\n                'id' => 'f1b79505-2371-422f-88d8-9c6326806b3d',\n                'data' => '-----BEGIN PGP MESSAGE-----'\n        ]\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      security:
+      - bearerHttpAuthentication: []
+      parameters:
+      - $ref: '#/components/parameters/resourceId'
+      tags:
+      - Resources
+      responses:
+        '200':
+          $ref: '#/components/responses/resources_addAndUpdate'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+      requestBody:
+        $ref: '#/components/requestBodies/resourceAddAndUpdate'
+    delete:
+      summary: Delete a resource.
+      operationId: deleteResource
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request DELETE \\\n  --url {{API_BASE_URL}}/resources/43051c9f-7122-4887-81e8-3b390cf0f04a.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/resources/43051c9f-7122-4887-81e8-3b390cf0f04a.json';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/resources/43051c9f-7122-4887-81e8-3b390cf0f04a.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      security:
+      - bearerHttpAuthentication: []
+      parameters:
+      - $ref: '#/components/parameters/resourceId'
+      tags:
+      - Resources
+      responses:
+        '200':
+          $ref: '#/components/responses/nullBody'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+components:
+  schemas:
+    e2eeMetadataBasedId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: uuid
+    resourceV5IndexAndView:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
+      - type: object
+        required:
+        - resource_type_id
+        - expired
+        properties:
+          resource_type_id:
+            type: string
+            format: uuid
+          expired:
+            type: string
+            format: date-time
+            x-nullable: true
+          favorite:
+            $ref: '#/components/schemas/favorite'
+          secrets:
+            type: array
+            items:
+              type: string
+          resource_type:
+            $ref: '#/components/schemas/resourceType'
+    groupsUsersIndexAndView:
+      type: object
+      required:
+      - id
+      - group_id
+      - user_id
+      - is_admin
+      - created
+      properties:
+        id:
+          type: string
+          format: uuid
+        group_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        is_admin:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+    e2eeMetadataBased:
+      type: object
+      required:
+      - metadata
+      - metadata_key_id
+      - metadata_key_type
+      properties:
+        metadata:
+          type: string
+        metadata_key_id:
+          type: string
+          format: uuid
+        metadata_key_type:
+          type: string
+          enum:
+          - user_key
+          - shared_key
+    secretIndex:
+      type: object
+      required:
+      - id
+      - user_id
+      - resource_id
+      - data
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        resource_id:
+          type: string
+          format: uuid
+        data:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    userIndexAndView:
+      type: object
+      required:
+      - id
+      - role_id
+      - username
+      - active
+      - deleted
+      - created
+      - modified
+      - disabled
+      properties:
+        is_mfa_enabled:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        role_id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        active:
+          type: boolean
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        disabled:
+          type: string
+          format: date-time
+          x-nullable: true
+        profile:
+          type: object
+          required:
+          - id
+          - user_id
+          - first_name
+          - last_name
+          - created
+          - modified
+          - avatar
+          properties:
+            id:
+              type: string
+              format: uuid
+            user_id:
+              type: string
+              format: uuid
+            first_name:
+              type: string
+            last_name:
+              type: string
+            created:
+              type: string
+              format: date-time
+            modified:
+              type: string
+              format: date-time
+            avatar:
+              type: object
+              required:
+              - url
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                profile_id:
+                  type: string
+                  format: uuid
+                created:
+                  type: string
+                  format: date-time
+                modified:
+                  type: string
+                  format: date-time
+                url:
+                  type: object
+                  required:
+                  - medium
+                  - small
+                  properties:
+                    medium:
+                      type: string
+                      format: url
+                    small:
+                      type: string
+                      format: url
+        groups_users:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        gpgkey:
+          $ref: '#/components/schemas/gpgkey'
+          x-nullable: true
+        role:
+          $ref: '#/components/schemas/role'
+        missing_metadata_key_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        last_logged_in:
+          type: string
+          format: date-time
+          x-nullable: true
+    resourceAddAndUpdate:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - type: object
+        required:
+        - expired
+        - folder_parent_id
+        - resource_type_id
+        - secrets
+        properties:
+          expired:
+            type: string
+            format: date-time
+            x-nullable: true
+          folder_parent_id:
+            type: string
+            format: uuid
+            x-nullable: true
+          resource_type_id:
+            type: string
+            format: uuid
+          secrets:
+            type: array
+            items:
+              type: string
+    groupIndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - deleted
+      - created
+      - modified
+      - created_by
+      - modified_by
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        my_group_user:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        groups_users:
+          type: array
+          items:
+            $ref: '#/components/schemas/groupsUsersIndexAndView'
+        user_count:
+          type: integer
+    e2eeMetadataBasedCommon:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedId'
+      - type: object
+        required:
+        - created
+        - modified
+        - created_by
+        - modified_by
+        - personal
+        - folder_parent_id
+        properties:
+          created:
+            type: string
+            format: date-time
+          modified:
+            type: string
+            format: date-time
+          created_by:
+            type: string
+            format: uuid
+          modified_by:
+            type: string
+            format: uuid
+          personal:
+            type: boolean
+          folder_parent_id:
+            type: string
+            format: uuid
+            x-nullable: true
+          modifier:
+            $ref: '#/components/schemas/userIndexAndView'
+          creator:
+            $ref: '#/components/schemas/userIndexAndView'
+          permission:
+            $ref: '#/components/schemas/permissionIndexAndView'
+          permissions:
+            type: array
+            items:
+              $ref: '#/components/schemas/permissionIndexAndView'
+    headerWithPagination:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      - pagination
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+        pagination:
+          type: object
+          required:
+          - count
+          - page
+          - limit
+          properties:
+            count:
+              type: integer
+            page:
+              type: integer
+            limit:
+              type: integer
+              x-nullable: true
+    resourceV4IndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - username
+      - uri
+      - description
+      - deleted
+      - created
+      - created_by
+      - modified_by
+      - resource_type_id
+      - expired
+      - folder_parent_id
+      - personal
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        username:
+          type: string
+        uri:
+          type: string
+        description:
+          type: string
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        resource_type_id:
+          type: string
+          format: uuid
+        expired:
+          type: string
+          format: date-time
+          x-nullable: true
+        folder_parent_id:
+          type: string
+          format: uuid
+          x-nullable: true
+        personal:
+          type: boolean
+        favorite:
+          $ref: '#/components/schemas/favorite'
+        modifier:
+          $ref: '#/components/schemas/userIndexAndView'
+        creator:
+          $ref: '#/components/schemas/userIndexAndView'
+        secrets:
+          type: array
+          items:
+            $ref: '#/components/schemas/secretIndex'
+        resource_type:
+          $ref: '#/components/schemas/resourceType'
+        permission:
+          $ref: '#/components/schemas/permissionIndexAndView'
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/permissionIndexAndView'
+    gpgkey:
+      type: object
+      required:
+      - id
+      - user_id
+      - armored_key
+      - bits
+      - uid
+      - key_id
+      - fingerprint
+      - type
+      - expires
+      - key_created
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        armored_key:
+          type: string
+        bits:
+          type: integer
+        uid:
+          type: string
+        key_id:
+          type: string
+        fingerprint:
+          type: string
+        type:
+          type: string
+          enum:
+          - RSA
+          - ECC
+        expires:
+          type: string
+          format: date-time
+          x-nullable: true
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    permissionIndexAndView:
+      type: object
+      required:
+      - id
+      - aco
+      - aco_foreign_key
+      - aro
+      - aro_foreign_key
+      - type
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        aco:
+          type: string
+          enum:
+          - Resource
+          - Folder
+        aco_foreign_key:
+          type: string
+          format: uuid
+        aro:
+          type: string
+          enum:
+          - User
+          - Group
+        aro_foreign_key:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/permissionLevel'
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+          x-nullable: true
+        group:
+          $ref: '#/components/schemas/groupIndexAndView'
+          x-nullable: true
+    permissionLevel:
+      description: '* `1` - Read
+
+        * `7` - Update
+
+        * `15` - Owner
+
+        '
+      type: integer
+      enum:
+      - 1
+      - 7
+      - 15
+    resourceType:
+      type: object
+      required:
+      - id
+      - slug
+      - name
+      - description
+      - definition
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        slug:
+          type: string
+          description: '* `password-string` - The original passbolt resource type, where the secret is a non empty string.
+
+            * `password-and-description` - A resource with the password and the description encrypted.
+
+            * `totp` - A resource with standalone TOTP fields.
+
+            * `password-description-totp` - A resource with encrypted password, description and TOTP fields.
+
+            * `v5-default-with-totp` - The new default resource type with a TOTP introduced with v5.
+
+            * `v5-password-string (Deprecated)` - The original passbolt resource type, kept for backward compatibility reasons.
+
+            * `v5-totp-standalone` - The new standalone TOTP resource type introduced with v5.
+
+            * `v5-default` - The new default resource type introduced with v5.
+
+            '
+          enum:
+          - password-string
+          - password-and-description
+          - totp
+          - password-description-totp
+          - v5-default-with-totp
+          - v5-password-string (Deprecated)
+          - v5-totp-standalone
+          - v5-default
+        name:
+          type: string
+        description:
+          type: string
+        definition:
+          type: object
+          description: Schema for the expected data for this kind of resources.
+        deleted:
+          type: string
+          x-nullable: true
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    role:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          enum:
+          - admin
+          - guest
+          - user
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    favorite:
+      type: object
+      required:
+      - id
+      - user_id
+      - foreign_key
+      - foreign_model
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        foreign_key:
+          type: string
+          format: uuid
+        foreign_model:
+          type: string
+          enum:
+          - Resource
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+  parameters:
+    filterIsOwnedByMe:
+      name: filter[is-owned-by-me]
+      description: Only return elements owned by yourself.
+      in: query
+      required: false
+      schema:
+        type: boolean
+    filterIsSharedWithGroup:
+      name: filter[is-shared-with-group]
+      description: Only return elements shared with group.
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+        description: Group UUID
+    containSecret:
+      name: contain[secret]
+      description: Add secrets to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    filterHasParent:
+      name: filter[has-parent]
+      description: Only return elements filtered by parent folder.
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+    filterHasId:
+      name: filter[has-id]
+      description: Only return elements filtered by their id.
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+    containPermissionsGroup:
+      name: contain[permissions.group]
+      description: Add group to permissions in response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containCreator:
+      name: contain[creator]
+      description: Add creator to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    filterIsSharedWithMe:
+      name: filter[is-shared-with-me]
+      description: Only return elements shared to yourself and you are not owner.
+      in: query
+      required: false
+      schema:
+        type: boolean
+    containPermissions:
+      name: contain[permissions]
+      description: Add permissions to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    filterIsFavorite:
+      name: filter[is-favorite]
+      description: Only return favorite elements.
+      in: query
+      required: false
+      schema:
+        type: boolean
+    containResourceType:
+      name: contain[resource-type]
+      description: Add resource type to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    resourceId:
+      name: resourceId
+      description: ID for the resource being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    containFavorite:
+      name: contain[favorite]
+      description: Add favorite to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    filterMetadataKeyType:
+      name: filter[metadata_key_type]
+      description: Only return elements that match the metadata key type
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+    containModifier:
+      name: contain[modifier]
+      description: Add modifier to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containPermissionsUserProfile:
+      name: contain[permissions.user.profile]
+      description: Add user profile to permissions in response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containPermission:
+      name: contain[permission]
+      description: Add permission to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+  responses:
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+    resources_addAndUpdate:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                anyOf:
+                - $ref: '#/components/schemas/resourceV4IndexAndView'
+                - $ref: '#/components/schemas/resourceV5IndexAndView'
+          examples:
+            base:
+              value:
+                id: ae60d89c-f13b-4fb1-b2dc-c8dc806cac88
+                metadata: '-----BEGIN PGP MESSAGE-----'
+                metadata_key_id: 0194fec1-65fa-7b6f-935a-9541c1c13281
+                metadata_key_type: shared_key
+                deleted: false
+                created: '2024-07-08T08:06:25+00:00'
+                modified: '2024-07-08T08:06:25+00:00'
+                created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                resource_type_id: a28a04cd-6f53-518a-967c-9963bf9cec51
+                expired: null
+                folder_parent_id: null
+                personal: true
+    resources_index:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/headerWithPagination'
+              body:
+                type: array
+                items:
+                  anyOf:
+                  - $ref: '#/components/schemas/resourceV4IndexAndView'
+                  - $ref: '#/components/schemas/resourceV5IndexAndView'
+          examples:
+            resourcesWithoutSecret:
+              summary: Resources without any extra data
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /resources.json
+                  code: 200
+                  pagination:
+                    count: 2
+                    page: 1
+                    limit: null
+                body:
+                - id: ae60d89c-f13b-4fb1-b2dc-c8dc806cac88
+                  metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: 0194fec1-65fa-7b6f-935a-9541c1c13281
+                  metadata_key_type: shared_key
+                  created: '2024-07-08T08:06:25+00:00'
+                  modified: '2024-07-08T08:06:25+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  resource_type_id: a28a04cd-6f53-518a-967c-9963bf9cec51
+                  deleted: false
+                  expired: null
+                  folder_parent_id: null
+                  personal: true
+                - id: ae60d89c-f13b-4fb1-b2dc-c8dc806cac89
+                  metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: 0194fec1-65fa-7b6f-935a-9541c1c13281
+                  metadata_key_type: shared_key
+                  created: '2024-08-08T08:06:25+00:00'
+                  modified: '2024-08-08T08:06:25+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  resource_type_id: a28a04cd-6f53-518a-967c-9963bf9cec51
+                  deleted: false
+                  expired: null
+                  folder_parent_id: null
+                  personal: true
+            resourcesWithSecret:
+              summary: Resources with secrets included
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /resources.json
+                  code: 200
+                  pagination:
+                    count: 2
+                    page: 1
+                    limit: null
+                body:
+                - id: ae60d89c-f13b-4fb1-b2dc-c8dc806cac89
+                  metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: 0194fec1-65fa-7b6f-935a-9541c1c13281
+                  metadata_key_type: shared_key
+                  created: '2024-08-08T08:06:25+00:00'
+                  modified: '2024-08-08T08:06:25+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  resource_type_id: a28a04cd-6f53-518a-967c-9963bf9cec51
+                  expired: null
+                  folder_parent_id: null
+                  personal: true
+                  secrets:
+                  - '-----BEGIN PGP MESSAGE-----'
+                - id: dd1f723d-0d1e-513f-8218-4055dc0530d0
+                  metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: 0194fec1-65fa-7b6f-935a-9541c1c13281
+                  metadata_key_type: shared_key
+                  created: '2024-07-08T08:06:25+00:00'
+                  modified: '2024-07-08T08:06:25+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  resource_type_id: a28a04cd-6f53-518a-967c-9963bf9cec51
+                  expired: null
+                  folder_parent_id: null
+                  personal: true
+                  secrets:
+                  - '-----BEGIN PGP MESSAGE-----'
+    metadataKeyTypeFilterNotValid:
+      description: metadata_key_type filter is not valid
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    resources_view:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                anyOf:
+                - $ref: '#/components/schemas/resourceV4IndexAndView'
+                - $ref: '#/components/schemas/resourceV5IndexAndView'
+          examples:
+            resourceWithoutSecret:
+              summary: Resource without any extra data
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /resources/ae60d89c-f13b-4fb1-b2dc-c8dc806cac88.json
+                  code: 200
+                body:
+                  id: ae60d89c-f13b-4fb1-b2dc-c8dc806cac88
+                  metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: 0194fec1-65fa-7b6f-935a-9541c1c13281
+                  metadata_key_type: shared_key
+                  deleted: false
+                  created: '2024-07-08T08:06:25+00:00'
+                  modified: '2024-07-08T08:06:25+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  resource_type_id: a28a04cd-6f53-518a-967c-9963bf9cec51
+                  expired: null
+                  folder_parent_id: null
+                  personal: true
+            resourcesWithSecret:
+              summary: Resource with secrets included
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /resources/ae60d89c-f13b-4fb1-b2dc-c8dc806cac88.json
+                  code: 200
+                body:
+                  id: ae60d89c-f13b-4fb1-b2dc-c8dc806cac88
+                  metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: 0194fec1-65fa-7b6f-935a-9541c1c13281
+                  metadata_key_type: shared_key
+                  deleted: false
+                  created: '2024-07-08T08:06:25+00:00'
+                  modified: '2024-07-08T08:06:25+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  resource_type_id: a28a04cd-6f53-518a-967c-9963bf9cec51
+                  expired: null
+                  folder_parent_id: null
+                  personal: true
+                  secrets:
+                  - '-----BEGIN PGP MESSAGE-----'
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+  requestBodies:
+    resourceAddAndUpdate:
+      description: The resource you want to create or update
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/resourceAddAndUpdate'
+          examples:
+            base:
+              value:
+                folder_parent_id: null
+                personal: true
+                expired: null
+                metadata_key_id: 9d9a6672-35d6-4d0f-a807-b90edf25c275
+                resource_type_id: dd1f723d-0d1e-513f-8218-4055dc0530d0
+                metadata_key_type: shared_key
+                metadata: '-----BEGIN PGP MESSAGE-----'
+                secrets:
+                - '-----BEGIN PGP MESSAGE-----'
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

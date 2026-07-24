@@ -1,0 +1,420 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Tags API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Tags
+  description: Get tags and add tags to resources to categorize them.
+paths:
+  /tags.json:
+    get:
+      summary: Get personal tags and shared tags.
+      description: '> *Encrypted metadata for tags is available since version 5.1, and is not supported on all clients.*
+
+        '
+      operationId: indexTags
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/tags.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/tags.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/tags.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Tags
+      responses:
+        '200':
+          $ref: '#/components/responses/tags_index'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+  /tags/{resourceOrTagId}.json:
+    put:
+      summary: Update a tag.
+      operationId: updateTag
+      description: '> *Encrypted metadata for tags is available since version 5.1, and is not supported on all clients.*
+
+        '
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request PUT \\\n  --url {{API_BASE_URL}}/tags/2e5d88cb-9b04-4010-806c-a449315ae4d5.json \\\n  --header 'authorization: Bearer {{JWT_TOKEN}}' \\\n  --header 'content-type: application/json' \\\n  --data '{\n    \"metadata\": \"-----BEGIN PGP MESSAGE-----\",\n    \"metadata_key_id\": \"7902f423-decb-4b09-b5e4-d4136f1813ea\",\n    \"metadata_key_type\": \"shared_key\",\n    \"is_shared\": true\n  }'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/tags/2e5d88cb-9b04-4010-806c-a449315ae4d5.json';\nconst options = {\n  method: 'PUT',\n  headers: {authorization: 'Bearer {{JWT_TOKEN}}', 'content-type': 'application/json'},\n  body: '{\"metadata\":\"-----BEGIN PGP MESSAGE-----\",\"metadata_key_id\":\"7902f423-decb-4b09-b5e4-d4136f1813ea\",\"metadata_key_type\":\"shared_key\",\"is_shared\":true}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/tags/2e5d88cb-9b04-4010-806c-a449315ae4d5.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"PUT\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'metadata' => '-----BEGIN PGP MESSAGE-----',\n    'metadata_key_id' => '7902f423-decb-4b09-b5e4-d4136f1813ea',\n    'metadata_key_type' => 'shared_key',\n    'is_shared' => true\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"authorization: Bearer {{JWT_TOKEN}}\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Tags
+      parameters:
+      - $ref: '#/components/parameters/resourceOrTagId'
+      requestBody:
+        $ref: '#/components/requestBodies/tags_update'
+      responses:
+        '200':
+          $ref: '#/components/responses/tags_update'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+    post:
+      summary: Add tags to a resource.
+      operationId: addTagsResource
+      description: '> *Encrypted metadata for tags is available since version 5.1, and is not supported on all clients.*
+
+        '
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n  --url {{API_BASE_URL}}/tags/b4651f60-392d-4af7-b204-0f8d26798b9b.json \\\n  --header 'authorization: Bearer {{JWT_TOKEN}}' \\\n  --header 'content-type: application/json' \\\n  --data '{\n  \"tags\": [\n    {\n      \"metadata\": \"-----BEGIN PGP MESSAGE-----\",\n      \"metadata_key_id\": null,\n      \"metadata_key_type\": \"shared_key\",\n      \"is_shared\": true\n    },\n    {\n      \"id\": \"4879d401-c242-458d-91a0-dba864c36535\"\n    }\n  ]\n}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/tags/b4651f60-392d-4af7-b204-0f8d26798b9b.json';\nconst options = {\n  method: 'POST',\n  headers: {authorization: 'Bearer {{JWT_TOKEN}}', 'content-type': 'application/json'},\n  body: '{\"tags\":[{\"metadata\":\"-----BEGIN PGP MESSAGE-----\",\"metadata_key_id\":null,\"metadata_key_type\":\"shared_key\",\"is_shared\":true},{\"id\":\"4879d401-c242-458d-91a0-dba864c36535\"}]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/tags/b4651f60-392d-4af7-b204-0f8d26798b9b.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'tags' => [\n        [\n                'metadata' => '-----BEGIN PGP MESSAGE-----',\n                'metadata_key_id' => null,\n                'metadata_key_type' => 'shared_key',\n                'is_shared' => null\n        ],\n        [\n                'id' => '4879d401-c242-458d-91a0-dba864c36535'\n        ]\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"authorization: Bearer {{JWT_TOKEN}}\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Tags
+      parameters:
+      - $ref: '#/components/parameters/resourceOrTagId'
+      responses:
+        '200':
+          $ref: '#/components/responses/addResource'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+      requestBody:
+        $ref: '#/components/requestBodies/addResource'
+components:
+  schemas:
+    e2eeMetadataBasedId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: uuid
+    tagIndexAndView:
+      anyOf:
+      - $ref: '#/components/schemas/tagLegacy'
+      - $ref: '#/components/schemas/tagV5'
+    tagLegacy:
+      type: object
+      required:
+      - id
+      - slug
+      - is_shared
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+          x-nullable: true
+        slug:
+          type: string
+        is_shared:
+          type: boolean
+    tagV5:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedId'
+      - type: object
+        required:
+        - is_shared
+        properties:
+          is_shared:
+            type: boolean
+    e2eeMetadataBased:
+      type: object
+      required:
+      - metadata
+      - metadata_key_id
+      - metadata_key_type
+      properties:
+        metadata:
+          type: string
+        metadata_key_id:
+          type: string
+          format: uuid
+        metadata_key_type:
+          type: string
+          enum:
+          - user_key
+          - shared_key
+    tagAddResource:
+      anyOf:
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: uuid
+      - $ref: '#/components/schemas/tagV5Update'
+      - type: string
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+    tagV5Update:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - type: object
+        required:
+        - is_shared
+        properties:
+          is_shared:
+            type: boolean
+  responses:
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    tags_update:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/tagV5'
+          examples:
+            base:
+              value:
+                header:
+                  id: 15a7d119-07c7-4fcb-8afc-ee8eba41fdc0
+                  status: success
+                  servertime: 1721207029
+                  action: 43efcc1ec-5cc1-5d2a-a16e-234f23b70719
+                  message: The operation was successful.
+                  url: /tags/04b87425-160e-4e31-b42f-89c455650331.json
+                body:
+                  id: 04b87425-160e-4e31-b42f-89c455650331
+                  metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: ed94010c-6a97-488c-a60c-cfc6558f3ed7
+                  metadata_key_type: shared_key
+                  is_shared: false
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    tags_index:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/tagIndexAndView'
+          examples:
+            base:
+              value:
+                header:
+                  id: 15a7d119-07c7-4fcb-8afc-ee8eba41fdc0
+                  status: success
+                  servertime: 1721207029
+                  action: 43efcc1ec-5cc1-5d2a-a16e-234f23b70719
+                  message: The operation was successful.
+                  url: /tags.json
+                body:
+                - id: c9e3b8e0-5ea9-4f40-a5e9-e3e4d2002be2
+                  slug: '#sharedTag'
+                  is_shared: true
+                - id: 9b3ffebf-f3a2-40dc-9e73-2c9b3a927932
+                  slug: v4 format tag
+                  is_shared: false
+                - id: 04b87425-160e-4e31-b42f-89c455650331
+                  metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: ed94010c-6a97-488c-a60c-cfc6558f3ed7
+                  metadata_key_type: shared_key
+                  is_shared: false
+    addResource:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/tagIndexAndView'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1740497420
+                  action: acef8942-0c23-5de8-92e8-76ed8c5664f2
+                  message: The operation was successful.
+                  url: /tags/b4651f60-392d-4af7-b204-0f8d26798b9b.json
+                  code: 200
+                body:
+                - id: 52ca9f92-4115-4759-a965-89e6b41b36fd
+                  slug: important
+                  is_shared: false
+                - metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: null
+                  metadata_key_type: user_key
+                  is_shared: false
+  requestBodies:
+    tags_update:
+      description: The tag to update.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagV5Update'
+          examples:
+            base:
+              value:
+                metadata: '-----BEGIN PGP MESSAGE-----'
+                metadata_key_id: ed94010c-6a97-488c-a60c-cfc6558f3ed7
+                metadata_key_type: shared_key
+                is_shared: false
+    addResource:
+      description: The tags to set for the resource.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagAddResource'
+          examples:
+            base:
+              value:
+                tags:
+                - metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: null
+                  metadata_key_type: shared_key
+                  is_shared: true
+                - id: 4879d401-c242-458d-91a0-dba864c36535
+  parameters:
+    resourceOrTagId:
+      name: resourceOrTagId
+      description: The tag (for `PUT`) or resource (for `POST`) identifier being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

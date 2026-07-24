@@ -1,0 +1,1663 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Groups API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Groups
+  description: 'Organize users in logical groups to make it easier to share resources with them.
+
+    '
+paths:
+  /groups.json:
+    get:
+      summary: Get multiple groups.
+      operationId: indexGroups
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/groups.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/groups.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/groups.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/containModifier'
+      - $ref: '#/components/parameters/containModifierProfile'
+      - $ref: '#/components/parameters/containMyGroupUser'
+      - $ref: '#/components/parameters/containGroupsUsers'
+      - $ref: '#/components/parameters/containGroupsUsersUser'
+      - $ref: '#/components/parameters/containGroupsUsersUserProfile'
+      - $ref: '#/components/parameters/containGroupsUsersUserGpgkey'
+      - $ref: '#/components/parameters/filterHasUsers'
+      - $ref: '#/components/parameters/filterHasManagers'
+      responses:
+        '200':
+          $ref: '#/components/responses/groups_index'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+    post:
+      summary: Create a group.
+      description: Please note that only users with Admin role can create a group.
+      operationId: addGroup
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n  --url {{API_BASE_URL}}/groups.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"name\": \"Groupe B\",\n  \"groups_users\": [\n    {\n      \"user_id\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n      \"is_admin\": true\n    }]\n  }'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/groups.json';\nconst options = {\n  method: 'POST',\n  headers: {Authorization: 'Bearer {{JWT_TOKEN}}'},\n  body: '{\"name\":\"Groupe B\",\"groups_users\":[{\"user_id\":\"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\"is_admin\":true}]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/groups.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'name' => 'Groupe B',\n    'groups_users' => [\n      [\n        'user_id' => '8bb80df5-700c-48ce-b568-85a60fc3c8f2',\n        'is_admin' => true\n      ]\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Groups
+      responses:
+        '200':
+          $ref: '#/components/responses/addAndUpdate'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+      requestBody:
+        $ref: '#/components/requestBodies/groupAdd'
+  /groups/{groupId}.json:
+    get:
+      summary: Get a group.
+      operationId: viewGroup
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/groups/8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/groups/8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/groups/8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/groupId'
+      - $ref: '#/components/parameters/containModifier'
+      - $ref: '#/components/parameters/containModifierProfile'
+      - $ref: '#/components/parameters/containUsers'
+      - $ref: '#/components/parameters/containMyGroupUser'
+      - $ref: '#/components/parameters/containGroupsUsers'
+      - $ref: '#/components/parameters/containGroupsUsersUser'
+      - $ref: '#/components/parameters/containGroupsUsersUserProfile'
+      - $ref: '#/components/parameters/containGroupsUsersUserGpgkey'
+      responses:
+        '200':
+          $ref: '#/components/responses/groups_view'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+    put:
+      summary: Update a group.
+      operationId: updateGroup
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request PUT \\\n--url {{API_BASE_URL}}/groups/8fa37ef6-f167-4342-8e1c-3488439cf7d1.json \\\n--header 'Authorization: Bearer {{JWT_TOKEN}}' \\\n--header 'Content-Type: application/json' \\\n--data '{\n  \"name\": \"WRC\",\n  \"groups_users\": [\n    {\n      \"user_id\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n      \"is_admin\": true\n    },\n    {\n      \"id\": \"3b9b9757-1ccb-444a-a3cf-4090364fac4f\",\n      \"is_admin\": false\n    },\n    {\n      \"id\": \"1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6\",\n      \"delete\": true\n    }\n  ]\n}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/groups/8fa37ef6-f167-4342-8e1c-3488439cf7d1.json';\nconst options = {\n  method: 'PUT',\n  headers: {Authorization: 'Bearer {{JWT_TOKEN}}'},\n  body: '{\"name\":\"WRC\",\"groups_users\":[{\"user_id\":\"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\"is_admin\":true},{\"id\":\"3b9b9757-1ccb-444a-a3cf-4090364fac4f\",\"is_admin\":false},{\"id\":\"1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6\",\"delete\":true}]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/groups/8fa37ef6-f167-4342-8e1c-3488439cf7d1.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"PUT\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'name' => 'WRC',\n    'groups_users' => [\n      [\n        'user_id' => '8bb80df5-700c-48ce-b568-85a60fc3c8f2',\n        'is_admin' => true\n      ],\n      [\n        'id' => '3b9b9757-1ccb-444a-a3cf-4090364fac4f',\n        'is_admin' => false\n      ],\n      [\n        'id' => '1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6',\n        'delete' => true\n      ]\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/groupId'
+      responses:
+        '200':
+          $ref: '#/components/responses/addAndUpdate'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+      requestBody:
+        $ref: '#/components/requestBodies/groupUpdate'
+    delete:
+      summary: Delete a group.
+      description: 'Only a group manager or a user with administrator role can delete a group. A group cannot be deleted as long as it is the sole owner of a shared resource or folder.
+
+        '
+      operationId: deleteGroup
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request DELETE \\\n  --url {{API_BASE_URL}}/groups/164d51b8-d6ce-4d59-b8a0-43869919407e.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/groups/164d51b8-d6ce-4d59-b8a0-43869919407e.json';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/groups/164d51b8-d6ce-4d59-b8a0-43869919407e.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/groupId'
+      responses:
+        '200':
+          $ref: '#/components/responses/nullBody'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /groups/{groupId}/dry-run.json:
+    put:
+      summary: Dry run a group update.
+      operationId: dryRunUpdateGroup
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request PUT \\\n--url {{API_BASE_URL}}/groups/8fa37ef6-f167-4342-8e1c-3488439cf7d1/dry-run.json \\\n--header 'Authorization: Bearer {{JWT_TOKEN}}' \\\n--header 'Content-Type: application/json' \\\n--data '{\n  \"name\": \"WRC\",\n  \"groups_users\": [\n    {\n      \"user_id\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n      \"is_admin\": true\n    }\n  ]\n}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/groups/8fa37ef6-f167-4342-8e1c-3488439cf7d1/dry-run.json';\nconst options = {\n  method: 'PUT',\n  headers: {Authorization: 'Bearer {{JWT_TOKEN}}'},\n  body: '{\"name\":\"WRC\",\"groups_users\":[{\"user_id\":\"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\"is_admin\":true}]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/groups/8fa37ef6-f167-4342-8e1c-3488439cf7d1/dry-run.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"PUT\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'name' => 'WRC',\n    'groups_users' => [\n      [\n        'user_id' => '8bb80df5-700c-48ce-b568-85a60fc3c8f2',\n        'is_admin' => true\n      ]\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/groupId'
+      responses:
+        '200':
+          $ref: '#/components/responses/updateDryRunSuccess'
+        '400':
+          $ref: '#/components/responses/updateDryRunError'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+      requestBody:
+        $ref: '#/components/requestBodies/groupUpdate'
+    delete:
+      summary: Dry run a group deletion.
+      operationId: dryRunDeleteGroup
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request DELETE \\\n  --url {{API_BASE_URL}}/groups/164d51b8-d6ce-4d59-b8a0-43869919407e/dry-run.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/groups/164d51b8-d6ce-4d59-b8a0-43869919407e/dry-run.json';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/groups/164d51b8-d6ce-4d59-b8a0-43869919407e/dry-run.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/groupId'
+      responses:
+        '200':
+          $ref: '#/components/responses/emptyArrayBody'
+        '400':
+          $ref: '#/components/responses/deleteDryRun'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '404':
+          $ref: '#/components/responses/notFound'
+components:
+  schemas:
+    e2eeMetadataBasedId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: uuid
+    folderV5IndexAndView:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
+      - type: object
+        properties:
+          children_resources:
+            type: array
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/resourceV4IndexAndView'
+              - $ref: '#/components/schemas/resourceV5IndexAndView'
+          children_folders:
+            type: array
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/folderV4IndexAndView'
+              - $ref: '#/components/schemas/folderV5IndexAndView'
+    resourceV5IndexAndView:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
+      - type: object
+        required:
+        - resource_type_id
+        - expired
+        properties:
+          resource_type_id:
+            type: string
+            format: uuid
+          expired:
+            type: string
+            format: date-time
+            x-nullable: true
+          favorite:
+            $ref: '#/components/schemas/favorite'
+          secrets:
+            type: array
+            items:
+              type: string
+          resource_type:
+            $ref: '#/components/schemas/resourceType'
+    groupsUsersIndexAndView:
+      type: object
+      required:
+      - id
+      - group_id
+      - user_id
+      - is_admin
+      - created
+      properties:
+        id:
+          type: string
+          format: uuid
+        group_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        is_admin:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+    groupUpdateDryRun:
+      type: object
+      required:
+      - dry-run
+      properties:
+        dry-run:
+          type: object
+          required:
+          - SecretsNeeded
+          - Secrets
+          properties:
+            SecretsNeeded:
+              type: array
+              items:
+                type: object
+                required:
+                - Secret
+                properties:
+                  Secret:
+                    type: object
+                    required:
+                    - resource_id
+                    - user_id
+                    properties:
+                      resource_id:
+                        type: string
+                        format: uuid
+                      user_id:
+                        type: string
+                        format: uuid
+            Secrets:
+              type: array
+              items:
+                type: object
+                required:
+                - Secret
+                properties:
+                  Secret:
+                    type: object
+                    required:
+                    - id
+                    - resource_id
+                    - user_id
+                    - data
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      resource_id:
+                        type: string
+                        format: uuid
+                      user_id:
+                        type: string
+                        format: uuid
+                      data:
+                        type: string
+    e2eeMetadataBased:
+      type: object
+      required:
+      - metadata
+      - metadata_key_id
+      - metadata_key_type
+      properties:
+        metadata:
+          type: string
+        metadata_key_id:
+          type: string
+          format: uuid
+        metadata_key_type:
+          type: string
+          enum:
+          - user_key
+          - shared_key
+    groupDeleteDryRunError:
+      type: object
+      properties:
+        resources:
+          type: object
+          properties:
+            sole_owner:
+              type: array
+              items:
+                anyOf:
+                - $ref: '#/components/schemas/resourceV4IndexAndView'
+                - $ref: '#/components/schemas/resourceV5IndexAndView'
+        folders:
+          type: object
+          properties:
+            sole_owner:
+              type: array
+              items:
+                anyOf:
+                - $ref: '#/components/schemas/folderV4IndexAndView'
+                - $ref: '#/components/schemas/folderV5IndexAndView'
+    groupAdd:
+      type: object
+      required:
+      - name
+      - groups_users
+      properties:
+        name:
+          type: string
+        groups_users:
+          type: array
+          items:
+            type: object
+            required:
+            - user_id
+            - is_admin
+            properties:
+              user_id:
+                type: string
+                format: uuid
+              is_admin:
+                type: boolean
+    secretIndex:
+      type: object
+      required:
+      - id
+      - user_id
+      - resource_id
+      - data
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        resource_id:
+          type: string
+          format: uuid
+        data:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    userIndexAndView:
+      type: object
+      required:
+      - id
+      - role_id
+      - username
+      - active
+      - deleted
+      - created
+      - modified
+      - disabled
+      properties:
+        is_mfa_enabled:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        role_id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        active:
+          type: boolean
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        disabled:
+          type: string
+          format: date-time
+          x-nullable: true
+        profile:
+          type: object
+          required:
+          - id
+          - user_id
+          - first_name
+          - last_name
+          - created
+          - modified
+          - avatar
+          properties:
+            id:
+              type: string
+              format: uuid
+            user_id:
+              type: string
+              format: uuid
+            first_name:
+              type: string
+            last_name:
+              type: string
+            created:
+              type: string
+              format: date-time
+            modified:
+              type: string
+              format: date-time
+            avatar:
+              type: object
+              required:
+              - url
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                profile_id:
+                  type: string
+                  format: uuid
+                created:
+                  type: string
+                  format: date-time
+                modified:
+                  type: string
+                  format: date-time
+                url:
+                  type: object
+                  required:
+                  - medium
+                  - small
+                  properties:
+                    medium:
+                      type: string
+                      format: url
+                    small:
+                      type: string
+                      format: url
+        groups_users:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        gpgkey:
+          $ref: '#/components/schemas/gpgkey'
+          x-nullable: true
+        role:
+          $ref: '#/components/schemas/role'
+        missing_metadata_key_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        last_logged_in:
+          type: string
+          format: date-time
+          x-nullable: true
+    groupIndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - deleted
+      - created
+      - modified
+      - created_by
+      - modified_by
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        my_group_user:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        groups_users:
+          type: array
+          items:
+            $ref: '#/components/schemas/groupsUsersIndexAndView'
+        user_count:
+          type: integer
+    e2eeMetadataBasedCommon:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedId'
+      - type: object
+        required:
+        - created
+        - modified
+        - created_by
+        - modified_by
+        - personal
+        - folder_parent_id
+        properties:
+          created:
+            type: string
+            format: date-time
+          modified:
+            type: string
+            format: date-time
+          created_by:
+            type: string
+            format: uuid
+          modified_by:
+            type: string
+            format: uuid
+          personal:
+            type: boolean
+          folder_parent_id:
+            type: string
+            format: uuid
+            x-nullable: true
+          modifier:
+            $ref: '#/components/schemas/userIndexAndView'
+          creator:
+            $ref: '#/components/schemas/userIndexAndView'
+          permission:
+            $ref: '#/components/schemas/permissionIndexAndView'
+          permissions:
+            type: array
+            items:
+              $ref: '#/components/schemas/permissionIndexAndView'
+    resourceV4IndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - username
+      - uri
+      - description
+      - deleted
+      - created
+      - created_by
+      - modified_by
+      - resource_type_id
+      - expired
+      - folder_parent_id
+      - personal
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        username:
+          type: string
+        uri:
+          type: string
+        description:
+          type: string
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        resource_type_id:
+          type: string
+          format: uuid
+        expired:
+          type: string
+          format: date-time
+          x-nullable: true
+        folder_parent_id:
+          type: string
+          format: uuid
+          x-nullable: true
+        personal:
+          type: boolean
+        favorite:
+          $ref: '#/components/schemas/favorite'
+        modifier:
+          $ref: '#/components/schemas/userIndexAndView'
+        creator:
+          $ref: '#/components/schemas/userIndexAndView'
+        secrets:
+          type: array
+          items:
+            $ref: '#/components/schemas/secretIndex'
+        resource_type:
+          $ref: '#/components/schemas/resourceType'
+        permission:
+          $ref: '#/components/schemas/permissionIndexAndView'
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/permissionIndexAndView'
+    gpgkey:
+      type: object
+      required:
+      - id
+      - user_id
+      - armored_key
+      - bits
+      - uid
+      - key_id
+      - fingerprint
+      - type
+      - expires
+      - key_created
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        armored_key:
+          type: string
+        bits:
+          type: integer
+        uid:
+          type: string
+        key_id:
+          type: string
+        fingerprint:
+          type: string
+        type:
+          type: string
+          enum:
+          - RSA
+          - ECC
+        expires:
+          type: string
+          format: date-time
+          x-nullable: true
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    permissionIndexAndView:
+      type: object
+      required:
+      - id
+      - aco
+      - aco_foreign_key
+      - aro
+      - aro_foreign_key
+      - type
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        aco:
+          type: string
+          enum:
+          - Resource
+          - Folder
+        aco_foreign_key:
+          type: string
+          format: uuid
+        aro:
+          type: string
+          enum:
+          - User
+          - Group
+        aro_foreign_key:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/permissionLevel'
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+          x-nullable: true
+        group:
+          $ref: '#/components/schemas/groupIndexAndView'
+          x-nullable: true
+    permissionLevel:
+      description: '* `1` - Read
+
+        * `7` - Update
+
+        * `15` - Owner
+
+        '
+      type: integer
+      enum:
+      - 1
+      - 7
+      - 15
+    groupUpdate:
+      type: object
+      required:
+      - name
+      - groups_users
+      properties:
+        name:
+          type: string
+        groups_users:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: GroupUser relationship ID (required for updating existing users or marking for deletion)
+              user_id:
+                type: string
+                format: uuid
+                description: User ID (required for adding new users to the group)
+              is_admin:
+                type: boolean
+                description: Whether the user is a group administrator
+              delete:
+                type: boolean
+                description: Whether to remove the user from the group
+        secrets:
+          type: array
+          items:
+            type: object
+            required:
+            - resource_id
+            - user_id
+            - data
+            properties:
+              resource_id:
+                type: string
+                format: uuid
+              user_id:
+                type: string
+                format: uuid
+              data:
+                type: string
+    resourceType:
+      type: object
+      required:
+      - id
+      - slug
+      - name
+      - description
+      - definition
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        slug:
+          type: string
+          description: '* `password-string` - The original passbolt resource type, where the secret is a non empty string.
+
+            * `password-and-description` - A resource with the password and the description encrypted.
+
+            * `totp` - A resource with standalone TOTP fields.
+
+            * `password-description-totp` - A resource with encrypted password, description and TOTP fields.
+
+            * `v5-default-with-totp` - The new default resource type with a TOTP introduced with v5.
+
+            * `v5-password-string (Deprecated)` - The original passbolt resource type, kept for backward compatibility reasons.
+
+            * `v5-totp-standalone` - The new standalone TOTP resource type introduced with v5.
+
+            * `v5-default` - The new default resource type introduced with v5.
+
+            '
+          enum:
+          - password-string
+          - password-and-description
+          - totp
+          - password-description-totp
+          - v5-default-with-totp
+          - v5-password-string (Deprecated)
+          - v5-totp-standalone
+          - v5-default
+        name:
+          type: string
+        description:
+          type: string
+        definition:
+          type: object
+          description: Schema for the expected data for this kind of resources.
+        deleted:
+          type: string
+          x-nullable: true
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    role:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          enum:
+          - admin
+          - guest
+          - user
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    favorite:
+      type: object
+      required:
+      - id
+      - user_id
+      - foreign_key
+      - foreign_model
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        foreign_key:
+          type: string
+          format: uuid
+        foreign_model:
+          type: string
+          enum:
+          - Resource
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+    folderV4IndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - created
+      - modified
+      - created_by
+      - modified_by
+      - folder_parent_id
+      - personal
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        folder_parent_id:
+          type: string
+          format: uuid
+          x-nullable: true
+        personal:
+          type: boolean
+        modifier:
+          $ref: '#/components/schemas/userIndexAndView'
+        creator:
+          $ref: '#/components/schemas/userIndexAndView'
+        permission:
+          $ref: '#/components/schemas/permissionIndexAndView'
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/permissionIndexAndView'
+        children_resources:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/resourceV4IndexAndView'
+            - $ref: '#/components/schemas/resourceV5IndexAndView'
+        children_folders:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/folderV4IndexAndView'
+            - $ref: '#/components/schemas/folderV5IndexAndView'
+  responses:
+    deleteDryRun:
+      description: The dry-run failed.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/groupDeleteDryRunError'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The group cannot be deleted. The group should not be sole owner of shared content, transfer the ownership to other users.
+                  url: /groups/8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc/dry-run.json
+                  code: 400
+                body:
+                  errors:
+                    resources:
+                      sole_owner:
+                      - id: ae60d89c-f13b-4fb1-b2dc-c8dc806cac88
+                        metadata: '-----BEGIN PGP MESSAGE-----'
+                        metadata_key_id: 0194fec1-65fa-7b6f-935a-9541c1c13281
+                        metadata_key_type: shared_key
+                        created: '2024-07-08T08:06:25+00:00'
+                        modified: '2024-07-08T08:06:25+00:00'
+                        created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                        modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                        resource_type_id: a28a04cd-6f53-518a-967c-9963bf9cec51
+                        expired: null
+                        folder_parent_id: null
+                        personal: false
+                        permissions:
+                        - id: 836b7e69-578a-4bd6-aee5-ee23b5753f52
+                          aco: Resource
+                          aco_foreign_key: a736a8aa-7cfe-4466-8294-d130ee23ef88
+                          aro: Group
+                          aro_foreign_key: 8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc
+                          type: 15
+                          created: '2024-07-22T16:01:25+00:00'
+                          modified: '2024-07-31T12:59:28+00:00'
+                          group:
+                            id: 8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc
+                            name: WRC
+                            deleted: false
+                            created: '2024-07-22T16:01:07+00:00'
+                            modified: '2024-07-22T16:01:07+00:00'
+                            created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                            modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                          user: null
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+    addAndUpdate:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/groupIndexAndView'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /groups.json
+                  code: 200
+                body:
+                  id: 8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc
+                  name: Groupe B
+                  deleted: false
+                  created: '2024-07-08T10:13:20+00:00'
+                  modified: '2024-07-08T10:13:20+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  groups_users:
+                  - id: 3b9b9757-1ccb-444a-a3cf-4090364fac4f
+                    group_id: 8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc
+                    user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                    is_admin: true
+                    created: '2024-07-22T16:01:07+00:00'
+    emptyArrayBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: array
+                items:
+                  type: object
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: []
+    groups_index:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/groupIndexAndView'
+          examples:
+            base:
+              summary: Base without any extra data
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /groups.json
+                  code: 200
+                body:
+                - id: 8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc
+                  name: Groupe B
+                  deleted: true
+                  created: '2024-07-08T10:13:20+00:00'
+                  modified: '2024-07-08T10:13:20+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+            withGroupsUsersProfiles:
+              summary: Groups index with users profile
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /groups.json
+                  code: 200
+                body:
+                - id: 8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc
+                  name: Groupe B
+                  deleted: true
+                  created: '2024-07-08T10:13:20+00:00'
+                  modified: '2024-07-08T10:13:20+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  groups_users:
+                  - id: 3b9b9757-1ccb-444a-a3cf-4090364fac4f
+                    group_id: 8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc
+                    user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                    is_admin: true
+                    created: '2024-07-22T16:01:07+00:00'
+                    user:
+                      id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                      role_id: 639b50cf-66f9-4b23-8d55-d0609710cd9d
+                      username: ada@passbolt.com
+                      active: true
+                      deleted: false
+                      created: '2024-07-03T12:52:06+00:00'
+                      modified: '2024-07-03T12:52:06+00:00'
+                      disabled: null
+                      profile:
+                        id: 920edf1e-5ce8-4da4-a8fc-21040fe78d09
+                        user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                        first_name: Ada
+                        last_name: Lovelace
+                        created: '2024-07-03T12:52:06+00:00'
+                        modified: '2024-07-03T12:52:06+00:00'
+                      last_logged_in: null
+    updateDryRunError:
+      description: The dry-run failed.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/groupUpdateDryRun'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /groups/8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc/dry-run.json
+                  code: 200
+                body:
+                  dry-run:
+                    SecretsNeeded:
+                    - Secret:
+                        resource_id: a736a8aa-7cfe-4466-8294-d130ee23ef88
+                        user_id: 8c640fd5-268c-4ae0-9e35-2f120cf1a831
+                    Secrets:
+                    - Secret:
+                        resource_id: a736a8aa-7cfe-4466-8294-d130ee23ef88
+                        data: '-----BEGIN PGP MESSAGE-----'
+    updateDryRunSuccess:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/groupUpdateDryRun'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /groups/8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc/dry-run.json
+                  code: 200
+                body:
+                  dry-run:
+                    SecretsNeeded: []
+                    Secrets: []
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    groups_view:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/groupIndexAndView'
+          examples:
+            base:
+              summary: Base without any extra data
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /groups.json
+                  code: 200
+                body:
+                  id: 8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc
+                  name: Groupe B
+                  deleted: true
+                  created: '2024-07-08T10:13:20+00:00'
+                  modified: '2024-07-08T10:13:20+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+            withGroupsUsersProfiles:
+              summary: Groups index with users profile
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /groups.json
+                  code: 200
+                body:
+                  id: 8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc
+                  name: Groupe B
+                  deleted: true
+                  created: '2024-07-08T10:13:20+00:00'
+                  modified: '2024-07-08T10:13:20+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  groups_users:
+                  - id: 3b9b9757-1ccb-444a-a3cf-4090364fac4f
+                    group_id: 8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc
+                    user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                    is_admin: true
+                    created: '2024-07-22T16:01:07+00:00'
+                    user:
+                      id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                      role_id: 639b50cf-66f9-4b23-8d55-d0609710cd9d
+                      username: ada@passbolt.com
+                      active: true
+                      deleted: false
+                      created: '2024-07-03T12:52:06+00:00'
+                      modified: '2024-07-03T12:52:06+00:00'
+                      disabled: null
+                      profile:
+                        id: 920edf1e-5ce8-4da4-a8fc-21040fe78d09
+                        user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                        first_name: Ada
+                        last_name: Lovelace
+                        created: '2024-07-03T12:52:06+00:00'
+                        modified: '2024-07-03T12:52:06+00:00'
+                      last_logged_in: null
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+  requestBodies:
+    groupUpdate:
+      description: The group you want to update
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/groupUpdate'
+          examples:
+            base:
+              summary: Update group with mixed operations
+              value:
+                name: WRC
+                groups_users:
+                - user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  is_admin: true
+                - id: 3b9b9757-1ccb-444a-a3cf-4090364fac4f
+                  is_admin: false
+                - id: 1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6
+                  delete: true
+                secrets:
+                - resource_id: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  data: '-----BEGIN PGP MESSAGE-----'
+                - resource_id: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  user_id: 3b9b9757-1ccb-444a-a3cf-4090364fac4f
+                  data: '-----BEGIN PGP MESSAGE-----'
+    groupAdd:
+      description: The group you want to create
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/groupAdd'
+          examples:
+            base:
+              value:
+                name: Groupe B
+                groups_users:
+                - user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  is_admin: true
+  parameters:
+    containModifierProfile:
+      name: contain[modifier.profile]
+      description: Add modifier and their profile to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containGroupsUsersUser:
+      name: contain[groups_users.user]
+      description: Add group users' user data to groups in response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containUsers:
+      name: contain[users]
+      description: Add users to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    groupId:
+      name: groupId
+      description: ID for the group being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    containGroupsUsersUserGpgkey:
+      name: contain[groups_users.user.gpgkey]
+      description: Add group users' user gpg key to groups in response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containGroupsUsersUserProfile:
+      name: contain[groups_users.user.profile]
+      description: Add group users' user profiles to groups in response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    filterHasManagers:
+      name: filter[has-managers]
+      description: Only return elements filtered by managers.
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          format: uuid
+          description: User UUID
+    containMyGroupUser:
+      name: contain[my_group_user]
+      description: Add `my_group_user` to groups in response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    filterHasUsers:
+      name: filter[has-users]
+      description: Only return elements filtered by users.
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          format: uuid
+          description: User UUID
+    containModifier:
+      name: contain[modifier]
+      description: Add modifier to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containGroupsUsers:
+      name: contain[groups_users]
+      description: Add group users to groups in response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session

@@ -1,0 +1,327 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: contact@passbolt.com
+  description: This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.
+  license:
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  termsOfService: https://www.passbolt.com/terms
+  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Directory Sync API
+  version: 5.0.0
+servers:
+- url: https://passbolt.local
+  description: API Passbolt
+tags:
+- name: Directory Sync
+  description: Run directory synchronization.
+paths:
+  /directorysync/synchronize/dry-run.json:
+    get:
+      summary: Simulate directory synchronization without making changes.
+      operationId: simulateSync
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request GET \\\n  --url {{API_BASE_URL}}/directorysync/synchronize/dry-run.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}'\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/directorysync/synchronize/dry-run.json';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer {{JWT_TOKEN}}'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/directorysync/synchronize/dry-run.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Directory Sync
+      responses:
+        '200':
+          $ref: '#/components/responses/synchronizeAndSimulate'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /directorysync/synchronize.json:
+    post:
+      summary: Run the directory synchronization.
+      operationId: runSync
+      security:
+      - bearerHttpAuthentication: []
+      x-codeSamples:
+      - lang: cURL
+        source: "curl --request POST \\\n  --url {{API_BASE_URL}}/directorysync/synchronize.json.json \\\n  --header 'Authorization: Bearer {{JWT_TOKEN}}' \\\n"
+      - lang: JavaScript
+        source: "const url = '{{API_BASE_URL}}/directorysync/synchronize.json.json';\nconst options = {\n  method: 'POST',\n  headers: {Authorization: 'Bearer {{JWT_TOKEN}}'},\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}\n"
+      - lang: PHP
+        source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/directorysync/synchronize.json.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
+      tags:
+      - Directory Sync
+      responses:
+        '200':
+          $ref: '#/components/responses/synchronizeAndSimulate'
+        '401':
+          $ref: '#/components/responses/authenticationRequired'
+        '403':
+          $ref: '#/components/responses/accessRestrictedToAdministrators'
+        '404':
+          $ref: '#/components/responses/notFound'
+components:
+  responses:
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    accessRestrictedToAdministrators:
+      description: Access restricted
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Access restricted to administrators.
+                  url: <API ENDPOINT URL>
+                  code: 403
+                body: ''
+    synchronizeAndSimulate:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/synchronizeAndSimulate'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body:
+                  users:
+                  - message: The user anakin@passbolt.com was successfully added to passbolt.
+                    model: Users
+                    data:
+                      username: anakin@passbolt.com
+                      profile:
+                        first_name: Anakin
+                        last_name: Skywalker
+                        user_id: 5c10147b-c955-4972-be35-39859b107cc6
+                        created: '2025-07-21T14:03:58+00:00'
+                        modified: '2025-07-21T14:03:58+00:00'
+                        id: c763e974-dcd7-4b76-953b-30fc884821bf
+                      role_id: cf4dffa8-5bdf-422b-93ce-d727eceb3ea8
+                      deleted: false
+                      created: '2025-07-21T14:03:58+00:00'
+                      modified: '2025-07-21T14:03:58+00:00'
+                      id: 5c10147b-c955-4972-be35-39859b107cc6
+                      last_logged_in: null
+                    action: create
+                    status: success
+                    created: '2025-07-21T14:03:58+00:00'
+                    version: '2'
+                  - message: The user luke@passbolt.com was successfully added to passbolt.
+                    model: Users
+                    data:
+                      username: luke@passbolt.com
+                      profile:
+                        first_name: Luke
+                        last_name: Skywalker
+                        user_id: 5c10147b-c955-4972-be35-39859b107cc6
+                        created: '2025-07-21T14:03:58+00:00'
+                        modified: '2025-07-21T14:03:58+00:00'
+                        id: c763e974-dcd7-4b76-953b-30fc884821bf
+                      role_id: cf4dffa8-5bdf-422b-93ce-d727eceb3ea8
+                      deleted: false
+                      created: '2025-07-21T14:03:58+00:00'
+                      modified: '2025-07-21T14:03:58+00:00'
+                      id: 5c10147b-c955-4972-be35-39859b107cc6
+                      last_logged_in: null
+                    action: create
+                    status: success
+                    created: '2025-07-21T14:03:58+00:00'
+                    version: '2'
+                groups: []
+  schemas:
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+    synchronizeAndSimulate:
+      type: object
+      required:
+      - users
+      properties:
+        users:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              model:
+                type: string
+              data:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  profile:
+                    type: object
+                    properties:
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      user_id:
+                        type: string
+                      created:
+                        type: string
+                        format: date-time
+                      modified:
+                        type: string
+                        format: date-time
+                      id:
+                        type: string
+                        format: uuid
+                  role_id:
+                    type: string
+                    format: uuid
+                  deleted:
+                    type: boolean
+                  created:
+                    type: string
+                    format: date-time
+                  modified:
+                    type: string
+                    format: date-time
+                  id:
+                    type: string
+                    format: uuid
+                  last_logged_in:
+                    type: string
+                    format: date-time
+                    x-nullable: true
+              action:
+                type: string
+              status:
+                type: string
+              created:
+                type: string
+                format: date-time
+              version:
+                type: string
+  securitySchemes:
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+    gpgCookieAuthentication:
+      description: Session-based authentication. Note that a CSRF token needs to be provided through a header named `X-CSRF-Token`.
+      type: apiKey
+      in: cookie
+      name: passbolt_session
