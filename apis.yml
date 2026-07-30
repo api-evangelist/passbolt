@@ -3,9 +3,22 @@ name: Passbolt
 description: Passbolt is an open source password manager for teams. The Passbolt API provides programmatic access to manage
   resources (passwords), folders, users, groups, sharing, comments, metadata, and authentication via GPGAuth or JWT.
 type: Index
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/passbolt.png
 tags:
 - Password Manager
 - Security
@@ -16,21 +29,1899 @@ modified: '2026-05-19'
 url: https://raw.githubusercontent.com/api-evangelist/passbolt/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-- aid: passbolt:passbolt
-  name: Passbolt API
-  description: Low-level reference for the Passbolt API covering authentication, resources, folders, users, groups, sharing,
-    comments, metadata keys, and healthcheck. JWT is the preferred authentication method; legacy GPGAuth is also supported.
+- aid: passbolt:passbolt-authentication-gpgauth-api
+  name: Passbolt Authentication (GPGAuth) API
+  description: >-
+    The legacy authentication method, using the GPGAuth protocol.
+
+
+    Find more [here](https://www.passbolt.com/docs/development/authentication).
   humanURL: https://www.passbolt.com/docs/api/
   baseURL: https://passbolt.local
   tags:
-  - Password Manager
-  - Security
-  - Secrets
+  - Authentication (GPGAuth)
   properties:
+  - type: OpenAPI
+    url: openapi/passbolt-authentication-gpgauth-api-openapi.yml
   - type: Documentation
     url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-authentication-jwt-api
+  name: Passbolt Authentication (JWT) API
+  description: >-
+    JWT-based authentication is the preferred way to interact with the Passbolt API. Find more [here](https://www.passbolt.com/docs/development)
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Authentication (JWT)
+  properties:
   - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/passbolt/refs/heads/main/openapi/passbolt-openapi.yaml
+    url: openapi/passbolt-authentication-jwt-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-avatars-api
+  name: Passbolt Avatars API
+  description: Query avatar images.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Avatars
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-avatars-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-comments-api
+  name: Passbolt Comments API
+  description: Manipulate comments for resources.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Comments
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-comments-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-directory-sync-api
+  name: Passbolt Directory Sync API
+  description: Run directory synchronization.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Directory Sync
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-directory-sync-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-favorites-api
+  name: Passbolt Favorites API
+  description: The favorite endpoints are used to add or remove a `Resource` from your favorites.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Favorites
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-favorites-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-folders-api
+  name: Passbolt Folders API
+  description: Organize your passwords and share them in bulk using folders.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Folders
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-folders-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-gpg-keys-api
+  name: Passbolt GPG keys API
+  description: >-
+    In order to encrypt information, the server and the clients needs the user's public keys. These OpenPGP
+    endpoints let you query the saved public key data.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - GPG keys
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-gpg-keys-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-groups-api
+  name: Passbolt Groups API
+  description: Organize users in logical groups to make it easier to share resources with them.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-groups-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-healthcheck-api
+  name: Passbolt Healthcheck API
+  description: Gather data about the passbolt instance's health.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Healthcheck
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-healthcheck-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-metadata-keys-api
+  name: Passbolt Metadata keys API
+  description: Manipulate metadata keys.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Metadata keys
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-metadata-keys-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-metadata-private-keys-api
+  name: Passbolt Metadata private keys API
+  description: Manipulate private keys for metadata.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Metadata private keys
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-metadata-private-keys-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-metadata-rotate-key-api
+  name: Passbolt Metadata rotate key API
+  description: Gather information about metadata keys that needs to be rotated
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Metadata rotate key
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-metadata-rotate-key-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-metadata-session-key-api
+  name: Passbolt Metadata session key API
+  description: Gather information on the saved encrypted session keys cache
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Metadata session key
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-metadata-session-key-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-metadata-types-settings-api
+  name: Passbolt Metadata types settings API
+  description: Retrieve information about the resource types settings selected by the administrators
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Metadata types settings
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-metadata-types-settings-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-metadata-upgrade-api
+  name: Passbolt Metadata upgrade API
+  description: Upgrading elements to the new v5 metadata format
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Metadata upgrade
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-metadata-upgrade-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-move-api
+  name: Passbolt Move API
+  description: Move a folder or a resource across folders.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Move
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-move-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-multi-factor-authentication-api
+  name: Passbolt Multi-Factor Authentication API
+  description: Complete and validate authentication for users with MFA enabled.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Multi-Factor Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-multi-factor-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-permissions-api
+  name: Passbolt Permissions API
+  description: Query permissions for resources.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Permissions
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-permissions-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-resource-types-api
+  name: Passbolt Resource types API
+  description: >-
+    Resource-types are used for describing how and what data is stored for a resource and its associated
+    secrets.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Resource types
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-resource-types-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-resources-api
+  name: Passbolt Resources API
+  description: A resource holds the metadata for its secrets.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Resources
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-resources-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-roles-api
+  name: Passbolt Roles API
+  description: Different categories of users.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-roles-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-secrets-api
+  name: Passbolt Secrets API
+  description: Secrets associated to resources.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Secrets
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-secrets-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-settings-api
+  name: Passbolt Settings API
+  description: Retrieve the server settings
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-settings-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-shares-api
+  name: Passbolt Shares API
+  description: Share resources and folders to users with an exhaustive permission system.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Shares
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-shares-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-tags-api
+  name: Passbolt Tags API
+  description: Get tags and add tags to resources to categorize them.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-tags-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-gpgauth.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-authentication-jwt.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-avatars.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-comments.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-directory-sync.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-favorites.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-folders.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-gpg-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-groups.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-healthcheck.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-private-keys.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-rotate-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-session-key.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-types-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-metadata-upgrade.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-move.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-multi-factor-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-permissions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resource-types.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-resources.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-roles.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-secrets.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-settings.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-shares.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-tags.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/passbolt-users.yaml
+- aid: passbolt:passbolt-users-api
+  name: Passbolt Users API
+  description: User are entities with the ability to interact with the application.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-users-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
   - type: Signup
     url: https://www.passbolt.com/pricing
   - type: TermsOfService
