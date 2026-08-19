@@ -1,0 +1,471 @@
+{
+  "item": [
+    {
+      "id": "7515c7f6-2f57-40f6-81b5-d315832a3cf2",
+      "name": "Directory Sync",
+      "description": {
+        "content": "Run directory synchronization.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "229492e8-5405-46d8-a940-468a42c1ff71",
+          "name": "Simulate directory synchronization without making changes.",
+          "request": {
+            "name": "Simulate directory synchronization without making changes.",
+            "description": {},
+            "url": {
+              "path": [
+                "directorysync",
+                "synchronize",
+                "dry-run.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "46893b0a-25de-41fa-81bb-75b565acf557",
+              "name": "Operation is successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "directorysync",
+                    "synchronize",
+                    "dry-run.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"success\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<SUCCESS MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 200\n  },\n  \"body\": {\n    \"users\": [\n      {\n        \"message\": \"The user anakin@passbolt.com was successfully added to passbolt.\",\n        \"model\": \"Users\",\n        \"data\": {\n          \"username\": \"anakin@passbolt.com\",\n          \"profile\": {\n            \"first_name\": \"Anakin\",\n            \"last_name\": \"Skywalker\",\n            \"user_id\": \"5c10147b-c955-4972-be35-39859b107cc6\",\n            \"created\": \"2025-07-21T14:03:58+00:00\",\n            \"modified\": \"2025-07-21T14:03:58+00:00\",\n            \"id\": \"c763e974-dcd7-4b76-953b-30fc884821bf\"\n          },\n          \"role_id\": \"cf4dffa8-5bdf-422b-93ce-d727eceb3ea8\",\n          \"deleted\": false,\n          \"created\": \"2025-07-21T14:03:58+00:00\",\n          \"modified\": \"2025-07-21T14:03:58+00:00\",\n          \"id\": \"5c10147b-c955-4972-be35-39859b107cc6\",\n          \"last_logged_in\": null\n        },\n        \"action\": \"create\",\n        \"status\": \"success\",\n        \"created\": \"2025-07-21T14:03:58+00:00\",\n        \"version\": \"2\"\n      },\n      {\n        \"message\": \"The user luke@passbolt.com was successfully added to passbolt.\",\n        \"model\": \"Users\",\n        \"data\": {\n          \"username\": \"luke@passbolt.com\",\n          \"profile\": {\n            \"first_name\": \"Luke\",\n            \"last_name\": \"Skywalker\",\n            \"user_id\": \"5c10147b-c955-4972-be35-39859b107cc6\",\n            \"created\": \"2025-07-21T14:03:58+00:00\",\n            \"modified\": \"2025-07-21T14:03:58+00:00\",\n            \"id\": \"c763e974-dcd7-4b76-953b-30fc884821bf\"\n          },\n          \"role_id\": \"cf4dffa8-5bdf-422b-93ce-d727eceb3ea8\",\n          \"deleted\": false,\n          \"created\": \"2025-07-21T14:03:58+00:00\",\n          \"modified\": \"2025-07-21T14:03:58+00:00\",\n          \"id\": \"5c10147b-c955-4972-be35-39859b107cc6\",\n          \"last_logged_in\": null\n        },\n        \"action\": \"create\",\n        \"status\": \"success\",\n        \"created\": \"2025-07-21T14:03:58+00:00\",\n        \"version\": \"2\"\n      }\n    ]\n  },\n  \"groups\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1551a2b-f8a2-4d54-b3fd-d1f6feb5d62c",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "directorysync",
+                    "synchronize",
+                    "dry-run.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acdf4ab7-3e6b-42e3-821d-b759d5c996d8",
+              "name": "Access restricted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "directorysync",
+                    "synchronize",
+                    "dry-run.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Access restricted to administrators.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 403\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "74cffaa3-2651-44b8-997b-c31e57f021aa",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "directorysync",
+                    "synchronize",
+                    "dry-run.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The <MODEL> does not exist.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 404\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ca8468d-cc5d-4ce0-ba2f-028298cb7e06",
+          "name": "Run the directory synchronization.",
+          "request": {
+            "name": "Run the directory synchronization.",
+            "description": {},
+            "url": {
+              "path": [
+                "directorysync",
+                "synchronize.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d7970ae8-deb3-4a9d-a8a7-ad6b7cf4fce0",
+              "name": "Operation is successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "directorysync",
+                    "synchronize.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"success\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<SUCCESS MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 200\n  },\n  \"body\": {\n    \"users\": [\n      {\n        \"message\": \"The user anakin@passbolt.com was successfully added to passbolt.\",\n        \"model\": \"Users\",\n        \"data\": {\n          \"username\": \"anakin@passbolt.com\",\n          \"profile\": {\n            \"first_name\": \"Anakin\",\n            \"last_name\": \"Skywalker\",\n            \"user_id\": \"5c10147b-c955-4972-be35-39859b107cc6\",\n            \"created\": \"2025-07-21T14:03:58+00:00\",\n            \"modified\": \"2025-07-21T14:03:58+00:00\",\n            \"id\": \"c763e974-dcd7-4b76-953b-30fc884821bf\"\n          },\n          \"role_id\": \"cf4dffa8-5bdf-422b-93ce-d727eceb3ea8\",\n          \"deleted\": false,\n          \"created\": \"2025-07-21T14:03:58+00:00\",\n          \"modified\": \"2025-07-21T14:03:58+00:00\",\n          \"id\": \"5c10147b-c955-4972-be35-39859b107cc6\",\n          \"last_logged_in\": null\n        },\n        \"action\": \"create\",\n        \"status\": \"success\",\n        \"created\": \"2025-07-21T14:03:58+00:00\",\n        \"version\": \"2\"\n      },\n      {\n        \"message\": \"The user luke@passbolt.com was successfully added to passbolt.\",\n        \"model\": \"Users\",\n        \"data\": {\n          \"username\": \"luke@passbolt.com\",\n          \"profile\": {\n            \"first_name\": \"Luke\",\n            \"last_name\": \"Skywalker\",\n            \"user_id\": \"5c10147b-c955-4972-be35-39859b107cc6\",\n            \"created\": \"2025-07-21T14:03:58+00:00\",\n            \"modified\": \"2025-07-21T14:03:58+00:00\",\n            \"id\": \"c763e974-dcd7-4b76-953b-30fc884821bf\"\n          },\n          \"role_id\": \"cf4dffa8-5bdf-422b-93ce-d727eceb3ea8\",\n          \"deleted\": false,\n          \"created\": \"2025-07-21T14:03:58+00:00\",\n          \"modified\": \"2025-07-21T14:03:58+00:00\",\n          \"id\": \"5c10147b-c955-4972-be35-39859b107cc6\",\n          \"last_logged_in\": null\n        },\n        \"action\": \"create\",\n        \"status\": \"success\",\n        \"created\": \"2025-07-21T14:03:58+00:00\",\n        \"version\": \"2\"\n      }\n    ]\n  },\n  \"groups\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7dff6070-89f4-40af-83c6-b500fa4d461d",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "directorysync",
+                    "synchronize.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43f255a4-075f-445c-9d5d-b78bec1e3678",
+              "name": "Access restricted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "directorysync",
+                    "synchronize.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Access restricted to administrators.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 403\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cafd861d-7b2e-4f69-85b3-3318317ca375",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "directorysync",
+                    "synchronize.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The <MODEL> does not exist.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 404\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://passbolt.local",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f2340990-6a78-4cf0-94b5-7e45ac0ce2db",
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Directory Sync API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.\n\nContact Support:\n Email: contact@passbolt.com",
+      "type": "text/plain"
+    }
+  }
+}

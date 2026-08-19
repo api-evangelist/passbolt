@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata types settings API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata types settings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get metadata types settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/metadata/types/settings.json"
+          },
+          "docs": "Get information from the resource types settings, as selected by the administrators."
+        },
+        {
+          "info": {
+            "name": "Upgrade a resource types settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/metadata/types/settings.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Administrators can define which resource type is the default"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

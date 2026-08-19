@@ -1,0 +1,817 @@
+{
+  "item": [
+    {
+      "id": "8b82fc48-f9f6-495b-8d19-051ae529418f",
+      "name": "Metadata session key",
+      "description": {
+        "content": "Gather information on the saved encrypted session keys cache",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9f2dc233-e6e7-4ea4-9032-14dced17ed6a",
+          "name": "Get session keys.",
+          "request": {
+            "name": "Get session keys.",
+            "description": {
+              "content": "Get a list of available encrypted session keys in cache for the given user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metadata",
+                "session-keys.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a50fac4f-9128-442b-b9bd-de05f8841403",
+              "name": "Operation is successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "session-keys.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"26c1344a-22ef-4c49-90a0-130a9c82a648\",\n    \"status\": \"success\",\n    \"servertime\": 1740143504,\n    \"action\": \"c5969bdd-018f-552b-b20d-01636766a81f\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/metadata/session-keys.json\",\n    \"code\": 200\n  },\n  \"body\": [\n    {\n      \"id\": \"922216c5-fa6c-4487-9e4c-b2a9215f7f17\",\n      \"user_id\": \"bf5dc039-314d-4ac1-938f-c1ad8331e28a\",\n      \"data\": \"-----BEGIN PGP MESSAGE-----\",\n      \"created\": \"2025-01-18T15:52:17+00:00\",\n      \"modified\": \"2025-02-18T15:52:17+00:00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b84485d8-a15d-4b11-beea-77f3dc9aa740",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "session-keys.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9c5241dd-d3f9-443d-995d-68852a0ee73a",
+          "name": "Add a session key.",
+          "request": {
+            "name": "Add a session key.",
+            "description": {},
+            "url": {
+              "path": [
+                "metadata",
+                "session-keys.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d8d92e1a-24e8-4943-86c4-d93e0ea9c925",
+              "name": "Operation is successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "session-keys.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"26c1344a-22ef-4c49-90a0-130a9c82a648\",\n    \"status\": \"success\",\n    \"servertime\": 1740143504,\n    \"action\": \"c36e894d-ed63-5434-aa70-4b777f9fdf32\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/metadata/session-keys.json\",\n    \"code\": 200\n  },\n  \"body\": {\n    \"id\": \"5ea1c453-749b-43ca-8606-b85d63ab137f\",\n    \"user_id\": \"bf5dc039-314d-4ac1-938f-c1ad8331e28a\",\n    \"data\": \"-----BEGIN PGP MESSAGE-----\",\n    \"created\": \"2025-03-05T14:22:33+00:00\",\n    \"modified\": \"2025-03-05T14:22:33+00:00\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d3bb5e5-c1bc-4b9d-a501-71fd66fe6fd7",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "session-keys.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5791898d-a62b-4cb7-a5ff-49858e4f7f8e",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "session-keys.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "98fc082d-9e4b-428e-aeb1-bd654c66c8cf",
+          "name": "Update a given session-key entry.",
+          "request": {
+            "name": "Update a given session-key entry.",
+            "description": {},
+            "url": {
+              "path": [
+                "metadata",
+                "session-key",
+                "{{sessionKeyId}}.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": \"<string>\",\n  \"modified\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4b68740b-b493-4526-98fa-57d3114022fb",
+              "name": "Operation is successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "session-key",
+                    "{{sessionKeyId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"26c1344a-22ef-4c49-90a0-130a9c82a648\",\n    \"status\": \"success\",\n    \"servertime\": 1740143504,\n    \"action\": \"c5969bdd-018f-552b-b20d-01636766a81f\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/metadata/session-keys/16c1344a-33ae-4c49-90a0-130a9c82a091\",\n    \"code\": 200\n  },\n  \"body\": {\n    \"data\": \"----BEGIN PGP MESSAGE-----\",\n    \"modified\": \"2025-02-18T15:52:17+00:00\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af582841-6f53-4e1c-a1ab-ca18d653f0b7",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "session-key",
+                    "{{sessionKeyId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "389a3116-0f17-4ea8-886f-92dbb70b7fd5",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "session-key",
+                    "{{sessionKeyId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c69d1f5f-86d1-42da-a07e-10fc2fc666f8",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "session-key",
+                    "{{sessionKeyId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The <MODEL> does not exist.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 404\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb22b2db-66ab-4590-ac89-feb5aa22a13c",
+              "name": "The modified date is not equal to the persisted session key one",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "session-key",
+                    "{{sessionKeyId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 409\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d55d047e-128d-43c5-8643-7789aeb81c1d",
+          "name": "Delete a given session-key entry.",
+          "request": {
+            "name": "Delete a given session-key entry.",
+            "description": {},
+            "url": {
+              "path": [
+                "metadata",
+                "session-key",
+                "{{sessionKeyId}}.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "23712eb1-37a3-48e7-805e-8d4f65285f1f",
+              "name": "Operation is successful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "session-key",
+                    "{{sessionKeyId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"success\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"<SUCCESS MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 200\n  },\n  \"body\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83ffa998-2965-4794-998c-6f25eec3c8da",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "session-key",
+                    "{{sessionKeyId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "702c4ce2-f38c-4650-bb0a-80eb753c4493",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "session-key",
+                    "{{sessionKeyId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The <MODEL> does not exist.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 404\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://passbolt.local",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) ID for the session key being manipulated",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<uuid>",
+      "key": "sessionKeyId"
+    }
+  ],
+  "info": {
+    "_postman_id": "2c8a9aa5-cfca-4248-beec-9165c856b994",
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata session key API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.\n\nContact Support:\n Email: contact@passbolt.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "item": [
+    {
+      "id": "117ec05d-faeb-4187-862e-b68d3ddd6e7d",
+      "name": "Roles",
+      "description": {
+        "content": "Different categories of users.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f00e4758-cbc4-4fc5-8e80-e4f6325d3b86",
+          "name": "Get multiple roles.",
+          "request": {
+            "name": "Get multiple roles.",
+            "description": {},
+            "url": {
+              "path": [
+                "roles.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5e8c5e3e-d532-4cfe-af83-c659141fd1de",
+              "name": "Operation is successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "roles.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"success\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/roles.json\",\n    \"code\": 200\n  },\n  \"body\": [\n    {\n      \"id\": \"639b50cf-66f9-4b23-8d55-d0609710cd9d\",\n      \"name\": \"admin\",\n      \"description\": \"Organization administrator\",\n      \"created\": \"2012-07-04T13:39:25+00:00\",\n      \"modified\": \"2012-07-04T13:39:25+00:00\"\n    },\n    {\n      \"id\": \"50307b17-a097-483b-b388-4bf262348180\",\n      \"name\": \"guest\",\n      \"description\": \"Non logged in user\",\n      \"created\": \"2012-07-04T13:39:25+00:00\",\n      \"modified\": \"2012-07-04T13:39:25+00:00\"\n    },\n    {\n      \"id\": \"c2f96fb1-611d-466d-80fb-e82beba5ed87\",\n      \"name\": \"user\",\n      \"description\": \"Logged in user\",\n      \"created\": \"2012-07-04T13:39:25+00:00\",\n      \"modified\": \"2012-07-04T13:39:25+00:00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d90b6bd0-92f4-4678-90b7-33e68ececcc1",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "roles.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae767efc-7bed-46fb-b9e6-2db68eae541a",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "roles.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://passbolt.local",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "243a1662-5b10-42e7-8bcc-8a375d21a9dd",
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Roles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.\n\nContact Support:\n Email: contact@passbolt.com",
+      "type": "text/plain"
+    }
+  }
+}

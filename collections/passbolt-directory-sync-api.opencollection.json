@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Directory Sync API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Directory Sync",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Simulate directory synchronization without making changes.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/directorysync/synchronize/dry-run.json"
+          },
+          "docs": "Simulate directory synchronization without making changes."
+        },
+        {
+          "info": {
+            "name": "Run the directory synchronization.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/directorysync/synchronize.json"
+          },
+          "docs": "Run the directory synchronization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

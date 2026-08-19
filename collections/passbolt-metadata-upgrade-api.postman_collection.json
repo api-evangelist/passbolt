@@ -1,0 +1,1885 @@
+{
+  "item": [
+    {
+      "id": "834ca443-b153-46eb-8c96-da205a535764",
+      "name": "Metadata upgrade",
+      "description": {
+        "content": "Upgrading elements to the new v5 metadata format",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "96ec91a5-d53c-4d7f-8f6a-97ca9fbf65b4",
+          "name": "Get Upgradable Folders",
+          "request": {
+            "name": "Get Upgradable Folders",
+            "description": {
+              "content": "> *Encrypted metadata for this item is not supported on all clients.*\n\nRetrieves a list of folders that are eligible for an upgrade to v5 format. Results are paginated and the page size is fixed at 20.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metadata",
+                "upgrade",
+                "folders.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter[is-shared]",
+                  "value": "<boolean>",
+                  "description": "Only return shared items."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[permission]",
+                  "value": "<integer>",
+                  "description": "Add permission to response body."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d39f499c-061b-40be-8a8f-f49cc5da6ecd",
+              "name": "Operation is successful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "folders.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "contain[permission]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"2b6024fb-2915-47e6-84e6-8988217b14e7\",\n    \"status\": \"success\",\n    \"servertime\": 1740046035,\n    \"action\": \"8d061841-cef0-509a-8ee3-de91c7390d99\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/metadata/upgrade/folders.json\",\n    \"code\": 200,\n    \"pagination\": {\n      \"count\": 2,\n      \"page\": 1,\n      \"limit\": null\n    }\n  },\n  \"body\": [\n    {\n      \"personal\": true,\n      \"id\": \"27605bac-8aa8-4fe4-a80b-486d8b76c748\",\n      \"name\": \"folder v4 format\",\n      \"created\": \"2025-02-19T13:50:53+00:00\",\n      \"modified\": \"2025-02-19T14:36:51+00:00\",\n      \"created_by\": \"ae48ed02-54ea-4be4-9ae8-229bf8c04739\",\n      \"modified_by\": \"ae48ed02-54ea-4be4-9ae8-229bf8c04739\",\n      \"folder_parent_id\": null\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bbd635f0-fa43-4b1b-9f9a-dfff8d29d330",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "folders.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "contain[permission]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20445c50-2cbf-453e-a4fb-de2cb45ca624",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "folders.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "contain[permission]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70f9f960-8bc1-44cb-a796-6c1fdaf475ee",
+              "name": "Access restricted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "folders.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "contain[permission]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Access restricted to administrators.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 403\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "585bae96-a0f0-4a9f-a6ee-997b4fa0cbff",
+          "name": "Upgrade a folder",
+          "request": {
+            "name": "Upgrade a folder",
+            "description": {
+              "content": "> *Encrypted metadata for this item is not supported on all clients.*\n\nUpgrade folders that are eligible for an upgrade to v5 format.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metadata",
+                "upgrade",
+                "folders.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "contain[permissions]",
+                  "value": "<integer>",
+                  "description": "Add permissions to response body."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"<uuid>\",\n    \"metadata\": \"<string>\",\n    \"metadata_key_id\": \"<uuid>\",\n    \"metadata_key_type\": \"<string>\",\n    \"modified\": \"<dateTime>\",\n    \"modified_by\": \"<uuid>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"metadata\": \"<string>\",\n    \"metadata_key_id\": \"<uuid>\",\n    \"metadata_key_type\": \"<string>\",\n    \"modified\": \"<dateTime>\",\n    \"modified_by\": \"<uuid>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3db2163b-620e-43a2-84a1-e05659d39d5b",
+              "name": "Operation is successful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "folders.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"2b6024fb-2915-47e6-84e6-8988217b14e7\",\n    \"status\": \"success\",\n    \"servertime\": 1740046035,\n    \"action\": \"8d061841-cef0-509a-8ee3-de91c7390d99\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/metadata/upgrade/folders.json\",\n    \"code\": 200,\n    \"pagination\": {\n      \"count\": 2,\n      \"page\": 1,\n      \"limit\": null\n    }\n  },\n  \"body\": [\n    {\n      \"personal\": true,\n      \"id\": \"27605bac-8aa8-4fe4-a80b-486d8b76c748\",\n      \"name\": \"folder v4 format\",\n      \"created\": \"2025-02-19T13:50:53+00:00\",\n      \"modified\": \"2025-02-19T14:36:51+00:00\",\n      \"created_by\": \"ae48ed02-54ea-4be4-9ae8-229bf8c04739\",\n      \"modified_by\": \"ae48ed02-54ea-4be4-9ae8-229bf8c04739\",\n      \"folder_parent_id\": null\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4b2b53f-98cb-47df-a747-9addf881cd44",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "folders.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef9e479f-c0a7-41b7-9821-84fa9587ef50",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "folders.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83bf3e4b-a05e-419a-94d9-a71f6766fc02",
+              "name": "Access restricted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "folders.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Access restricted to administrators.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 403\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e495e00f-1e74-4a28-a9ec-a5a33193504a",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "folders.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The <MODEL> does not exist.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 404\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ab934ea-3fae-433d-8f50-a8fc83808dfb",
+              "name": "Entity was updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "folders.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"Entity <MODEL> was updated.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 409\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49bbc7eb-1d7d-4252-ab89-ef9143160502",
+          "name": "Get Upgradable Resources",
+          "request": {
+            "name": "Get Upgradable Resources",
+            "description": {
+              "content": "Retrieves a list of resources that are eligible for an upgrade to v5 format. Results are paginated and the page size is fixed at 20.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metadata",
+                "upgrade",
+                "resources.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter[is-shared]",
+                  "value": "<boolean>",
+                  "description": "Only return shared items."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0ecadc6a-2672-4063-b26b-e7b7927a9d6f",
+              "name": "Operation is successful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"2b6024fb-2915-47e6-84e6-8988217b14e7\",\n    \"status\": \"success\",\n    \"servertime\": 1740046035,\n    \"action\": \"8d061841-cef0-509a-8ee3-de91c7390d99\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/metadata/upgrade/resources.json\",\n    \"code\": 200,\n    \"pagination\": {\n      \"count\": 2,\n      \"page\": 1,\n      \"limit\": 20\n    }\n  },\n  \"body\": [\n    {\n      \"id\": \"97f5415f-2e09-4171-a99e-1908e876662a\",\n      \"name\": \"password v4 format\",\n      \"username\": \"anakin\",\n      \"uri\": \"https://passbolt.com\",\n      \"description\": null,\n      \"deleted\": false,\n      \"expired\": null,\n      \"created\": \"2025-02-19T10:34:07+00:00\",\n      \"modified\": \"2025-02-19T10:34:07+00:00\",\n      \"created_by\": \"ae48ed02-54ea-4be4-9ae8-229bf8c04739\",\n      \"modified_by\": \"ae48ed02-54ea-4be4-9ae8-229bf8c04739\",\n      \"resource_type_id\": \"a28a04cd-6f53-518a-967c-9963bf9cec51\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd30c5fb-8ae9-41b2-ac6e-ec548a8d80cf",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2789f1d-6861-4323-84a3-4bb6ee481b8b",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26aef1b8-fd5e-46be-a1ca-4621ce3b7f84",
+              "name": "Access restricted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Access restricted to administrators.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 403\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "42b90723-4e43-49b4-9ab7-c18c4c2d25f9",
+          "name": "Upgrade a Resource",
+          "request": {
+            "name": "Upgrade a Resource",
+            "description": {
+              "content": "Upgrade resources that are eligible for an upgrade to v5 format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metadata",
+                "upgrade",
+                "resources.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter[is-shared]",
+                  "value": "<boolean>",
+                  "description": "Only return shared items."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[permissions]",
+                  "value": "<integer>",
+                  "description": "Add permissions to response body."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"<uuid>\",\n    \"metadata\": \"<string>\",\n    \"metadata_key_id\": \"<uuid>\",\n    \"metadata_key_type\": \"<string>\",\n    \"modified\": \"<dateTime>\",\n    \"modified_by\": \"<uuid>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"metadata\": \"<string>\",\n    \"metadata_key_id\": \"<uuid>\",\n    \"metadata_key_type\": \"<string>\",\n    \"modified\": \"<dateTime>\",\n    \"modified_by\": \"<uuid>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d8551abd-e0e9-4e90-b564-3ed710a160f0",
+              "name": "Operation is successful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"2b6024fb-2915-47e6-84e6-8988217b14e7\",\n    \"status\": \"success\",\n    \"servertime\": 1740046035,\n    \"action\": \"8d061841-cef0-509a-8ee3-de91c7390d99\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/metadata/upgrade/resources.json\",\n    \"code\": 200,\n    \"pagination\": {\n      \"count\": 2,\n      \"page\": 1,\n      \"limit\": 20\n    }\n  },\n  \"body\": [\n    {\n      \"id\": \"97f5415f-2e09-4171-a99e-1908e876662a\",\n      \"name\": \"password v4 format\",\n      \"username\": \"anakin\",\n      \"uri\": \"https://passbolt.com\",\n      \"description\": null,\n      \"deleted\": false,\n      \"expired\": null,\n      \"created\": \"2025-02-19T10:34:07+00:00\",\n      \"modified\": \"2025-02-19T10:34:07+00:00\",\n      \"created_by\": \"ae48ed02-54ea-4be4-9ae8-229bf8c04739\",\n      \"modified_by\": \"ae48ed02-54ea-4be4-9ae8-229bf8c04739\",\n      \"resource_type_id\": \"a28a04cd-6f53-518a-967c-9963bf9cec51\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5bc7a569-2008-41b8-b29f-418371f41882",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acdb587b-8726-4f9d-846b-56df400a6b0e",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8b12906-1f9d-43ec-8a69-85e27291fac8",
+              "name": "Access restricted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Access restricted to administrators.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 403\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0e9c0f1-3023-4494-951d-abdad35eca26",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The <MODEL> does not exist.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 404\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59d7ea64-dbee-44f6-a727-5959f82c8525",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The provided modified date does not match.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 409\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b664402d-ca43-43c1-99c8-a1fab6a5803e",
+          "name": "Get Upgradable Tags",
+          "request": {
+            "name": "Get Upgradable Tags",
+            "description": {
+              "content": "> *This endpoint is available since version 5.1.*\n\n> *Encrypted metadata for this item is not supported on all clients.*\n\nRetrieves a list of tags that are eligible for an upgrade to v5 format. Results are paginated and the page size is fixed at 20.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metadata",
+                "upgrade",
+                "tags.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter[is-shared]",
+                  "value": "<boolean>",
+                  "description": "Only return shared items."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7af3ba63-e2cd-4c7f-af87-66ddc26b44de",
+              "name": "Operation is successful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "tags.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"2b6024fb-2915-47e6-84e6-8988217b14e7\",\n    \"status\": \"success\",\n    \"servertime\": 1740046035,\n    \"action\": \"8d061841-cef0-509a-8ee3-de91c7390d99\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/metadata/upgrade/resources.json\",\n    \"code\": 200,\n    \"pagination\": {\n      \"count\": 1,\n      \"page\": 1,\n      \"limit\": 20\n    }\n  },\n  \"body\": [\n    {\n      \"id\": \"97f5415f-2e09-4171-a99e-1908e876662b\",\n      \"user_id\": null,\n      \"slug\": \"important tag in v4 format\",\n      \"is_shared\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3bb0cc0-a71c-4329-9a21-6a724fc88670",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "tags.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd55450a-e614-4890-a404-f80454182c53",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "tags.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9062d1b4-7eb9-499c-9a6c-c0475c7a3fe3",
+              "name": "Access restricted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "tags.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Access restricted to administrators.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 403\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "249d95fa-f6e0-4a32-b9e8-3ade31047fe5",
+          "name": "Upgrade a tag",
+          "request": {
+            "name": "Upgrade a tag",
+            "description": {
+              "content": "> *This endpoint is available since version 5.1.*\n\n> *Encrypted metadata for this item is not supported on all clients.*\n\nUpgrade tags that are eligible for an upgrade to v5 format.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metadata",
+                "upgrade",
+                "tags.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter[is-shared]",
+                  "value": "<boolean>",
+                  "description": "Only return shared items."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"<uuid>\",\n    \"is_shared\": \"<boolean>\",\n    \"metadata\": \"<string>\",\n    \"metadata_key_id\": \"<uuid>\",\n    \"metadata_key_type\": \"<string>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"is_shared\": \"<boolean>\",\n    \"metadata\": \"<string>\",\n    \"metadata_key_id\": \"<uuid>\",\n    \"metadata_key_type\": \"<string>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "debc0de0-ac1f-42aa-a24a-a7aaf8be85ed",
+              "name": "Operation is successful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "tags.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"2b6024fb-2915-47e6-84e6-8988217b14e7\",\n    \"status\": \"success\",\n    \"servertime\": 1740046035,\n    \"action\": \"8d061841-cef0-509a-8ee3-de91c7390d99\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/metadata/upgrade/resources.json\",\n    \"code\": 200,\n    \"pagination\": {\n      \"count\": 1,\n      \"page\": 1,\n      \"limit\": 20\n    }\n  },\n  \"body\": [\n    {\n      \"id\": \"97f5415f-2e09-4171-a99e-1908e876662b\",\n      \"user_id\": null,\n      \"slug\": \"important tag in v4 format\",\n      \"is_shared\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0d08c9a-0d8c-4fea-bb64-a21a7790e213",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "tags.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a46980f-fdeb-4cc0-9e26-f29afdd3f0c3",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "tags.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ebf78ec6-8525-452e-b614-c2cd209335ae",
+              "name": "Access restricted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "tags.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Access restricted to administrators.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 403\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f578e12-9972-49fd-8d4e-82dc7f4b267d",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "upgrade",
+                    "tags.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[is-shared]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The <MODEL> does not exist.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 404\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://passbolt.local",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "dacc3385-fa54-4275-bb14-d6bf581e33e7",
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata upgrade API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.\n\nContact Support:\n Email: contact@passbolt.com",
+      "type": "text/plain"
+    }
+  }
+}

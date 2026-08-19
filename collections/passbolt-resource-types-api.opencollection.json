@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Resource types API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Resource types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get multiple resource types.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/resource-types.json",
+            "params": [
+              {
+                "name": "contain[resources_count]",
+                "value": "",
+                "type": "query",
+                "description": "Get the number of count of resources associated to this type of resource."
+              },
+              {
+                "name": "filter[is-deleted]",
+                "value": "",
+                "type": "query",
+                "description": "Only return deleted elements."
+              }
+            ]
+          },
+          "docs": "Get multiple resource types."
+        },
+        {
+          "info": {
+            "name": "Get a resource type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/resource-types/:resourceTypeId.json",
+            "params": [
+              {
+                "name": "resourceTypeId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the resource type being manipulated."
+              }
+            ]
+          },
+          "docs": "Get a resource type."
+        },
+        {
+          "info": {
+            "name": "Update resource type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://passbolt.local/resource-types/:resourceTypeId.json",
+            "params": [
+              {
+                "name": "resourceTypeId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the resource type being manipulated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update resource type."
+        },
+        {
+          "info": {
+            "name": "Delete a resource type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://passbolt.local/resource-types/:resourceTypeId.json",
+            "params": [
+              {
+                "name": "resourceTypeId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the resource type being manipulated."
+              }
+            ]
+          },
+          "docs": "Delete a resource type."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

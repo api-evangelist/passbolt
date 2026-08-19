@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Multi-Factor Authentication API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Multi-Factor Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check multi-factor authentication.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/mfa/verify/:mfaProviderName.json",
+            "params": [
+              {
+                "name": "mfaProviderName",
+                "value": "",
+                "type": "path",
+                "description": "Name for the MFA provider."
+              }
+            ]
+          },
+          "docs": "Check if MFA validation is needed. `400` means that this kind of MFA is not required.\n"
+        },
+        {
+          "info": {
+            "name": "Attempt multi-factor authentication.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/mfa/verify/:mfaProviderName.json",
+            "params": [
+              {
+                "name": "mfaProviderName",
+                "value": "",
+                "type": "path",
+                "description": "Name for the MFA provider."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Attempt multi-factor authentication."
+        },
+        {
+          "info": {
+            "name": "Information about MFA requirements.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/mfa/verify/error.json"
+          },
+          "docs": "Information about MFA requirements."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Authentication (GPGAuth) API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication (GPGAuth)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check authentication status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/auth/is-authenticated.json",
+            "auth": {
+              "type": "apikey",
+              "key": "passbolt_session",
+              "value": "{{passbolt_session}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Can be used as a session keep-alive."
+        },
+        {
+          "info": {
+            "name": "Log in.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/auth/login.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Log in."
+        },
+        {
+          "info": {
+            "name": "Log out.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/auth/logout.json",
+            "auth": {
+              "type": "apikey",
+              "key": "passbolt_session",
+              "value": "{{passbolt_session}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Log out."
+        },
+        {
+          "info": {
+            "name": "Get the server's public PGP key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/auth/verify.json"
+          },
+          "docs": "Can be used to validate data signature."
+        },
+        {
+          "info": {
+            "name": "Verify the server's identity.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/auth/verify.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify the server's identity."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

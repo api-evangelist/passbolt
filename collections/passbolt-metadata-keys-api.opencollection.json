@@ -1,0 +1,132 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata keys API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get metadata keys.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/metadata/keys.json",
+            "params": [
+              {
+                "name": "filter[deleted]",
+                "value": "",
+                "type": "query",
+                "description": "Filter for deleted elements."
+              },
+              {
+                "name": "filter[expired]",
+                "value": "",
+                "type": "query",
+                "description": "Filter for expired elements."
+              },
+              {
+                "name": "contain[metadata_private_keys]",
+                "value": "",
+                "type": "query",
+                "description": "Add metadata private keys in response."
+              }
+            ]
+          },
+          "docs": "Get metadata keys."
+        },
+        {
+          "info": {
+            "name": "Create a metadata key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/metadata/keys.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a metadata key."
+        },
+        {
+          "info": {
+            "name": "Mark a metadata key as expired.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://passbolt.local/metadata/keys/:metadataKeyId.json",
+            "params": [
+              {
+                "name": "metadataKeyId",
+                "value": "",
+                "type": "path",
+                "description": "The metadata key identifier being manipulated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Mark a metadata key as expired."
+        },
+        {
+          "info": {
+            "name": "Delete a metadata key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://passbolt.local/metadata/keys/:metadataKeyId.json",
+            "params": [
+              {
+                "name": "metadataKeyId",
+                "value": "",
+                "type": "path",
+                "description": "The metadata key identifier being manipulated."
+              }
+            ]
+          },
+          "docs": "Delete a metadata key."
+        },
+        {
+          "info": {
+            "name": "Get metadata keys settings.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/metadata/keys/settings.json"
+          },
+          "docs": "Get metadata keys settings."
+        },
+        {
+          "info": {
+            "name": "Update metadata keys settings.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/metadata/keys/settings.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update metadata keys settings."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

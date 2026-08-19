@@ -1,0 +1,1555 @@
+{
+  "item": [
+    {
+      "id": "254cef59-1ddb-4ebb-b36a-c756c3f697d1",
+      "name": "Resources",
+      "description": {
+        "content": "A resource holds the metadata for its secrets.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6eb722cf-38ab-46cc-9d5d-d4837cf33787",
+          "name": "Get multiple resources.",
+          "request": {
+            "name": "Get multiple resources.",
+            "description": {},
+            "url": {
+              "path": [
+                "resources.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "contain[creator]",
+                  "value": "<integer>",
+                  "description": "Add creator to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[favorite]",
+                  "value": "<integer>",
+                  "description": "Add favorite to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[modifier]",
+                  "value": "<integer>",
+                  "description": "Add modifier to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[secret]",
+                  "value": "<integer>",
+                  "description": "Add secrets to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[resource-type]",
+                  "value": "<integer>",
+                  "description": "Add resource type to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[permission]",
+                  "value": "<integer>",
+                  "description": "Add permission to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[permissions]",
+                  "value": "<integer>",
+                  "description": "Add permissions to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[permissions.user.profile]",
+                  "value": "<integer>",
+                  "description": "Add user profile to permissions in response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[permissions.group]",
+                  "value": "<integer>",
+                  "description": "Add group to permissions in response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[is-favorite]",
+                  "value": "<boolean>",
+                  "description": "Only return favorite elements."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[is-shared-with-group]",
+                  "value": "<uuid>",
+                  "description": "Only return elements shared with group."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[is-owned-by-me]",
+                  "value": "<boolean>",
+                  "description": "Only return elements owned by yourself."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[is-shared-with-me]",
+                  "value": "<boolean>",
+                  "description": "Only return elements shared to yourself and you are not owner."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[has-id]",
+                  "value": "<uuid>",
+                  "description": "Only return elements filtered by their id."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[has-parent]",
+                  "value": "<uuid>",
+                  "description": "Only return elements filtered by parent folder."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[metadata_key_type]",
+                  "value": "<uuid>",
+                  "description": "Only return elements that match the metadata key type"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7025a20c-7122-4dbc-aaed-20ac50d66c96",
+              "name": "Operation is successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contain[creator]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[favorite]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[modifier]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[secret]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[resource-type]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permission]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions.user.profile]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions.group]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[is-favorite]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[is-shared-with-group]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[is-owned-by-me]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[is-shared-with-me]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[has-id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[has-parent]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[metadata_key_type]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"success\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/resources.json\",\n    \"code\": 200,\n    \"pagination\": {\n      \"count\": 2,\n      \"page\": 1,\n      \"limit\": null\n    }\n  },\n  \"body\": [\n    {\n      \"id\": \"ae60d89c-f13b-4fb1-b2dc-c8dc806cac88\",\n      \"metadata\": \"-----BEGIN PGP MESSAGE-----\",\n      \"metadata_key_id\": \"0194fec1-65fa-7b6f-935a-9541c1c13281\",\n      \"metadata_key_type\": \"shared_key\",\n      \"created\": \"2024-07-08T08:06:25+00:00\",\n      \"modified\": \"2024-07-08T08:06:25+00:00\",\n      \"created_by\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n      \"modified_by\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n      \"resource_type_id\": \"a28a04cd-6f53-518a-967c-9963bf9cec51\",\n      \"deleted\": false,\n      \"expired\": null,\n      \"folder_parent_id\": null,\n      \"personal\": true\n    },\n    {\n      \"id\": \"ae60d89c-f13b-4fb1-b2dc-c8dc806cac89\",\n      \"metadata\": \"-----BEGIN PGP MESSAGE-----\",\n      \"metadata_key_id\": \"0194fec1-65fa-7b6f-935a-9541c1c13281\",\n      \"metadata_key_type\": \"shared_key\",\n      \"created\": \"2024-08-08T08:06:25+00:00\",\n      \"modified\": \"2024-08-08T08:06:25+00:00\",\n      \"created_by\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n      \"modified_by\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n      \"resource_type_id\": \"a28a04cd-6f53-518a-967c-9963bf9cec51\",\n      \"deleted\": false,\n      \"expired\": null,\n      \"folder_parent_id\": null,\n      \"personal\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18ee4f5c-53ba-40be-a8f0-855bbfd8eee9",
+              "name": "metadata_key_type filter is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contain[creator]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[favorite]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[modifier]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[secret]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[resource-type]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permission]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions.user.profile]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions.group]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[is-favorite]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[is-shared-with-group]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[is-owned-by-me]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[is-shared-with-me]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[has-id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[has-parent]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[metadata_key_type]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce27097c-be40-4a78-b7d6-a05a9e6a7a12",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contain[creator]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[favorite]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[modifier]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[secret]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[resource-type]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permission]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions.user.profile]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions.group]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[is-favorite]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[is-shared-with-group]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[is-owned-by-me]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[is-shared-with-me]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[has-id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[has-parent]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[metadata_key_type]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be71acfc-500b-4faf-986b-d6ea81fab543",
+          "name": "Create a resource.",
+          "request": {
+            "name": "Create a resource.",
+            "description": {},
+            "url": {
+              "path": [
+                "resources.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"expired\": \"<dateTime>\",\n  \"folder_parent_id\": \"<uuid>\",\n  \"metadata\": \"<string>\",\n  \"metadata_key_id\": \"<uuid>\",\n  \"metadata_key_type\": \"<string>\",\n  \"resource_type_id\": \"<uuid>\",\n  \"secrets\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0b0c9c33-312a-424d-bfb6-4f3951114a66",
+              "name": "Operation is successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ae60d89c-f13b-4fb1-b2dc-c8dc806cac88\",\n  \"metadata\": \"-----BEGIN PGP MESSAGE-----\",\n  \"metadata_key_id\": \"0194fec1-65fa-7b6f-935a-9541c1c13281\",\n  \"metadata_key_type\": \"shared_key\",\n  \"deleted\": false,\n  \"created\": \"2024-07-08T08:06:25+00:00\",\n  \"modified\": \"2024-07-08T08:06:25+00:00\",\n  \"created_by\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n  \"modified_by\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n  \"resource_type_id\": \"a28a04cd-6f53-518a-967c-9963bf9cec51\",\n  \"expired\": null,\n  \"folder_parent_id\": null,\n  \"personal\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4fe662a-d160-4b1c-8e74-86c9e4ee6998",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "725b0ca3-ed20-4b60-8679-145a8eb3500a",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ebe96ea-fa6a-48ba-9e47-a78b3c15ef66",
+          "name": "Get a resource.",
+          "request": {
+            "name": "Get a resource.",
+            "description": {},
+            "url": {
+              "path": [
+                "resources",
+                "{{resourceId}}.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "contain[creator]",
+                  "value": "<integer>",
+                  "description": "Add creator to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[favorite]",
+                  "value": "<integer>",
+                  "description": "Add favorite to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[modifier]",
+                  "value": "<integer>",
+                  "description": "Add modifier to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[secret]",
+                  "value": "<integer>",
+                  "description": "Add secrets to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[resource-type]",
+                  "value": "<integer>",
+                  "description": "Add resource type to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[permission]",
+                  "value": "<integer>",
+                  "description": "Add permission to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[permissions]",
+                  "value": "<integer>",
+                  "description": "Add permissions to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[permissions.user.profile]",
+                  "value": "<integer>",
+                  "description": "Add user profile to permissions in response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[permissions.group]",
+                  "value": "<integer>",
+                  "description": "Add group to permissions in response body."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7a9dd714-c44f-4d49-881d-88b8cd96bce6",
+              "name": "Operation is successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "{{resourceId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contain[creator]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[favorite]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[modifier]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[secret]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[resource-type]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permission]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions.user.profile]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions.group]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"success\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/resources/ae60d89c-f13b-4fb1-b2dc-c8dc806cac88.json\",\n    \"code\": 200\n  },\n  \"body\": {\n    \"id\": \"ae60d89c-f13b-4fb1-b2dc-c8dc806cac88\",\n    \"metadata\": \"-----BEGIN PGP MESSAGE-----\",\n    \"metadata_key_id\": \"0194fec1-65fa-7b6f-935a-9541c1c13281\",\n    \"metadata_key_type\": \"shared_key\",\n    \"deleted\": false,\n    \"created\": \"2024-07-08T08:06:25+00:00\",\n    \"modified\": \"2024-07-08T08:06:25+00:00\",\n    \"created_by\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n    \"modified_by\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n    \"resource_type_id\": \"a28a04cd-6f53-518a-967c-9963bf9cec51\",\n    \"expired\": null,\n    \"folder_parent_id\": null,\n    \"personal\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df6d30d5-2837-4c76-87e2-1f26b4cb1c27",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "{{resourceId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contain[creator]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[favorite]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[modifier]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[secret]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[resource-type]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permission]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions.user.profile]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions.group]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5f5d1e4-5324-49bd-a931-86796f39db0b",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "{{resourceId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contain[creator]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[favorite]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[modifier]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[secret]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[resource-type]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permission]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions.user.profile]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions.group]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b15b5377-bfe2-4ab7-bcd6-dd847b74a6ca",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "{{resourceId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contain[creator]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[favorite]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[modifier]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[secret]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[resource-type]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permission]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions.user.profile]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[permissions.group]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The <MODEL> does not exist.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 404\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bbf0c9d5-894a-4208-8628-6ec72cae3825",
+          "name": "Update a resource.",
+          "request": {
+            "name": "Update a resource.",
+            "description": {
+              "content": "If the password you are updating has been shared with 7 users, the `secrets` key will need to be an array of 7 objects.\n\nYou must encrypt and sign the new plaintext passwords using the recipient public key and the current user secret key. You can then create a list which include one object per user: the `data` key holds the encrypted plaintext password and `user_id` holds the user UUID.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "resources",
+                "{{resourceId}}.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"expired\": \"<dateTime>\",\n  \"folder_parent_id\": \"<uuid>\",\n  \"metadata\": \"<string>\",\n  \"metadata_key_id\": \"<uuid>\",\n  \"metadata_key_type\": \"<string>\",\n  \"resource_type_id\": \"<uuid>\",\n  \"secrets\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0db2ad70-b1a1-46dc-8973-ce79eeaf7294",
+              "name": "Operation is successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "{{resourceId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ae60d89c-f13b-4fb1-b2dc-c8dc806cac88\",\n  \"metadata\": \"-----BEGIN PGP MESSAGE-----\",\n  \"metadata_key_id\": \"0194fec1-65fa-7b6f-935a-9541c1c13281\",\n  \"metadata_key_type\": \"shared_key\",\n  \"deleted\": false,\n  \"created\": \"2024-07-08T08:06:25+00:00\",\n  \"modified\": \"2024-07-08T08:06:25+00:00\",\n  \"created_by\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n  \"modified_by\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n  \"resource_type_id\": \"a28a04cd-6f53-518a-967c-9963bf9cec51\",\n  \"expired\": null,\n  \"folder_parent_id\": null,\n  \"personal\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4339a451-5b9b-454f-bab1-b9d24a19c849",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "{{resourceId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b843a59-41db-41cd-950b-cf4c1616d535",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "{{resourceId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d454784-14d5-493d-b291-21768a2c88da",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "{{resourceId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The <MODEL> does not exist.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 404\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5329f078-33bc-4cc9-b75d-2b7618a25473",
+          "name": "Delete a resource.",
+          "request": {
+            "name": "Delete a resource.",
+            "description": {},
+            "url": {
+              "path": [
+                "resources",
+                "{{resourceId}}.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a2df9520-65a4-4227-ba03-558e09f81840",
+              "name": "Operation is successful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "{{resourceId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"success\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"<SUCCESS MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 200\n  },\n  \"body\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19daab52-f19c-495d-9bc7-656e826226ed",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "{{resourceId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "948b1b7a-0aaf-49ed-9fb5-2cfbb784377c",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "{{resourceId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8fcaa567-0346-4476-8dd4-608b1e08478d",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "{{resourceId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The <MODEL> does not exist.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 404\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://passbolt.local",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) ID for the resource being manipulated.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<uuid>",
+      "key": "resourceId"
+    }
+  ],
+  "info": {
+    "_postman_id": "3cee9912-9adb-41d4-8cbf-ce3b8792f4fc",
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Resources API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.\n\nContact Support:\n Email: contact@passbolt.com",
+      "type": "text/plain"
+    }
+  }
+}

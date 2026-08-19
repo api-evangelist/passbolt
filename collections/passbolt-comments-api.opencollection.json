@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Comments API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Comments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update a comment.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://passbolt.local/comments/:commentId.json",
+            "params": [
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the comment being manipulated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a comment."
+        },
+        {
+          "info": {
+            "name": "Delete a comment.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://passbolt.local/comments/:commentId.json",
+            "params": [
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the comment being manipulated."
+              }
+            ]
+          },
+          "docs": "Delete a comment."
+        },
+        {
+          "info": {
+            "name": "Get comments for a resource.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/comments/resource/:resourceId.json",
+            "params": [
+              {
+                "name": "resourceId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the resource being manipulated."
+              },
+              {
+                "name": "contain[creator]",
+                "value": "",
+                "type": "query",
+                "description": "Add creator to response body."
+              },
+              {
+                "name": "contain[modifier]",
+                "value": "",
+                "type": "query",
+                "description": "Add modifier to response body."
+              }
+            ]
+          },
+          "docs": "Get comments for a resource."
+        },
+        {
+          "info": {
+            "name": "Add a comment.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/comments/resource/:resourceId.json",
+            "params": [
+              {
+                "name": "resourceId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the resource being manipulated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a comment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

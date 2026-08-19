@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Favorites API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Favorites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Unset a resource as favorite.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://passbolt.local/favorite/:favoriteId.json",
+            "params": [
+              {
+                "name": "favoriteId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the favorite being manipulated."
+              }
+            ]
+          },
+          "docs": "Unset a resource as favorite."
+        },
+        {
+          "info": {
+            "name": "Set a resource as favorite.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/favorite/:foreignModel/:foreignId.json",
+            "params": [
+              {
+                "name": "foreignModel",
+                "value": "",
+                "type": "path",
+                "description": "Type for the foreign model being set as favorite."
+              },
+              {
+                "name": "foreignId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the foreign element being manipulated."
+              }
+            ]
+          },
+          "docs": "Set a resource as favorite."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,257 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Resources API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Resources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get multiple resources.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/resources.json",
+            "params": [
+              {
+                "name": "contain[creator]",
+                "value": "",
+                "type": "query",
+                "description": "Add creator to response body."
+              },
+              {
+                "name": "contain[favorite]",
+                "value": "",
+                "type": "query",
+                "description": "Add favorite to response body."
+              },
+              {
+                "name": "contain[modifier]",
+                "value": "",
+                "type": "query",
+                "description": "Add modifier to response body."
+              },
+              {
+                "name": "contain[secret]",
+                "value": "",
+                "type": "query",
+                "description": "Add secrets to response body."
+              },
+              {
+                "name": "contain[resource-type]",
+                "value": "",
+                "type": "query",
+                "description": "Add resource type to response body."
+              },
+              {
+                "name": "contain[permission]",
+                "value": "",
+                "type": "query",
+                "description": "Add permission to response body."
+              },
+              {
+                "name": "contain[permissions]",
+                "value": "",
+                "type": "query",
+                "description": "Add permissions to response body."
+              },
+              {
+                "name": "contain[permissions.user.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add user profile to permissions in response body."
+              },
+              {
+                "name": "contain[permissions.group]",
+                "value": "",
+                "type": "query",
+                "description": "Add group to permissions in response body."
+              },
+              {
+                "name": "filter[is-favorite]",
+                "value": "",
+                "type": "query",
+                "description": "Only return favorite elements."
+              },
+              {
+                "name": "filter[is-shared-with-group]",
+                "value": "",
+                "type": "query",
+                "description": "Only return elements shared with group."
+              },
+              {
+                "name": "filter[is-owned-by-me]",
+                "value": "",
+                "type": "query",
+                "description": "Only return elements owned by yourself."
+              },
+              {
+                "name": "filter[is-shared-with-me]",
+                "value": "",
+                "type": "query",
+                "description": "Only return elements shared to yourself and you are not owner."
+              },
+              {
+                "name": "filter[has-id]",
+                "value": "",
+                "type": "query",
+                "description": "Only return elements filtered by their id."
+              },
+              {
+                "name": "filter[has-parent]",
+                "value": "",
+                "type": "query",
+                "description": "Only return elements filtered by parent folder."
+              },
+              {
+                "name": "filter[metadata_key_type]",
+                "value": "",
+                "type": "query",
+                "description": "Only return elements that match the metadata key type"
+              }
+            ]
+          },
+          "docs": "Get multiple resources."
+        },
+        {
+          "info": {
+            "name": "Create a resource.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/resources.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a resource."
+        },
+        {
+          "info": {
+            "name": "Get a resource.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/resources/:resourceId.json",
+            "params": [
+              {
+                "name": "resourceId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the resource being manipulated."
+              },
+              {
+                "name": "contain[creator]",
+                "value": "",
+                "type": "query",
+                "description": "Add creator to response body."
+              },
+              {
+                "name": "contain[favorite]",
+                "value": "",
+                "type": "query",
+                "description": "Add favorite to response body."
+              },
+              {
+                "name": "contain[modifier]",
+                "value": "",
+                "type": "query",
+                "description": "Add modifier to response body."
+              },
+              {
+                "name": "contain[secret]",
+                "value": "",
+                "type": "query",
+                "description": "Add secrets to response body."
+              },
+              {
+                "name": "contain[resource-type]",
+                "value": "",
+                "type": "query",
+                "description": "Add resource type to response body."
+              },
+              {
+                "name": "contain[permission]",
+                "value": "",
+                "type": "query",
+                "description": "Add permission to response body."
+              },
+              {
+                "name": "contain[permissions]",
+                "value": "",
+                "type": "query",
+                "description": "Add permissions to response body."
+              },
+              {
+                "name": "contain[permissions.user.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add user profile to permissions in response body."
+              },
+              {
+                "name": "contain[permissions.group]",
+                "value": "",
+                "type": "query",
+                "description": "Add group to permissions in response body."
+              }
+            ]
+          },
+          "docs": "Get a resource."
+        },
+        {
+          "info": {
+            "name": "Update a resource.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://passbolt.local/resources/:resourceId.json",
+            "params": [
+              {
+                "name": "resourceId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the resource being manipulated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "If the password you are updating has been shared with 7 users, the `secrets` key will need to be an array of 7 objects.\n\nYou must encrypt and sign the new plaintext passwords using the recipient public key and the current user secret key. You can then create a list which include one object per user: the `data` key holds the encrypted plaintext password and `user_id` holds the user UUID.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a resource.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://passbolt.local/resources/:resourceId.json",
+            "params": [
+              {
+                "name": "resourceId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the resource being manipulated."
+              }
+            ]
+          },
+          "docs": "Delete a resource."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

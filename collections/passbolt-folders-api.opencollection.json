@@ -1,0 +1,355 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Folders API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Folders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get multiple folders.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/folders.json",
+            "params": [
+              {
+                "name": "contain[children_resources]",
+                "value": "",
+                "type": "query",
+                "description": "Add children resources to response body."
+              },
+              {
+                "name": "contain[children_folders]",
+                "value": "",
+                "type": "query",
+                "description": "Add children folders to response body."
+              },
+              {
+                "name": "contain[creator]",
+                "value": "",
+                "type": "query",
+                "description": "Add creator to response body."
+              },
+              {
+                "name": "contain[creator.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add creator and their profile to response body."
+              },
+              {
+                "name": "contain[modifier]",
+                "value": "",
+                "type": "query",
+                "description": "Add modifier to response body."
+              },
+              {
+                "name": "contain[modifier.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add modifier and their profile to response body."
+              },
+              {
+                "name": "contain[permission]",
+                "value": "",
+                "type": "query",
+                "description": "Add permission to response body."
+              },
+              {
+                "name": "contain[permissions]",
+                "value": "",
+                "type": "query",
+                "description": "Add permissions to response body."
+              },
+              {
+                "name": "contain[permissions.user.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add user profile to permissions in response body."
+              },
+              {
+                "name": "contain[permissions.group]",
+                "value": "",
+                "type": "query",
+                "description": "Add group to permissions in response body."
+              },
+              {
+                "name": "filter[has-id]",
+                "value": "",
+                "type": "query",
+                "description": "Only return elements filtered by their id."
+              },
+              {
+                "name": "filter[has-parent]",
+                "value": "",
+                "type": "query",
+                "description": "Only return elements filtered by parent folder."
+              },
+              {
+                "name": "filter[search]",
+                "value": "",
+                "type": "query",
+                "description": "Filter using a keyword or a string."
+              }
+            ]
+          },
+          "docs": "Get multiple folders."
+        },
+        {
+          "info": {
+            "name": "Create a folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/folders.json",
+            "params": [
+              {
+                "name": "contain[children_resources]",
+                "value": "",
+                "type": "query",
+                "description": "Add children resources to response body."
+              },
+              {
+                "name": "contain[children_folders]",
+                "value": "",
+                "type": "query",
+                "description": "Add children folders to response body."
+              },
+              {
+                "name": "contain[creator]",
+                "value": "",
+                "type": "query",
+                "description": "Add creator to response body."
+              },
+              {
+                "name": "contain[modifier]",
+                "value": "",
+                "type": "query",
+                "description": "Add modifier to response body."
+              },
+              {
+                "name": "contain[permission]",
+                "value": "",
+                "type": "query",
+                "description": "Add permission to response body."
+              },
+              {
+                "name": "contain[permissions]",
+                "value": "",
+                "type": "query",
+                "description": "Add permissions to response body."
+              },
+              {
+                "name": "contain[permissions.user.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add user profile to permissions in response body."
+              },
+              {
+                "name": "contain[permissions.group]",
+                "value": "",
+                "type": "query",
+                "description": "Add group to permissions in response body."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> *Encrypted metadata for this item is not supported on all clients.*\n"
+        },
+        {
+          "info": {
+            "name": "Get a folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/folders/:folderId.json",
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the folder being manipulated."
+              },
+              {
+                "name": "contain[children_resources]",
+                "value": "",
+                "type": "query",
+                "description": "Add children resources to response body."
+              },
+              {
+                "name": "contain[children_folders]",
+                "value": "",
+                "type": "query",
+                "description": "Add children folders to response body."
+              },
+              {
+                "name": "contain[creator]",
+                "value": "",
+                "type": "query",
+                "description": "Add creator to response body."
+              },
+              {
+                "name": "contain[creator.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add creator and their profile to response body."
+              },
+              {
+                "name": "contain[modifier]",
+                "value": "",
+                "type": "query",
+                "description": "Add modifier to response body."
+              },
+              {
+                "name": "contain[modifier.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add modifier and their profile to response body."
+              },
+              {
+                "name": "contain[permission]",
+                "value": "",
+                "type": "query",
+                "description": "Add permission to response body."
+              },
+              {
+                "name": "contain[permissions]",
+                "value": "",
+                "type": "query",
+                "description": "Add permissions to response body."
+              },
+              {
+                "name": "contain[permissions.user.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add user profile to permissions in response body."
+              },
+              {
+                "name": "contain[permissions.group]",
+                "value": "",
+                "type": "query",
+                "description": "Add group to permissions in response body."
+              },
+              {
+                "name": "filter[has-id]",
+                "value": "",
+                "type": "query",
+                "description": "Only return elements filtered by their id."
+              }
+            ]
+          },
+          "docs": "Get a folder."
+        },
+        {
+          "info": {
+            "name": "Update a folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://passbolt.local/folders/:folderId.json",
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the folder being manipulated."
+              },
+              {
+                "name": "contain[children_resources]",
+                "value": "",
+                "type": "query",
+                "description": "Add children resources to response body."
+              },
+              {
+                "name": "contain[children_folders]",
+                "value": "",
+                "type": "query",
+                "description": "Add children folders to response body."
+              },
+              {
+                "name": "contain[creator]",
+                "value": "",
+                "type": "query",
+                "description": "Add creator to response body."
+              },
+              {
+                "name": "contain[modifier]",
+                "value": "",
+                "type": "query",
+                "description": "Add modifier to response body."
+              },
+              {
+                "name": "contain[permission]",
+                "value": "",
+                "type": "query",
+                "description": "Add permission to response body."
+              },
+              {
+                "name": "contain[permissions]",
+                "value": "",
+                "type": "query",
+                "description": "Add permissions to response body."
+              },
+              {
+                "name": "contain[permissions.user.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add user profile to permissions in response body."
+              },
+              {
+                "name": "contain[permissions.group]",
+                "value": "",
+                "type": "query",
+                "description": "Add group to permissions in response body."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> *Encrypted metadata for this item is not supported on all clients.*\n\nThe current user must have the “update” or “owner” permission on the folder.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://passbolt.local/folders/:folderId.json",
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the folder being manipulated."
+              },
+              {
+                "name": "cascade",
+                "value": "",
+                "type": "query",
+                "description": "Delete element and its children elements."
+              }
+            ]
+          },
+          "docs": "Delete a folder."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

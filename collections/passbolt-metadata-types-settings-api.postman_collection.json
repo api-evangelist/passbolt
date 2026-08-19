@@ -1,0 +1,450 @@
+{
+  "item": [
+    {
+      "id": "40f87c6f-045b-4f18-be79-bcc244b03514",
+      "name": "Metadata types settings",
+      "description": {
+        "content": "Retrieve information about the resource types settings selected by the administrators",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "76455c23-ad3c-40b5-82b4-30d57ff45768",
+          "name": "Get metadata types settings",
+          "request": {
+            "name": "Get metadata types settings",
+            "description": {
+              "content": "Get information from the resource types settings, as selected by the administrators.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metadata",
+                "types",
+                "settings.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fc559c87-cd50-45f0-b309-0c990ef7f9ed",
+              "name": "Operation is successful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "types",
+                    "settings.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"0b2c4b00-561b-4d37-a27d-7499dc659b5f\",\n    \"status\": \"success\",\n    \"servertime\": 1740387841,\n    \"action\": \"11ffb449-cd7d-5dc0-8dae-501ef3c9e8a7\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/metadata/types/settings.json\",\n    \"code\": 200\n  },\n  \"body\": {\n    \"default_resource_types\": \"v5\",\n    \"default_folder_type\": \"v4\",\n    \"default_tag_type\": \"v4\",\n    \"default_comment_type\": \"v4\",\n    \"allow_creation_of_v5_resources\": true,\n    \"allow_creation_of_v5_folders\": false,\n    \"allow_creation_of_v5_tags\": false,\n    \"allow_creation_of_v5_comments\": false,\n    \"allow_creation_of_v4_resources\": true,\n    \"allow_creation_of_v4_folders\": true,\n    \"allow_creation_of_v4_tags\": true,\n    \"allow_creation_of_v4_comments\": true,\n    \"allow_v5_v4_downgrade\": false,\n    \"allow_v4_v5_upgrade\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ded55c76-805b-418d-91c1-743af9999a3f",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "types",
+                    "settings.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6dcd5e8-bfd2-4eb0-90d8-c694c08dd7ec",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "types",
+                    "settings.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The <MODEL> does not exist.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 404\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bef96f61-128c-4adc-b0c2-dffa7357a3fa",
+          "name": "Upgrade a resource types settings",
+          "request": {
+            "name": "Upgrade a resource types settings",
+            "description": {
+              "content": "Administrators can define which resource type is the default",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metadata",
+                "types",
+                "settings.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"default_resource_types\": \"<string>\",\n  \"default_folder_type\": \"<string>\",\n  \"default_tag_type\": \"<string>\",\n  \"default_comment_type\": \"<string>\",\n  \"allow_creation_of_v5_resources\": \"<boolean>\",\n  \"allow_creation_of_v5_folders\": \"<boolean>\",\n  \"allow_creation_of_v5_tags\": \"<boolean>\",\n  \"allow_creation_of_v5_comments\": \"<boolean>\",\n  \"allow_creation_of_v4_resources\": \"<boolean>\",\n  \"allow_creation_of_v4_folders\": \"<boolean>\",\n  \"allow_creation_of_v4_tags\": \"<boolean>\",\n  \"allow_creation_of_v4_comments\": \"<boolean>\",\n  \"allow_v5_v4_downgrade\": \"<boolean>\",\n  \"allow_v4_v5_upgrade\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ff3595b4-280e-4736-bb31-d900f28a0f11",
+              "name": "Operation is successful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "types",
+                    "settings.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"0b2c4b00-561b-4d37-a27d-7499dc659b5f\",\n    \"status\": \"success\",\n    \"servertime\": 1740387841,\n    \"action\": \"11ffb449-cd7d-5dc0-8dae-501ef3c9e8a7\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/metadata/types/settings.json\",\n    \"code\": 200\n  },\n  \"body\": {\n    \"default_resource_types\": \"v5\",\n    \"default_folder_type\": \"v4\",\n    \"default_tag_type\": \"v4\",\n    \"default_comment_type\": \"v4\",\n    \"allow_creation_of_v5_resources\": true,\n    \"allow_creation_of_v5_folders\": false,\n    \"allow_creation_of_v5_tags\": false,\n    \"allow_creation_of_v5_comments\": false,\n    \"allow_creation_of_v4_resources\": true,\n    \"allow_creation_of_v4_folders\": true,\n    \"allow_creation_of_v4_tags\": true,\n    \"allow_creation_of_v4_comments\": true,\n    \"allow_v5_v4_downgrade\": false,\n    \"allow_v4_v5_upgrade\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df5e67b1-3dd5-4f14-986b-0afa595926c0",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "types",
+                    "settings.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4086d2a6-ffc0-4c73-949e-8ff03c710d72",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "types",
+                    "settings.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35718677-1498-4c4b-a6a5-98f89d870776",
+              "name": "Access restricted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metadata",
+                    "types",
+                    "settings.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Access restricted to administrators.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 403\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://passbolt.local",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a89ca69d-d220-4cdc-9768-fdf61fc8b88b",
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata types settings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.\n\nContact Support:\n Email: contact@passbolt.com",
+      "type": "text/plain"
+    }
+  }
+}

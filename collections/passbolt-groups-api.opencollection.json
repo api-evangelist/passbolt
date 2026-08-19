@@ -1,0 +1,251 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Groups API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get multiple groups.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/groups.json",
+            "params": [
+              {
+                "name": "contain[modifier]",
+                "value": "",
+                "type": "query",
+                "description": "Add modifier to response body."
+              },
+              {
+                "name": "contain[modifier.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add modifier and their profile to response body."
+              },
+              {
+                "name": "contain[my_group_user]",
+                "value": "",
+                "type": "query",
+                "description": "Add `my_group_user` to groups in response body."
+              },
+              {
+                "name": "contain[groups_users]",
+                "value": "",
+                "type": "query",
+                "description": "Add group users to groups in response body."
+              },
+              {
+                "name": "contain[groups_users.user]",
+                "value": "",
+                "type": "query",
+                "description": "Add group users' user data to groups in response body."
+              },
+              {
+                "name": "contain[groups_users.user.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add group users' user profiles to groups in response body."
+              },
+              {
+                "name": "contain[groups_users.user.gpgkey]",
+                "value": "",
+                "type": "query",
+                "description": "Add group users' user gpg key to groups in response body."
+              },
+              {
+                "name": "filter[has-users]",
+                "value": "",
+                "type": "query",
+                "description": "Only return elements filtered by users."
+              },
+              {
+                "name": "filter[has-managers]",
+                "value": "",
+                "type": "query",
+                "description": "Only return elements filtered by managers."
+              }
+            ]
+          },
+          "docs": "Get multiple groups."
+        },
+        {
+          "info": {
+            "name": "Create a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/groups.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Please note that only users with Admin role can create a group."
+        },
+        {
+          "info": {
+            "name": "Get a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/groups/:groupId.json",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the group being manipulated."
+              },
+              {
+                "name": "contain[modifier]",
+                "value": "",
+                "type": "query",
+                "description": "Add modifier to response body."
+              },
+              {
+                "name": "contain[modifier.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add modifier and their profile to response body."
+              },
+              {
+                "name": "contain[users]",
+                "value": "",
+                "type": "query",
+                "description": "Add users to response body."
+              },
+              {
+                "name": "contain[my_group_user]",
+                "value": "",
+                "type": "query",
+                "description": "Add `my_group_user` to groups in response body."
+              },
+              {
+                "name": "contain[groups_users]",
+                "value": "",
+                "type": "query",
+                "description": "Add group users to groups in response body."
+              },
+              {
+                "name": "contain[groups_users.user]",
+                "value": "",
+                "type": "query",
+                "description": "Add group users' user data to groups in response body."
+              },
+              {
+                "name": "contain[groups_users.user.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add group users' user profiles to groups in response body."
+              },
+              {
+                "name": "contain[groups_users.user.gpgkey]",
+                "value": "",
+                "type": "query",
+                "description": "Add group users' user gpg key to groups in response body."
+              }
+            ]
+          },
+          "docs": "Get a group."
+        },
+        {
+          "info": {
+            "name": "Update a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://passbolt.local/groups/:groupId.json",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the group being manipulated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a group."
+        },
+        {
+          "info": {
+            "name": "Delete a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://passbolt.local/groups/:groupId.json",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the group being manipulated."
+              }
+            ]
+          },
+          "docs": "Only a group manager or a user with administrator role can delete a group. A group cannot be deleted as long as it is the sole owner of a shared resource or folder.\n"
+        },
+        {
+          "info": {
+            "name": "Dry run a group update.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://passbolt.local/groups/:groupId/dry-run.json",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the group being manipulated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Dry run a group update."
+        },
+        {
+          "info": {
+            "name": "Dry run a group deletion.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://passbolt.local/groups/:groupId/dry-run.json",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the group being manipulated."
+              }
+            ]
+          },
+          "docs": "Dry run a group deletion."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

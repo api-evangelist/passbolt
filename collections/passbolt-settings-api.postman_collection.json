@@ -1,0 +1,201 @@
+{
+  "item": [
+    {
+      "id": "87099466-0db7-4671-852a-60cebf3e1588",
+      "name": "Settings",
+      "description": {
+        "content": "Retrieve the server settings",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c1e1620e-8d76-4e1e-981e-482aba149d39",
+          "name": "Get the server settings.",
+          "request": {
+            "name": "Get the server settings.",
+            "description": {},
+            "url": {
+              "path": [
+                "settings.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "df36a23a-e2c4-4bdc-9841-e3d4a4ca10ea",
+              "name": "Operation is successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"2103c923-6b0c-42f9-b23f-0cceda9a2963\",\n    \"status\": \"success\",\n    \"servertime\": 1740993528,\n    \"action\": \"bef9f3ca-86ef-5c6a-9b38-320e03ceb5df\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/settings.json\",\n    \"code\": 200,\n    \"pagination\": {\n      \"count\": 2,\n      \"page\": 1,\n      \"limit\": null\n    }\n  },\n  \"body\": {\n    \"app\": {\n      \"url\": \"https://{API_BASE_URL}\",\n      \"locale\": \"en-UK\"\n    },\n    \"passbolt\": {\n      \"legal\": {\n        \"privacy_policy\": {\n          \"url\": \"\"\n        },\n        \"terms\": {\n          \"url\": \"https://www.passbolt.com/terms\"\n        }\n      },\n      \"edition\": \"pro\",\n      \"plugins\": {\n        \"jwtAuthentication\": {\n          \"enabled\": true\n        },\n        \"accountRecoveryRequestHelp\": {\n          \"enabled\": true\n        },\n        \"accountRecovery\": {\n          \"enabled\": true\n        },\n        \"selfRegistration\": {\n          \"enabled\": true\n        },\n        \"sso\": {\n          \"enabled\": true\n        },\n        \"mfaPolicies\": {\n          \"enabled\": true\n        },\n        \"ssoRecover\": {\n          \"enabled\": true\n        },\n        \"userPassPhrasePolicies\": {\n          \"enabled\": true\n        },\n        \"inFormIntegration\": {\n          \"enabled\": true\n        },\n        \"metadata\": {\n          \"version\": \"1.0.0\",\n          \"enabled\": true\n        },\n        \"locale\": {\n          \"options\": [\n            {\n              \"locale\": \"de-DE\",\n              \"label\": \"Deutsch\"\n            },\n            {\n              \"locale\": \"en-UK\",\n              \"label\": \"English\"\n            },\n            {\n              \"locale\": \"en-ES\",\n              \"label\": \"Español\"\n            },\n            {\n              \"locale\": \"fr-FR\",\n              \"label\": \"Français\"\n            },\n            {\n              \"locale\": \"it-IT\",\n              \"label\": \"Italiano (beta)\"\n            },\n            {\n              \"locale\": \"ja-JP\",\n              \"label\": \"日本語\"\n            },\n            {\n              \"locale\": \"ko-KR\",\n              \"label\": \"한국어 (beta)\"\n            },\n            {\n              \"locale\": \"lt-LT\",\n              \"label\": \"Lietuvių\"\n            },\n            {\n              \"locale\": \"nl-NL\",\n              \"label\": \"Nederlands\"\n            },\n            {\n              \"locale\": \"pl-PL\",\n              \"label\": \"Polski\"\n            },\n            {\n              \"locale\": \"pt-PR\",\n              \"label\": \"Português Brasil (beta)\"\n            },\n            {\n              \"locale\": \"ro-RO\",\n              \"label\": \"Română (beta)\"\n            },\n            {\n              \"locale\": \"ru-RU\",\n              \"label\": \"Pусский (beta)\"\n            },\n            {\n              \"locale\": \"sv-SE\",\n              \"label\": \"Svenska\"\n            }\n          ]\n        },\n        \"rememberMe\": {\n          \"options\": {\n            \"300\": \"5 minutes\",\n            \"900\": \"15 minutes\",\n            \"1800\": \"30 minutes\",\n            \"3600\": \"1 hour\",\n            \"-1\": \"Until I log out\"\n          }\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a353fe7-2a78-40ae-b8b0-c480d4eee089",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d324ee36-d848-4b29-95eb-f4d5ad36a4b8",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://passbolt.local",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "04f80054-f201-4467-b3f6-bc35eaba71a6",
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Settings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.\n\nContact Support:\n Email: contact@passbolt.com",
+      "type": "text/plain"
+    }
+  }
+}

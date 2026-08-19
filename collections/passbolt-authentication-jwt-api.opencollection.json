@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Authentication (JWT) API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication (JWT)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the JWKs server information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/auth/jwt/jwks.json"
+          },
+          "docs": "Get the JWKs server information."
+        },
+        {
+          "info": {
+            "name": "Login.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/auth/jwt/login.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Login."
+        },
+        {
+          "info": {
+            "name": "Logout.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/auth/jwt/logout.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Logout."
+        },
+        {
+          "info": {
+            "name": "Refresh access token.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/auth/jwt/refresh.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Refresh access token."
+        },
+        {
+          "info": {
+            "name": "Get the JWT RSA server information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/auth/jwt/rsa.json"
+          },
+          "docs": "This is not the key to use when encrypting the JWT login challenge.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

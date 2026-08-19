@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata private keys API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata private keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a metadata private key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/metadata/keys/privates.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Can also be used for sharing a missing private key for one or more users."
+        },
+        {
+          "info": {
+            "name": "Update a metadata private key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://passbolt.local/metadata/keys/private/:metadataPrivateKeyId.json",
+            "params": [
+              {
+                "name": "metadataPrivateKeyId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the metadata private key manipulated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a metadata private key."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

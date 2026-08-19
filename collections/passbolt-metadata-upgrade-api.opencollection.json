@@ -1,0 +1,156 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata upgrade API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata upgrade",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Upgradable Folders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/metadata/upgrade/folders.json",
+            "params": [
+              {
+                "name": "filter[is-shared]",
+                "value": "",
+                "type": "query",
+                "description": "Only return shared items."
+              },
+              {
+                "name": "contain[permission]",
+                "value": "",
+                "type": "query",
+                "description": "Add permission to response body."
+              }
+            ]
+          },
+          "docs": "> *Encrypted metadata for this item is not supported on all clients.*\n\nRetrieves a list of folders that are eligible for an upgrade to v5 format. Results are paginated and the page size is fixed at 20.\n"
+        },
+        {
+          "info": {
+            "name": "Upgrade a folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/metadata/upgrade/folders.json",
+            "params": [
+              {
+                "name": "contain[permissions]",
+                "value": "",
+                "type": "query",
+                "description": "Add permissions to response body."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> *Encrypted metadata for this item is not supported on all clients.*\n\nUpgrade folders that are eligible for an upgrade to v5 format.\n"
+        },
+        {
+          "info": {
+            "name": "Get Upgradable Resources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/metadata/upgrade/resources.json",
+            "params": [
+              {
+                "name": "filter[is-shared]",
+                "value": "",
+                "type": "query",
+                "description": "Only return shared items."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of resources that are eligible for an upgrade to v5 format. Results are paginated and the page size is fixed at 20."
+        },
+        {
+          "info": {
+            "name": "Upgrade a Resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/metadata/upgrade/resources.json",
+            "params": [
+              {
+                "name": "filter[is-shared]",
+                "value": "",
+                "type": "query",
+                "description": "Only return shared items."
+              },
+              {
+                "name": "contain[permissions]",
+                "value": "",
+                "type": "query",
+                "description": "Add permissions to response body."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upgrade resources that are eligible for an upgrade to v5 format."
+        },
+        {
+          "info": {
+            "name": "Get Upgradable Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/metadata/upgrade/tags.json",
+            "params": [
+              {
+                "name": "filter[is-shared]",
+                "value": "",
+                "type": "query",
+                "description": "Only return shared items."
+              }
+            ]
+          },
+          "docs": "> *This endpoint is available since version 5.1.*\n\n> *Encrypted metadata for this item is not supported on all clients.*\n\nRetrieves a list of tags that are eligible for an upgrade to v5 format. Results are paginated and the page size is fixed at 20.\n"
+        },
+        {
+          "info": {
+            "name": "Upgrade a tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/metadata/upgrade/tags.json",
+            "params": [
+              {
+                "name": "filter[is-shared]",
+                "value": "",
+                "type": "query",
+                "description": "Only return shared items."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> *This endpoint is available since version 5.1.*\n\n> *Encrypted metadata for this item is not supported on all clients.*\n\nUpgrade tags that are eligible for an upgrade to v5 format.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

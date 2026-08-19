@@ -1,0 +1,96 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata rotate key API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata rotate key",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get folders with expired keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/metadata/rotate-key/folders.json"
+          },
+          "docs": "See the folders that are using an expired key that needs to/can be rotated. Only administrators can query this endpoint."
+        },
+        {
+          "info": {
+            "name": "Rotate expired metadata keys for folders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/metadata/rotate-key/folders.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rotate the metadata of a given set of folders"
+        },
+        {
+          "info": {
+            "name": "Get resources with expired keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/metadata/rotate-key/resources.json"
+          },
+          "docs": "See the resources that are using an expired key that needs to/can be rotated. Only administrators can query this endpoint."
+        },
+        {
+          "info": {
+            "name": "Rotate expired metadata keys for resources",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/metadata/rotate-key/resources.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rotate the metadata of a given set of resources"
+        },
+        {
+          "info": {
+            "name": "Get tags with expired keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/metadata/rotate-key/tags.json"
+          },
+          "docs": "> *This endpoint is available since version 5.1.*\n\nSee the tags that are using an expired key that needs to/can be rotated. Only administrators can query this endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "Rotate expired metadata keys for tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/metadata/rotate-key/tags.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> *This endpoint is available since version 5.1.*\n\nRotate the metadata key of a given set of tags.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

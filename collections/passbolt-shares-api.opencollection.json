@@ -1,0 +1,113 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Shares API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Shares",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Share a resource or folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://passbolt.local/share/:foreignModel/:foreignId.json",
+            "params": [
+              {
+                "name": "foreignModel",
+                "value": "",
+                "type": "path",
+                "description": "Type for the foreign model being shared."
+              },
+              {
+                "name": "foreignId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the foreign element being manipulated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Share a resource or folder."
+        },
+        {
+          "info": {
+            "name": "Get AROs for sharing.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/share/search-aros.json",
+            "params": [
+              {
+                "name": "filter[search]",
+                "value": "",
+                "type": "query",
+                "description": "Filter using a keyword or a string."
+              },
+              {
+                "name": "contain[groups_users]",
+                "value": "",
+                "type": "query",
+                "description": "Add group users to groups in response body."
+              },
+              {
+                "name": "contain[gpgkey]",
+                "value": "",
+                "type": "query",
+                "description": "Add GPG key data to response body."
+              },
+              {
+                "name": "contain[role]",
+                "value": "",
+                "type": "query",
+                "description": "Add role to response body."
+              }
+            ]
+          },
+          "docs": "Get AROs for sharing."
+        },
+        {
+          "info": {
+            "name": "Simulate sharing a resource or folder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/share/simulate/:foreignModel/:foreignId.json",
+            "params": [
+              {
+                "name": "foreignModel",
+                "value": "",
+                "type": "path",
+                "description": "Type for the foreign model being shared."
+              },
+              {
+                "name": "foreignId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the foreign element being manipulated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Simulate sharing a resource or folder."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

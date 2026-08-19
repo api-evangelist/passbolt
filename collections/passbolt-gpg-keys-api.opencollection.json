@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) GPG keys API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GPG keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get multiple GPG keys.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/gpgkeys.json",
+            "params": [
+              {
+                "name": "filter[modified-after]",
+                "value": "",
+                "type": "query",
+                "description": "Only return elements modified after a timestamp."
+              },
+              {
+                "name": "filter[is-deleted]",
+                "value": "",
+                "type": "query",
+                "description": "Only return deleted elements."
+              }
+            ]
+          },
+          "docs": "Get multiple GPG keys."
+        },
+        {
+          "info": {
+            "name": "Get a GPG key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/gpgkeys/:gpgkeyId.json",
+            "params": [
+              {
+                "name": "gpgkeyId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the GPG key being manipulated."
+              }
+            ]
+          },
+          "docs": "Get a GPG key."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Healthcheck API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Healthcheck",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get healthcheck information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/healthcheck.json"
+          },
+          "docs": "Only administrators can query this endpoint."
+        },
+        {
+          "info": {
+            "name": "Check if passbolt is up.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/healthcheck/status.json"
+          },
+          "docs": "Check if passbolt is up."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

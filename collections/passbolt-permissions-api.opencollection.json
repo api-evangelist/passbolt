@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Permissions API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Permissions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get permissions for a resource.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/permissions/resource/:resourceId.json",
+            "params": [
+              {
+                "name": "resourceId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the resource being manipulated."
+              },
+              {
+                "name": "contain[group]",
+                "value": "",
+                "type": "query",
+                "description": "Add group to response body."
+              },
+              {
+                "name": "contain[user]",
+                "value": "",
+                "type": "query",
+                "description": "Add user to response body."
+              },
+              {
+                "name": "contain[user.profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add user profile to user data in response body."
+              }
+            ]
+          },
+          "docs": "Get permissions for a resource."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

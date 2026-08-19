@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata session key API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata session key",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get session keys.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/metadata/session-keys.json"
+          },
+          "docs": "Get a list of available encrypted session keys in cache for the given user."
+        },
+        {
+          "info": {
+            "name": "Add a session key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/metadata/session-keys.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a session key."
+        },
+        {
+          "info": {
+            "name": "Update a given session-key entry.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/metadata/session-key/:sessionKeyId.json",
+            "params": [
+              {
+                "name": "sessionKeyId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the session key being manipulated"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a given session-key entry."
+        },
+        {
+          "info": {
+            "name": "Delete a given session-key entry.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://passbolt.local/metadata/session-key/:sessionKeyId.json",
+            "params": [
+              {
+                "name": "sessionKeyId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the session key being manipulated"
+              }
+            ]
+          },
+          "docs": "Delete a given session-key entry."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

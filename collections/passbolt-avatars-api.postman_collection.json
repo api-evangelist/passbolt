@@ -1,0 +1,138 @@
+{
+  "item": [
+    {
+      "id": "c72fd3bf-0539-4fa6-aa42-174a979f988f",
+      "name": "Avatars",
+      "description": {
+        "content": "Query avatar images.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0d7a0c71-6419-425d-bfcd-a83d1a13bebc",
+          "name": "Get an avatar as an image.",
+          "request": {
+            "name": "Get an avatar as an image.",
+            "description": {
+              "content": "When the avatar doesn't exist, a placeholder image is returned instead.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "avatars",
+                "view",
+                ":avatarId",
+                ":avatarFormat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "avatarId",
+                  "description": "(Required) ID for the avatar being manipulated."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "avatarFormat",
+                  "description": "(Required) Format for the avatar being manipulated."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "image/jpeg"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "25e46ab8-ea84-4cbe-9585-f650d2477672",
+              "name": "Operation is successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "avatars",
+                    "view",
+                    ":avatarId",
+                    ":avatarFormat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "avatarId",
+                      "description": "(Required) ID for the avatar being manipulated."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "avatarFormat",
+                      "description": "(Required) Format for the avatar being manipulated."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "image/jpeg"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "image/jpeg"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://passbolt.local",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "559d23ee-36f7-412e-8fd7-b1b554b71135",
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Avatars API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.\n\nContact Support:\n Email: contact@passbolt.com",
+      "type": "text/plain"
+    }
+  }
+}

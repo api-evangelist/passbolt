@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Move API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Move",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Move an element.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://passbolt.local/move/:foreignModel/:foreignId.json",
+            "params": [
+              {
+                "name": "foreignModel",
+                "value": "",
+                "type": "path",
+                "description": "Type for the foreign model being moved."
+              },
+              {
+                "name": "foreignId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the foreign element being manipulated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Move an element."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

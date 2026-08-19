@@ -1,0 +1,198 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Users API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get multiple users.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/users.json",
+            "params": [
+              {
+                "name": "contain[last_logged_in]",
+                "value": "",
+                "type": "query",
+                "description": "Add last logged in to response body."
+              },
+              {
+                "name": "contain[groups_users]",
+                "value": "",
+                "type": "query",
+                "description": "Add group users to groups in response body."
+              },
+              {
+                "name": "contain[gpgkey]",
+                "value": "",
+                "type": "query",
+                "description": "Add GPG key data to response body."
+              },
+              {
+                "name": "contain[profile]",
+                "value": "",
+                "type": "query",
+                "description": "Add profile to response body."
+              },
+              {
+                "name": "contain[role]",
+                "value": "",
+                "type": "query",
+                "description": "Add role to response body."
+              },
+              {
+                "name": "contain[missing_metadata_key_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Add missing metadata key IDs to response body."
+              },
+              {
+                "name": "filter[search]",
+                "value": "",
+                "type": "query",
+                "description": "Filter using a keyword or a string."
+              },
+              {
+                "name": "filter[has-groups]",
+                "value": "",
+                "type": "query",
+                "description": "Only return elements filtered by groups."
+              },
+              {
+                "name": "filter[has-access]",
+                "value": "",
+                "type": "query",
+                "description": "Only return elements where specified users have access."
+              },
+              {
+                "name": "filter[is-admin]",
+                "value": "",
+                "type": "query",
+                "description": "Only return admin users."
+              },
+              {
+                "name": "filter[is-active]",
+                "value": "",
+                "type": "query",
+                "description": "Only return active elements."
+              }
+            ]
+          },
+          "docs": "Get multiple users."
+        },
+        {
+          "info": {
+            "name": "Create a user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://passbolt.local/users.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Only users with `admin` role can create other users.\n"
+        },
+        {
+          "info": {
+            "name": "Get a user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/users/:userId.json",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the user being manipulated. Can be set to `me` when viewing a user."
+              },
+              {
+                "name": "contain[missing_metadata_key_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Add missing metadata key IDs to response body."
+              }
+            ]
+          },
+          "docs": "Get a user."
+        },
+        {
+          "info": {
+            "name": "Update a user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://passbolt.local/users/:userId.json",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the user being manipulated. Can be set to `me` when viewing a user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Neither the email or the username field which can be updated, and only administrators can update a user's role.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://passbolt.local/users/:userId.json",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the user being manipulated. Can be set to `me` when viewing a user."
+              }
+            ]
+          },
+          "docs": "Only a user with an administrator role can delete users. A `user` can not be deleted as long as:\n\n- They are the sole owner of a shared resource.\n- They are a manager of a non empty group.\n\nIn this case you will need to transfer the ownership of the shared resources and appoint a new manager to the group in order to proceed.\n"
+        },
+        {
+          "info": {
+            "name": "Dry run a user deletion.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://passbolt.local/users/:userId/dry-run.json",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the user being manipulated. Can be set to `me` when viewing a user."
+              }
+            ]
+          },
+          "docs": "Dry run a user deletion."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

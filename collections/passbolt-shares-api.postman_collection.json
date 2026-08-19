@@ -1,0 +1,907 @@
+{
+  "item": [
+    {
+      "id": "c8f549e2-5ea2-469f-b231-1bda9a5b7ec4",
+      "name": "Shares",
+      "description": {
+        "content": "Share resources and folders to users with an exhaustive permission system.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ebab66b4-f5d9-4e57-bc22-7e42879c0b7b",
+          "name": "Share a resource or folder.",
+          "request": {
+            "name": "Share a resource or folder.",
+            "description": {},
+            "url": {
+              "path": [
+                "share",
+                ":foreignModel",
+                "{{foreignId}}.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "foreignModel",
+                  "description": "(Required) Type for the foreign model being shared."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"permissions\": [\n    {\n      \"id\": \"<uuid>\",\n      \"aro\": \"<string>\",\n      \"aro_foreign_key\": \"<uuid>\",\n      \"type\": \"<integer>\",\n      \"delete\": \"<boolean>\",\n      \"is_new\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"aro\": \"<string>\",\n      \"aro_foreign_key\": \"<uuid>\",\n      \"type\": \"<integer>\",\n      \"delete\": \"<boolean>\",\n      \"is_new\": \"<boolean>\"\n    }\n  ],\n  \"secrets\": [\n    {\n      \"data\": \"<string>\",\n      \"user_id\": \"<uuid>\",\n      \"resource_id\": \"<uuid>\"\n    },\n    {\n      \"data\": \"<string>\",\n      \"user_id\": \"<uuid>\",\n      \"resource_id\": \"<uuid>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5a7dae62-0cb5-4b07-81b8-284dd2d7d265",
+              "name": "Operation is successful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "share",
+                    ":foreignModel",
+                    "{{foreignId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "foreignModel",
+                      "description": "(Required) Type for the foreign model being shared."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"success\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"<SUCCESS MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 200\n  },\n  \"body\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01628ac9-3caf-4265-9e34-5b7cda94e53a",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "share",
+                    ":foreignModel",
+                    "{{foreignId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "foreignModel",
+                      "description": "(Required) Type for the foreign model being shared."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"success\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"Resource metadata key type is invalid.\",\n    \"url\": \"/share/resource/42968631-0c51-4405-9f2d-c6700c5057be.json\",\n    \"code\": 400\n  },\n  \"body\": {\n    \"permissions\": {\n      \"aco_foreign_key\": {\n        \"permission_unique\": \"A permission already exists for the given access control object and access request object.\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c74af4f-ba49-4fb1-972e-e481792fa6a3",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "share",
+                    ":foreignModel",
+                    "{{foreignId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "foreignModel",
+                      "description": "(Required) Type for the foreign model being shared."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6ccdaad-a67f-4a88-9140-bd1a497d3cfe",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "share",
+                    ":foreignModel",
+                    "{{foreignId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "foreignModel",
+                      "description": "(Required) Type for the foreign model being shared."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The <MODEL> does not exist.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 404\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a6cefb0-df07-4f30-8cb6-d2e79e22c1de",
+          "name": "Get AROs for sharing.",
+          "request": {
+            "name": "Get AROs for sharing.",
+            "description": {},
+            "url": {
+              "path": [
+                "share",
+                "search-aros.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter[search]",
+                  "value": "<string>",
+                  "description": "Filter using a keyword or a string."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[groups_users]",
+                  "value": "<integer>",
+                  "description": "Add group users to groups in response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[gpgkey]",
+                  "value": "<integer>",
+                  "description": "Add GPG key data to response body."
+                },
+                {
+                  "disabled": false,
+                  "key": "contain[role]",
+                  "value": "<integer>",
+                  "description": "Add role to response body."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "44290d37-873b-482a-a6a2-e25a98b41664",
+              "name": "Operation is successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "share",
+                    "search-aros.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[search]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contain[groups_users]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[gpgkey]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[role]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"success\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/share/search-aros.json\",\n    \"code\": 200\n  },\n  \"body\": [\n    {\n      \"id\": \"c48863da-32d3-48cd-9d47-de2891386423\",\n      \"role_id\": \"c2f96fb1-611d-466d-80fb-e82beba5ed87\",\n      \"username\": \"ada@passbolt.com\",\n      \"active\": true,\n      \"deleted\": false,\n      \"created\": \"2024-08-08T12:08:58+00:00\",\n      \"modified\": \"2024-08-08T12:14:38+00:00\",\n      \"disabled\": null,\n      \"groups_users\": [\n        {\n          \"id\": \"95accfa0-5c2c-47af-ba63-dd9efb46f99b\",\n          \"group_id\": \"8fa37ef6-f167-4342-8e1c-3488439cf7d1\",\n          \"user_id\": \"c48863da-32d3-48cd-9d47-de2891386423\",\n          \"is_admin\": false,\n          \"created\": \"2024-08-08T12:25:40+00:00\"\n        }\n      ],\n      \"profile\": {\n        \"id\": \"4d9e9297-b1ec-4aa1-af1c-c6693c3ffe36\",\n        \"user_id\": \"c48863da-32d3-48cd-9d47-de2891386423\",\n        \"first_name\": \"Ada\",\n        \"last_name\": \"Lovelace\",\n        \"created\": \"2024-08-08T12:08:58+00:00\",\n        \"modified\": \"2024-08-08T12:08:58+00:00\",\n        \"avatar\": {\n          \"url\": {\n            \"medium\": \"https://passbolt.local/img/avatar/user_medium.png\",\n            \"small\": \"https://passbolt.local/img/avatar/user.png\"\n          }\n        }\n      },\n      \"gpgkey\": {\n        \"id\": \"6f0f6eb6-ed74-4cb0-8872-3e96ee17b6f9\",\n        \"user_id\": \"c48863da-32d3-48cd-9d47-de2891386423\",\n        \"armored_key\": \"-----BEGIN PGP PUBLIC KEY BLOCK-----\",\n        \"bits\": 3072,\n        \"uid\": \"Ada Lovelace <ada@passbolt.com>\",\n        \"key_id\": \"08EF12596BC6B07B\",\n        \"fingerprint\": \"C4D0E64738F9956CDACC6D4808EF12596BC6B07B\",\n        \"type\": \"RSA\",\n        \"expires\": null,\n        \"key_created\": \"2024-08-08T12:13:42+00:00\",\n        \"deleted\": false,\n        \"created\": \"2024-08-08T12:14:38+00:00\",\n        \"modified\": \"2024-08-08T12:14:38+00:00\"\n      },\n      \"role\": {\n        \"id\": \"c2f96fb1-611d-466d-80fb-e82beba5ed87\",\n        \"name\": \"user\",\n        \"description\": \"Logged in user\",\n        \"created\": \"2012-07-04T13:39:25+00:00\",\n        \"modified\": \"2012-07-04T13:39:25+00:00\"\n      },\n      \"last_logged_in\": null\n    },\n    {\n      \"user_count\": 1,\n      \"id\": \"8fa37ef6-f167-4342-8e1c-3488439cf7d1\",\n      \"name\": \"Groupe B\",\n      \"deleted\": false,\n      \"created\": \"2024-07-22T16:01:07+00:00\",\n      \"modified\": \"2024-07-22T16:01:07+00:00\",\n      \"created_by\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\",\n      \"modified_by\": \"8bb80df5-700c-48ce-b568-85a60fc3c8f2\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f326272a-6962-450b-bbe5-7fb4f3684e34",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "share",
+                    "search-aros.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[search]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contain[groups_users]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[gpgkey]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[role]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"<ERROR MESSAGE>\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 400\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ebae24ce-c91f-430e-803d-41430b955891",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "share",
+                    "search-aros.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[search]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contain[groups_users]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[gpgkey]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[role]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5630494e-2df8-4983-b5bd-87cc5fd0454b",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "share",
+                    "search-aros.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[search]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "contain[groups_users]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[gpgkey]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "contain[role]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The <MODEL> does not exist.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 404\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0b9f576-510a-4b7a-aa35-0bbc98331e4d",
+          "name": "Simulate sharing a resource or folder.",
+          "request": {
+            "name": "Simulate sharing a resource or folder.",
+            "description": {},
+            "url": {
+              "path": [
+                "share",
+                "simulate",
+                ":foreignModel",
+                "{{foreignId}}.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "foreignModel",
+                  "description": "(Required) Type for the foreign model being shared."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"permissions\": [\n    {\n      \"id\": \"<uuid>\",\n      \"aro\": \"<string>\",\n      \"aro_foreign_key\": \"<uuid>\",\n      \"type\": \"<integer>\",\n      \"delete\": \"<boolean>\",\n      \"is_new\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"aro\": \"<string>\",\n      \"aro_foreign_key\": \"<uuid>\",\n      \"type\": \"<integer>\",\n      \"delete\": \"<boolean>\",\n      \"is_new\": \"<boolean>\"\n    }\n  ],\n  \"secrets\": [\n    {\n      \"data\": \"<string>\",\n      \"user_id\": \"<uuid>\",\n      \"resource_id\": \"<uuid>\"\n    },\n    {\n      \"data\": \"<string>\",\n      \"user_id\": \"<uuid>\",\n      \"resource_id\": \"<uuid>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5ccbec73-3988-4006-a09d-11093a803c46",
+              "name": "Operation is successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "share",
+                    "simulate",
+                    ":foreignModel",
+                    "{{foreignId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "foreignModel",
+                      "description": "(Required) Type for the foreign model being shared."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"success\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/share/simulate/resource/42968631-0c51-4405-9f2d-c6700c5057be.json\",\n    \"code\": 200\n  },\n  \"body\": {\n    \"changes\": {\n      \"added\": [],\n      \"removed\": [\n        {\n          \"User\": {\n            \"id\": \"c48863da-32d3-48cd-9d47-de2891386423\"\n          }\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec05607e-7a6e-4f2d-aafd-a9622262d04b",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "share",
+                    "simulate",
+                    ":foreignModel",
+                    "{{foreignId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "foreignModel",
+                      "description": "(Required) Type for the foreign model being shared."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"success\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"Resource metadata key type is invalid.\",\n    \"url\": \"/share/resource/42968631-0c51-4405-9f2d-c6700c5057be.json\",\n    \"code\": 400\n  },\n  \"body\": {\n    \"permissions\": {\n      \"aco_foreign_key\": {\n        \"permission_unique\": \"A permission already exists for the given access control object and access request object.\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2efccc4e-cc85-42b9-8f19-04e367ac20fe",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "share",
+                    "simulate",
+                    ":foreignModel",
+                    "{{foreignId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "foreignModel",
+                      "description": "(Required) Type for the foreign model being shared."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80b412c9-22f7-46a9-b816-d96eec983ff7",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "share",
+                    "simulate",
+                    ":foreignModel",
+                    "{{foreignId}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "foreignModel",
+                      "description": "(Required) Type for the foreign model being shared."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"error\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The <MODEL> does not exist.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 404\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://passbolt.local",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) ID for the foreign element being manipulated.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<uuid>",
+      "key": "foreignId"
+    }
+  ],
+  "info": {
+    "_postman_id": "8a5726a6-8cbf-4a09-b032-703e10a11578",
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Shares API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.\n\nContact Support:\n Email: contact@passbolt.com",
+      "type": "text/plain"
+    }
+  }
+}

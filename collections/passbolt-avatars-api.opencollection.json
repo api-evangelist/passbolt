@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Avatars API",
+    "version": "5.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Avatars",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an avatar as an image.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://passbolt.local/avatars/view/:avatarId/:avatarFormat",
+            "params": [
+              {
+                "name": "avatarId",
+                "value": "",
+                "type": "path",
+                "description": "ID for the avatar being manipulated."
+              },
+              {
+                "name": "avatarFormat",
+                "value": "",
+                "type": "path",
+                "description": "Format for the avatar being manipulated."
+              }
+            ]
+          },
+          "docs": "When the avatar doesn't exist, a placeholder image is returned instead."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

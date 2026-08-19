@@ -1,0 +1,230 @@
+{
+  "item": [
+    {
+      "id": "201c91bd-d1a7-404d-b8e5-f86f085019c4",
+      "name": "Healthcheck",
+      "description": {
+        "content": "Gather data about the passbolt instance's health.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "464a1123-fbbe-46d6-8a33-39b30d2fef47",
+          "name": "Get healthcheck information.",
+          "request": {
+            "name": "Get healthcheck information.",
+            "description": {
+              "content": "Only administrators can query this endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "healthcheck.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "28641607-10f7-4401-9c88-122dece9d437",
+              "name": "Operation is successful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "healthcheck.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"success\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"The operation was successful.\",\n    \"url\": \"/healthcheck.json\",\n    \"code\": 200\n  },\n  \"body\": {\n    \"environment\": {\n      \"gnupg\": true,\n      \"info\": {\n        \"phpVersion\": \"8.2.20\"\n      },\n      \"phpVersion\": true,\n      \"nextMinPhpVersion\": true,\n      \"pcre\": true,\n      \"mbstring\": true,\n      \"intl\": true,\n      \"image\": true,\n      \"tmpWritable\": true,\n      \"logWritable\": true\n    },\n    \"configFile\": {\n      \"app\": true,\n      \"passbolt\": false\n    },\n    \"core\": {\n      \"cache\": true,\n      \"debugDisabled\": false,\n      \"salt\": true,\n      \"info\": {\n        \"fullBaseUrl\": \"https://passbolt.localhost\"\n      },\n      \"fullBaseUrl\": true,\n      \"validFullBaseUrl\": true,\n      \"fullBaseUrlReachable\": true\n    },\n    \"ssl\": {\n      \"info\": \"cURL Error (60) SSL certificate problem: self-signed certificate\",\n      \"peerValid\": false,\n      \"hostValid\": false,\n      \"notSelfSigned\": false\n    },\n    \"smtpSettings\": {\n      \"isEnabled\": true,\n      \"errorMessage\": false,\n      \"source\": \"env variables\",\n      \"isInDb\": false,\n      \"areEndpointsDisabled\": false,\n      \"customSslOptions\": true\n    },\n    \"gpg\": {\n      \"lib\": true,\n      \"gpgHome\": true,\n      \"gpgHomeWritable\": true,\n      \"gpgKeyNotDefault\": true,\n      \"gpgKeyPublicBlock\": true,\n      \"gpgKeyPrivateBlock\": true,\n      \"gpgKeyPublicReadable\": true,\n      \"gpgKeyPrivateReadable\": true,\n      \"gpgKeyPrivateFingerprint\": true,\n      \"gpgKeyPublic\": true,\n      \"gpgKeyPrivate\": true,\n      \"gpgKey\": true,\n      \"info\": {\n        \"gpgKeyPrivate\": \"/etc/passbolt/gpg/serverkey_private.asc\",\n        \"gpgHome\": \"/var/lib/passbolt/.gnupg\"\n      },\n      \"gpgKeyPublicFingerprint\": true,\n      \"gpgKeyPublicInKeyring\": true,\n      \"gpgKeyPublicEmail\": true,\n      \"canEncrypt\": true,\n      \"canSign\": true,\n      \"canEncryptSign\": true,\n      \"canDecrypt\": true,\n      \"canDecryptVerify\": true,\n      \"canVerify\": true,\n      \"isPublicServerKeyGopengpgCompatible\": true,\n      \"isPrivateServerKeyGopengpgCompatible\": true\n    },\n    \"applications\": {\n      \"configPath\": \"/etc/passbolt/passbolt.php\",\n      \"info\": {\n        \"remoteVersion\": \"4.9.1\",\n        \"currentVersion\": \"4.9.0\"\n      },\n      \"latestVersion\": false,\n      \"sslForce\": false,\n      \"sslFullBaseUrl\": true,\n      \"seleniumDisabled\": true,\n      \"robotsIndexDisabled\": true,\n      \"registrationClosed\": {\n        \"isSelfRegistrationPluginEnabled\": true,\n        \"selfRegistrationProvider\": null,\n        \"isRegistrationPublicRemovedFromPassbolt\": true\n      },\n      \"hostAvailabilityCheckEnabled\": false,\n      \"jsProd\": true,\n      \"emailNotificationEnabled\": false,\n      \"schema\": true\n    },\n    \"database\": {\n      \"supportedBackend\": true,\n      \"connect\": true,\n      \"info\": {\n        \"tablesCount\": 31\n      },\n      \"tablesCount\": true,\n      \"defaultContent\": true\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57460863-2e9c-45a8-876e-c4923134a6c3",
+              "name": "Authentication required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "healthcheck.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a\",\n    \"status\": \"error\",\n    \"servertime\": 1721727753,\n    \"action\": \"e2aa01a9-84ec-55f8-aaed-24ee23259339\",\n    \"message\": \"Authentication is required to continue.\",\n    \"url\": \"<API ENDPOINT URL>\",\n    \"code\": 401\n  },\n  \"body\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fcbe099b-e1f4-4d69-b3dd-fc7b911b7ffb",
+          "name": "Check if passbolt is up.",
+          "request": {
+            "name": "Check if passbolt is up.",
+            "description": {},
+            "url": {
+              "path": [
+                "healthcheck",
+                "status.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d6937b6d-ebf3-4fee-85f4-d6e5e8d575b9",
+              "name": "Operation is successful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "healthcheck",
+                    "status.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"7ff2828c-1092-4897-8e0a-1dc64ada889f\",\n    \"status\": \"success\",\n    \"servertime\": 1721207029,\n    \"action\": \"4d0c0996-ce30-4bce-9918-9062ab35c542\",\n    \"message\": \"OK\",\n    \"url\": \"/healthcheck/status.json\",\n    \"code\": 200\n  },\n  \"body\": \"OK\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://passbolt.local",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b3b5fddf-cd33-4751-9f52-94e2e1135525",
+    "name": "Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Healthcheck API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is a low-level overview of the API and its endpoints, if you need higher-level guides for interacting with the endpoints, use the Developer guide.\n\nContact Support:\n Email: contact@passbolt.com",
+      "type": "text/plain"
+    }
+  }
+}
