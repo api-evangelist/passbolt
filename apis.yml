@@ -168,6 +168,8 @@ apis:
   humanURL: https://www.passbolt.com/docs/api/
   baseURL: https://passbolt.local
   tags:
+  - GPG Keys
+  tags_raw:
   - GPG keys
   properties:
   - type: OpenAPI
@@ -186,6 +188,8 @@ apis:
   humanURL: https://www.passbolt.com/docs/api/
   baseURL: https://passbolt.local
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -204,6 +208,8 @@ apis:
   humanURL: https://www.passbolt.com/docs/api/
   baseURL: https://passbolt.local
   tags:
+  - Health Check
+  tags_raw:
   - Healthcheck
   properties:
   - type: OpenAPI
@@ -386,6 +392,8 @@ apis:
   humanURL: https://www.passbolt.com/docs/api/
   baseURL: https://passbolt.local
   tags:
+  - Resource Types
+  tags_raw:
   - Resource types
   properties:
   - type: OpenAPI
@@ -512,6 +520,8 @@ apis:
   humanURL: https://www.passbolt.com/docs/api/
   baseURL: https://passbolt.local
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
