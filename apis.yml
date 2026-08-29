@@ -3,6 +3,18 @@ name: Passbolt
 description: Passbolt is an open source password manager for teams. The Passbolt API provides programmatic access to manage
   resources (passwords), folders, users, groups, sharing, comments, metadata, and authentication via GPGAuth or JWT.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
