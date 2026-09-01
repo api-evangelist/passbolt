@@ -180,7 +180,7 @@ apis:
   humanURL: https://www.passbolt.com/docs/api/
   baseURL: https://passbolt.local
   tags:
-  - GPG keys
+  - GPG Keys
   tags_raw:
   - GPG keys
   properties:
@@ -220,7 +220,7 @@ apis:
   humanURL: https://www.passbolt.com/docs/api/
   baseURL: https://passbolt.local
   tags:
-  - Healthcheck
+  - Health Check
   tags_raw:
   - Healthcheck
   properties:
@@ -404,7 +404,7 @@ apis:
   humanURL: https://www.passbolt.com/docs/api/
   baseURL: https://passbolt.local
   tags:
-  - Resource types
+  - Resource Types
   tags_raw:
   - Resource types
   properties:
