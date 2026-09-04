@@ -22,13 +22,14 @@ accessModel:
   try_now: true
   public: false
   label: Freemium · Self-serve signup
-  confidence: high
+  confidence: medium
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
+  - security
+  generated: '2026-09-03'
   method: derived
-position: Consumer
+position: Consuming
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/passbolt.png
 tags:
@@ -547,6 +548,9 @@ apis:
   - type: License
     url: https://www.gnu.org/licenses/agpl-3.0.html
 common:
+- type: CapabilityMap
+  url: capabilities/passbolt-capability-edges.yml
+  name: Passbolt Business Capability Map
 - type: AgenticAccess
   url: agentic-access/passbolt-agentic-access.yml
 - type: VulnerabilityDisclosure
