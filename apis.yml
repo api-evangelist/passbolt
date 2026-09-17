@@ -215,26 +215,6 @@ apis:
     url: https://www.passbolt.com/terms
   - type: License
     url: https://www.gnu.org/licenses/agpl-3.0.html
-- aid: passbolt:passbolt-healthcheck-api
-  name: Passbolt Healthcheck API
-  description: Gather data about the passbolt instance's health.
-  humanURL: https://www.passbolt.com/docs/api/
-  baseURL: https://passbolt.local
-  tags:
-  - Health Check
-  tags_raw:
-  - Healthcheck
-  properties:
-  - type: OpenAPI
-    url: openapi/passbolt-healthcheck-api-openapi.yml
-  - type: Documentation
-    url: https://www.passbolt.com/docs/api/
-  - type: Signup
-    url: https://www.passbolt.com/pricing
-  - type: TermsOfService
-    url: https://www.passbolt.com/terms
-  - type: License
-    url: https://www.gnu.org/licenses/agpl-3.0.html
 - aid: passbolt:passbolt-metadata-keys-api
   name: Passbolt Metadata keys API
   description: Manipulate metadata keys.
@@ -539,6 +519,24 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/passbolt-users-api-openapi.yml
+  - type: Documentation
+    url: https://www.passbolt.com/docs/api/
+  - type: Signup
+    url: https://www.passbolt.com/pricing
+  - type: TermsOfService
+    url: https://www.passbolt.com/terms
+  - type: License
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+- aid: passbolt:passbolt-health-check-api
+  name: Passbolt Health Check API
+  description: Gather data about the passbolt instance's health.
+  humanURL: https://www.passbolt.com/docs/api/
+  baseURL: https://passbolt.local
+  tags:
+  - Health Check
+  properties:
+  - type: OpenAPI
+    url: openapi/passbolt-health-check-api-openapi.yml
   - type: Documentation
     url: https://www.passbolt.com/docs/api/
   - type: Signup
