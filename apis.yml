@@ -477,6 +477,8 @@ apis:
   humanURL: https://www.passbolt.com/docs/api/
   baseURL: https://passbolt.local
   tags:
+  - Share
+  tags_raw:
   - Shares
   properties:
   - type: OpenAPI
