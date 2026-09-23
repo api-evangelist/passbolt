@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   contact:
     email: contact@passbolt.com
@@ -7,7 +7,7 @@ info:
     name: AGPL-3.0
     url: https://www.gnu.org/licenses/agpl-3.0.html
   termsOfService: https://www.passbolt.com/terms
-  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata session key API
+  title: Passbolt Metadata session key API
   version: 5.0.0
 servers:
 - url: https://passbolt.local
@@ -18,7 +18,7 @@ tags:
 paths:
   /metadata/session-keys.json:
     get:
-      summary: Get session keys.
+      summary: Get session keys
       description: Get a list of available encrypted session keys in cache for the given user.
       security:
       - bearerHttpAuthentication: []
@@ -38,7 +38,7 @@ paths:
         '401':
           $ref: '#/components/responses/authenticationRequired'
     post:
-      summary: Add a session key.
+      summary: Add a session key
       security:
       - bearerHttpAuthentication: []
       operationId: addMetadataSessionKey
@@ -62,7 +62,7 @@ paths:
           $ref: '#/components/responses/authenticationRequired'
   /metadata/session-key/{sessionKeyId}.json:
     post:
-      summary: Update a given session-key entry.
+      summary: Update a given session-key entry
       operationId: updateMetadataSessionKey
       x-codeSamples:
       - lang: cURL
@@ -91,7 +91,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/update'
     delete:
-      summary: Delete a given session-key entry.
+      summary: Delete a given session-key entry
       operationId: deleteSessionKey
       security:
       - bearerHttpAuthentication: []
@@ -115,8 +115,8 @@ paths:
           $ref: '#/components/responses/notFound'
 components:
   responses:
-    badRequest:
-      description: Bad request
+    metadataSessionKey_update:
+      description: Operation is successful
       content:
         application/json:
           schema:
@@ -128,71 +128,21 @@ components:
               header:
                 $ref: '#/components/schemas/header'
               body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
-    notFound:
-      description: Not found
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The <MODEL> does not exist.
-                  url: <API ENDPOINT URL>
-                  code: 404
-                body: ''
-    authenticationRequired:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
+                $ref: '#/components/schemas/e2eeDataModified'
           examples:
             base:
               value:
                 header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
+                  id: 26c1344a-22ef-4c49-90a0-130a9c82a648
+                  status: success
+                  servertime: 1740143504
+                  action: c5969bdd-018f-552b-b20d-01636766a81f
+                  message: The operation was successful.
+                  url: /metadata/session-keys/16c1344a-33ae-4c49-90a0-130a9c82a091
+                  code: 200
+                body:
+                  data: '----BEGIN PGP MESSAGE-----'
+                  modified: '2025-02-18T15:52:17+00:00'
     modifiedDateIsNotMatching:
       description: The modified date is not equal to the persisted session key one
       content:
@@ -219,6 +169,32 @@ components:
                   url: <API ENDPOINT URL>
                   code: 409
                 body: ''
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
     metadataSessionKey_index:
       description: Operation is successful
       content:
@@ -252,8 +228,8 @@ components:
                   data: '-----BEGIN PGP MESSAGE-----'
                   created: '2025-01-18T15:52:17+00:00'
                   modified: '2025-02-18T15:52:17+00:00'
-    metadataSessionKey_update:
-      description: Operation is successful
+    notFound:
+      description: Not found
       content:
         application/json:
           schema:
@@ -265,21 +241,45 @@ components:
               header:
                 $ref: '#/components/schemas/header'
               body:
-                $ref: '#/components/schemas/e2eeDataModified'
+                type: string
           examples:
-            base:
+            example:
               value:
                 header:
-                  id: 26c1344a-22ef-4c49-90a0-130a9c82a648
-                  status: success
-                  servertime: 1740143504
-                  action: c5969bdd-018f-552b-b20d-01636766a81f
-                  message: The operation was successful.
-                  url: /metadata/session-keys/16c1344a-33ae-4c49-90a0-130a9c82a091
-                  code: 200
-                body:
-                  data: '----BEGIN PGP MESSAGE-----'
-                  modified: '2025-02-18T15:52:17+00:00'
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
     metadataSessionKey_add:
       description: Operation is successful
       content:
@@ -311,8 +311,8 @@ components:
                   data: '-----BEGIN PGP MESSAGE-----'
                   created: '2025-03-05T14:22:33+00:00'
                   modified: '2025-03-05T14:22:33+00:00'
-    nullBody:
-      description: Operation is successful.
+    authenticationRequired:
+      description: Authentication required.
       content:
         application/json:
           schema:
@@ -324,19 +324,19 @@ components:
               header:
                 $ref: '#/components/schemas/header'
               body:
-                type: 'null'
+                type: string
           examples:
             base:
               value:
                 header:
                   id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
+                  status: error
                   servertime: 1721727753
                   action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
+                  message: Authentication is required to continue.
                   url: <API ENDPOINT URL>
-                  code: 200
-                body: null
+                  code: 401
+                body: ''
   schemas:
     metadataSessionKeyIndexAndView:
       allOf:
@@ -366,12 +366,6 @@ components:
             type: string
             format: uuid
             x-nullable: true
-    e2eeDataOnly:
-      required:
-      - data
-      properties:
-        data:
-          type: string
     e2eeIdCreatedDataModifiedUserId:
       allOf:
       - $ref: '#/components/schemas/e2eeDataUserId'
@@ -425,15 +419,12 @@ components:
         code:
           type: integer
           example: 200
-  parameters:
-    sessionKeyId:
-      name: sessionKeyId
-      description: ID for the session key being manipulated
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
+    e2eeDataOnly:
+      required:
+      - data
+      properties:
+        data:
+          type: string
   requestBodies:
     update:
       description: The metadata session key you want to update
@@ -458,6 +449,15 @@ components:
             base:
               value:
                 data: '-----BEGIN PGP MESSAGE-----'
+  parameters:
+    sessionKeyId:
+      name: sessionKeyId
+      description: ID for the session key being manipulated
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

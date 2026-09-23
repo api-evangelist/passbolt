@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   contact:
     email: contact@passbolt.com
@@ -7,7 +7,7 @@ info:
     name: AGPL-3.0
     url: https://www.gnu.org/licenses/agpl-3.0.html
   termsOfService: https://www.passbolt.com/terms
-  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Move API
+  title: Passbolt Move API
   version: 5.0.0
 servers:
 - url: https://passbolt.local
@@ -18,7 +18,7 @@ tags:
 paths:
   /move/{foreignModel}/{foreignId}.json:
     put:
-      summary: Move an element.
+      summary: Move an element
       operationId: moveElement
       x-codeSamples:
       - lang: cURL
@@ -47,6 +47,32 @@ paths:
         $ref: '#/components/requestBodies/move'
 components:
   responses:
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
     badRequest:
       description: Bad request
       content:
@@ -125,68 +151,7 @@ components:
                   url: <API ENDPOINT URL>
                   code: 401
                 body: ''
-    nullBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: 'null'
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: null
-  parameters:
-    moveForeignModel:
-      name: foreignModel
-      description: Type for the foreign model being moved.
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - resource
-        - folder
-    foreignId:
-      name: foreignId
-      description: ID for the foreign element being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-  requestBodies:
-    move:
-      description: The target parent folder ID
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/move'
   schemas:
-    move:
-      type: object
-      required:
-      - folder_parent_id
-      properties:
-        folder_parent_id:
-          type: string
-          format: uuid
     header:
       type: object
       required:
@@ -222,6 +187,41 @@ components:
         code:
           type: integer
           example: 200
+    move:
+      type: object
+      required:
+      - folder_parent_id
+      properties:
+        folder_parent_id:
+          type: string
+          format: uuid
+  parameters:
+    foreignId:
+      name: foreignId
+      description: ID for the foreign element being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    moveForeignModel:
+      name: foreignModel
+      description: Type for the foreign model being moved.
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - resource
+        - folder
+  requestBodies:
+    move:
+      description: The target parent folder ID
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/move'
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

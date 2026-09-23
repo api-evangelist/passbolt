@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   contact:
     email: contact@passbolt.com
@@ -7,18 +7,18 @@ info:
     name: AGPL-3.0
     url: https://www.gnu.org/licenses/agpl-3.0.html
   termsOfService: https://www.passbolt.com/terms
-  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Healthcheck API
+  title: Passbolt Healthcheck API
   version: 5.0.0
 servers:
 - url: https://passbolt.local
   description: API Passbolt
 tags:
-- name: Healthcheck
+- name: Health Check
   description: Gather data about the passbolt instance's health.
 paths:
   /healthcheck.json:
     get:
-      summary: Get healthcheck information.
+      summary: Get healthcheck information
       description: Only administrators can query this endpoint.
       security:
       - bearerHttpAuthentication: []
@@ -31,7 +31,7 @@ paths:
       - lang: PHP
         source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/healthcheck.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer {{JWT_TOKEN}}\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
       tags:
-      - Healthcheck
+      - Health Check
       responses:
         '200':
           $ref: '#/components/responses/healthcheck'
@@ -39,7 +39,7 @@ paths:
           $ref: '#/components/responses/authenticationRequired'
   /healthcheck/status.json:
     get:
-      summary: Check if passbolt is up.
+      summary: Check if passbolt is up
       operationId: viewHealthcheckStatus
       security: []
       x-codeSamples:
@@ -50,12 +50,214 @@ paths:
       - lang: PHP
         source: "<?php\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"{{API_BASE_URL}}/healthcheck/status.json\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}\n"
       tags:
-      - Healthcheck
+      - Health Check
       responses:
         '200':
           $ref: '#/components/responses/status'
 components:
+  responses:
+    status:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: OK
+                  url: /healthcheck/status.json
+                  code: 200
+                body: OK
+    healthcheck:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/healthcheck'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /healthcheck.json
+                  code: 200
+                body:
+                  environment:
+                    gnupg: true
+                    info:
+                      phpVersion: 8.2.20
+                    phpVersion: true
+                    nextMinPhpVersion: true
+                    pcre: true
+                    mbstring: true
+                    intl: true
+                    image: true
+                    tmpWritable: true
+                    logWritable: true
+                  configFile:
+                    app: true
+                    passbolt: false
+                  core:
+                    cache: true
+                    debugDisabled: false
+                    salt: true
+                    info:
+                      fullBaseUrl: https://passbolt.localhost
+                    fullBaseUrl: true
+                    validFullBaseUrl: true
+                    fullBaseUrlReachable: true
+                  ssl:
+                    info: 'cURL Error (60) SSL certificate problem: self-signed certificate'
+                    peerValid: false
+                    hostValid: false
+                    notSelfSigned: false
+                  smtpSettings:
+                    isEnabled: true
+                    errorMessage: false
+                    source: env variables
+                    isInDb: false
+                    areEndpointsDisabled: false
+                    customSslOptions: true
+                  gpg:
+                    lib: true
+                    gpgHome: true
+                    gpgHomeWritable: true
+                    gpgKeyNotDefault: true
+                    gpgKeyPublicBlock: true
+                    gpgKeyPrivateBlock: true
+                    gpgKeyPublicReadable: true
+                    gpgKeyPrivateReadable: true
+                    gpgKeyPrivateFingerprint: true
+                    gpgKeyPublic: true
+                    gpgKeyPrivate: true
+                    gpgKey: true
+                    info:
+                      gpgKeyPrivate: /etc/passbolt/gpg/serverkey_private.asc
+                      gpgHome: /var/lib/passbolt/.gnupg
+                    gpgKeyPublicFingerprint: true
+                    gpgKeyPublicInKeyring: true
+                    gpgKeyPublicEmail: true
+                    canEncrypt: true
+                    canSign: true
+                    canEncryptSign: true
+                    canDecrypt: true
+                    canDecryptVerify: true
+                    canVerify: true
+                    isPublicServerKeyGopengpgCompatible: true
+                    isPrivateServerKeyGopengpgCompatible: true
+                  applications:
+                    configPath: /etc/passbolt/passbolt.php
+                    info:
+                      remoteVersion: 4.9.1
+                      currentVersion: 4.9.0
+                    latestVersion: false
+                    sslForce: false
+                    sslFullBaseUrl: true
+                    seleniumDisabled: true
+                    robotsIndexDisabled: true
+                    registrationClosed:
+                      isSelfRegistrationPluginEnabled: true
+                      selfRegistrationProvider: null
+                      isRegistrationPublicRemovedFromPassbolt: true
+                    hostAvailabilityCheckEnabled: false
+                    jsProd: true
+                    emailNotificationEnabled: false
+                    schema: true
+                  database:
+                    supportedBackend: true
+                    connect: true
+                    info:
+                      tablesCount: 31
+                    tablesCount: true
+                    defaultContent: true
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
   schemas:
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
     healthcheck:
       type: object
       required:
@@ -351,208 +553,6 @@ components:
               type: boolean
             defaultContent:
               type: boolean
-    header:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
-  responses:
-    authenticationRequired:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
-    status:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            base:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: OK
-                  url: /healthcheck/status.json
-                  code: 200
-                body: OK
-    healthcheck:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/healthcheck'
-          examples:
-            base:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The operation was successful.
-                  url: /healthcheck.json
-                  code: 200
-                body:
-                  environment:
-                    gnupg: true
-                    info:
-                      phpVersion: 8.2.20
-                    phpVersion: true
-                    nextMinPhpVersion: true
-                    pcre: true
-                    mbstring: true
-                    intl: true
-                    image: true
-                    tmpWritable: true
-                    logWritable: true
-                  configFile:
-                    app: true
-                    passbolt: false
-                  core:
-                    cache: true
-                    debugDisabled: false
-                    salt: true
-                    info:
-                      fullBaseUrl: https://passbolt.localhost
-                    fullBaseUrl: true
-                    validFullBaseUrl: true
-                    fullBaseUrlReachable: true
-                  ssl:
-                    info: 'cURL Error (60) SSL certificate problem: self-signed certificate'
-                    peerValid: false
-                    hostValid: false
-                    notSelfSigned: false
-                  smtpSettings:
-                    isEnabled: true
-                    errorMessage: false
-                    source: env variables
-                    isInDb: false
-                    areEndpointsDisabled: false
-                    customSslOptions: true
-                  gpg:
-                    lib: true
-                    gpgHome: true
-                    gpgHomeWritable: true
-                    gpgKeyNotDefault: true
-                    gpgKeyPublicBlock: true
-                    gpgKeyPrivateBlock: true
-                    gpgKeyPublicReadable: true
-                    gpgKeyPrivateReadable: true
-                    gpgKeyPrivateFingerprint: true
-                    gpgKeyPublic: true
-                    gpgKeyPrivate: true
-                    gpgKey: true
-                    info:
-                      gpgKeyPrivate: /etc/passbolt/gpg/serverkey_private.asc
-                      gpgHome: /var/lib/passbolt/.gnupg
-                    gpgKeyPublicFingerprint: true
-                    gpgKeyPublicInKeyring: true
-                    gpgKeyPublicEmail: true
-                    canEncrypt: true
-                    canSign: true
-                    canEncryptSign: true
-                    canDecrypt: true
-                    canDecryptVerify: true
-                    canVerify: true
-                    isPublicServerKeyGopengpgCompatible: true
-                    isPrivateServerKeyGopengpgCompatible: true
-                  applications:
-                    configPath: /etc/passbolt/passbolt.php
-                    info:
-                      remoteVersion: 4.9.1
-                      currentVersion: 4.9.0
-                    latestVersion: false
-                    sslForce: false
-                    sslFullBaseUrl: true
-                    seleniumDisabled: true
-                    robotsIndexDisabled: true
-                    registrationClosed:
-                      isSelfRegistrationPluginEnabled: true
-                      selfRegistrationProvider: null
-                      isRegistrationPublicRemovedFromPassbolt: true
-                    hostAvailabilityCheckEnabled: false
-                    jsProd: true
-                    emailNotificationEnabled: false
-                    schema: true
-                  database:
-                    supportedBackend: true
-                    connect: true
-                    info:
-                      tablesCount: 31
-                    tablesCount: true
-                    defaultContent: true
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

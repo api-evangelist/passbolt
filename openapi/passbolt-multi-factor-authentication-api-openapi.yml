@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   contact:
     email: contact@passbolt.com
@@ -7,24 +7,20 @@ info:
     name: AGPL-3.0
     url: https://www.gnu.org/licenses/agpl-3.0.html
   termsOfService: https://www.passbolt.com/terms
-  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Multi-Factor Authentication API
+  title: Passbolt Multi-Factor Authentication API
   version: 5.0.0
 servers:
 - url: https://passbolt.local
   description: API Passbolt
 tags:
 - name: Multi-Factor Authentication
-  description: 'Complete and validate authentication for users with MFA enabled.
-
-    '
+  description: Complete and validate authentication for users with MFA enabled.
 paths:
   /mfa/verify/{mfaProviderName}.json:
     get:
-      summary: Check multi-factor authentication.
+      summary: Check multi-factor authentication
       operationId: mfaVerifyCheck
-      description: 'Check if MFA validation is needed. `400` means that this kind of MFA is not required.
-
-        '
+      description: Check if MFA validation is needed. `400` means that this kind of MFA is not required.
       security:
       - bearerHttpAuthentication: []
       x-codeSamples:
@@ -46,7 +42,7 @@ paths:
         '401':
           $ref: '#/components/responses/authenticationRequired'
     post:
-      summary: Attempt multi-factor authentication.
+      summary: Attempt multi-factor authentication
       operationId: mfaVerifyAttempt
       security:
       - bearerHttpAuthentication: []
@@ -72,7 +68,7 @@ paths:
           $ref: '#/components/responses/authenticationRequired'
   /mfa/verify/error.json:
     get:
-      summary: Information about MFA requirements.
+      summary: Information about MFA requirements
       operationId: mfaVerifyError
       security:
       - bearerHttpAuthentication: []
@@ -94,6 +90,60 @@ paths:
           $ref: '#/components/responses/error'
 components:
   responses:
+    invalidOtp:
+      description: Invalid OTP code.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/invalidOtp'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: Something went wrong when validating the one-time password.
+                  url: /mfa/verify/totp.json
+                  code: 400
+                body:
+                  totp:
+                    isValidOtp: This OTP is not valid.
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
     badRequest:
       description: Bad request
       content:
@@ -146,60 +196,6 @@ components:
                   url: <API ENDPOINT URL>
                   code: 401
                 body: ''
-    nullBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: 'null'
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: null
-    invalidOtp:
-      description: Invalid OTP code.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/invalidOtp'
-          examples:
-            base:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: Something went wrong when validating the one-time password.
-                  url: /mfa/verify/totp.json
-                  code: 400
-                body:
-                  totp:
-                    isValidOtp: This OTP is not valid.
     error:
       description: MFA is required.
       content:
@@ -228,6 +224,16 @@ components:
                 body:
                   mfa_providers:
                   - totp
+  parameters:
+    mfaProviderName:
+      name: mfaProviderName
+      description: Name for the MFA provider.
+      in: path
+      schema:
+        type: string
+        enum:
+        - totp
+        - yubikey
   schemas:
     invalidOtp:
       anyOf:
@@ -290,18 +296,6 @@ components:
         code:
           type: integer
           example: 200
-    error:
-      type: object
-      required:
-      - mfa_providers
-      properties:
-        mfa_providers:
-          type: array
-          items:
-            type: string
-            enum:
-            - totp
-            - yubikey
     mfaAttempt:
       anyOf:
       - type: object
@@ -328,6 +322,18 @@ components:
             enum:
             - 0
             - 1
+    error:
+      type: object
+      required:
+      - mfa_providers
+      properties:
+        mfa_providers:
+          type: array
+          items:
+            type: string
+            enum:
+            - totp
+            - yubikey
   requestBodies:
     attempt:
       description: The code for the MFA attempt.
@@ -341,16 +347,6 @@ components:
               summary: Attempt MFA with TOTP.
               value:
                 totp: '635742'
-  parameters:
-    mfaProviderName:
-      name: mfaProviderName
-      description: Name for the MFA provider.
-      in: path
-      schema:
-        type: string
-        enum:
-        - totp
-        - yubikey
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

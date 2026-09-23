@@ -1,33 +1,7 @@
 {
   "provider": "passbolt",
   "sources": [
-    "passbolt-authentication-gpgauth-api-openapi.yml",
-    "passbolt-authentication-jwt-api-openapi.yml",
-    "passbolt-avatars-api-openapi.yml",
-    "passbolt-comments-api-openapi.yml",
-    "passbolt-directory-sync-api-openapi.yml",
-    "passbolt-favorites-api-openapi.yml",
-    "passbolt-folders-api-openapi.yml",
-    "passbolt-gpg-keys-api-openapi.yml",
-    "passbolt-groups-api-openapi.yml",
-    "passbolt-healthcheck-api-openapi.yml",
-    "passbolt-metadata-keys-api-openapi.yml",
-    "passbolt-metadata-private-keys-api-openapi.yml",
-    "passbolt-metadata-rotate-key-api-openapi.yml",
-    "passbolt-metadata-session-key-api-openapi.yml",
-    "passbolt-metadata-types-settings-api-openapi.yml",
-    "passbolt-metadata-upgrade-api-openapi.yml",
-    "passbolt-move-api-openapi.yml",
-    "passbolt-multi-factor-authentication-api-openapi.yml",
-    "passbolt-permissions-api-openapi.yml",
-    "passbolt-resource-types-api-openapi.yml",
-    "passbolt-resources-api-openapi.yml",
-    "passbolt-roles-api-openapi.yml",
-    "passbolt-secrets-api-openapi.yml",
-    "passbolt-settings-api-openapi.yml",
-    "passbolt-shares-api-openapi.yml",
-    "passbolt-tags-api-openapi.yml",
-    "passbolt-users-api-openapi.yml"
+    "_original/passbolt-openapi.yaml"
   ],
   "outputs": [
     "passbolt-authentication-gpgauth-api-openapi.yml",
@@ -58,9 +32,44 @@
     "passbolt-tags-api-openapi.yml",
     "passbolt-users-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "passbolt-openapi.yaml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: passbolt-health-check-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 27 total)"
+  ],
+  "skipped": [
+    "passbolt-authentication-gpgauth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-authentication-jwt-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-avatars-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-comments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-directory-sync-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-favorites-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-folders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-gpg-keys-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-groups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-health-check-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-metadata-keys-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-metadata-private-keys-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-metadata-rotate-key-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-metadata-session-key-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-metadata-types-settings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-metadata-upgrade-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-move-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-multi-factor-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-permissions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-resource-types-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-resources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-roles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-secrets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-settings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-shares-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-tags-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "passbolt-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

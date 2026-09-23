@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   contact:
     email: contact@passbolt.com
@@ -7,20 +7,18 @@ info:
     name: AGPL-3.0
     url: https://www.gnu.org/licenses/agpl-3.0.html
   termsOfService: https://www.passbolt.com/terms
-  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Favorites API
+  title: Passbolt Favorites API
   version: 5.0.0
 servers:
 - url: https://passbolt.local
   description: API Passbolt
 tags:
 - name: Favorites
-  description: 'The favorite endpoints are used to add or remove a `Resource` from your favorites.
-
-    '
+  description: The favorite endpoints are used to add or remove a `Resource` from your favorites.
 paths:
   /favorite/{favoriteId}.json:
     delete:
-      summary: Unset a resource as favorite.
+      summary: Unset a resource as favorite
       operationId: deleteFavorite
       security:
       - bearerHttpAuthentication: []
@@ -46,7 +44,7 @@ paths:
           $ref: '#/components/responses/notFound'
   /favorite/{foreignModel}/{foreignId}.json:
     post:
-      summary: Set a resource as favorite.
+      summary: Set a resource as favorite
       operationId: addFavorite
       security:
       - bearerHttpAuthentication: []
@@ -73,6 +71,32 @@ paths:
           $ref: '#/components/responses/notFound'
 components:
   responses:
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
     badRequest:
       description: Bad request
       content:
@@ -151,32 +175,6 @@ components:
                   url: <API ENDPOINT URL>
                   code: 401
                 body: ''
-    nullBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: 'null'
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: null
     favorites_add:
       description: Operation is successful
       content:
@@ -209,32 +207,6 @@ components:
                   foreign_model: Resource
                   created: '2024-08-07T13:39:29+00:00'
                   modified: '2024-08-07T13:39:29+00:00'
-  parameters:
-    favoritesForeignModel:
-      name: foreignModel
-      description: Type for the foreign model being set as favorite.
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - resource
-    favoriteId:
-      name: favoriteId
-      description: ID for the favorite being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    foreignId:
-      name: foreignId
-      description: ID for the foreign element being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
   schemas:
     favorite:
       type: object
@@ -300,6 +272,32 @@ components:
         code:
           type: integer
           example: 200
+  parameters:
+    favoritesForeignModel:
+      name: foreignModel
+      description: Type for the foreign model being set as favorite.
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - resource
+    favoriteId:
+      name: favoriteId
+      description: ID for the favorite being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    foreignId:
+      name: foreignId
+      description: ID for the foreign element being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   contact:
     email: contact@passbolt.com
@@ -7,20 +7,18 @@ info:
     name: AGPL-3.0
     url: https://www.gnu.org/licenses/agpl-3.0.html
   termsOfService: https://www.passbolt.com/terms
-  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Authentication (JWT) API
+  title: Passbolt Authentication (JWT) API
   version: 5.0.0
 servers:
 - url: https://passbolt.local
   description: API Passbolt
 tags:
 - name: Authentication (JWT)
-  description: 'JWT-based authentication is the preferred way to interact with the Passbolt API. Find more [here](https://www.passbolt.com/docs/development)
-
-    '
+  description: JWT-based authentication is the preferred way to interact with the Passbolt API. Find more here
 paths:
   /auth/jwt/jwks.json:
     get:
-      summary: Get the JWKs server information.
+      summary: Get the JWKs server information
       operationId: viewAuthJwtJwks
       security: []
       x-codeSamples:
@@ -39,7 +37,7 @@ paths:
           $ref: '#/components/responses/notFound'
   /auth/jwt/login.json:
     post:
-      summary: Login.
+      summary: Login
       operationId: authJwtLogin
       security: []
       x-codeSamples:
@@ -60,7 +58,7 @@ paths:
           $ref: '#/components/responses/badRequest'
   /auth/jwt/logout.json:
     post:
-      summary: Logout.
+      summary: Logout
       operationId: authJwtLogout
       security:
       - bearerHttpAuthentication: []
@@ -84,7 +82,7 @@ paths:
           $ref: '#/components/responses/authenticationRequired'
   /auth/jwt/refresh.json:
     post:
-      summary: Refresh access token.
+      summary: Refresh access token
       operationId: authJwtRefresh
       security:
       - bearerHttpAuthentication: []
@@ -106,11 +104,9 @@ paths:
           $ref: '#/components/responses/badRequest'
   /auth/jwt/rsa.json:
     get:
-      summary: Get the JWT RSA server information.
+      summary: Get the JWT RSA server information
       operationId: viewAuthJwtRsa
-      description: 'This is not the key to use when encrypting the JWT login challenge.
-
-        '
+      description: This is not the key to use when encrypting the JWT login challenge.
       security: []
       x-codeSamples:
       - lang: cURL
@@ -140,6 +136,18 @@ components:
               value:
                 user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
                 challenge: '-----BEGIN PGP MESSAGE-----'
+    refresh:
+      description: The user and refresh token for session identification.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/refreshRequest'
+          examples:
+            base:
+              value:
+                user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                refresh_token: f8cea352-6bd3-4944-9523-20b31272bef0
     logout:
       description: The session associated to the refresh token you want to revoke.
       required: true
@@ -155,57 +163,19 @@ components:
             revokeAllSessions:
               summary: Empty body to revoke all sessions.
               value: null
-    refresh:
-      description: The user and refresh token for session identification.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/refreshRequest'
-          examples:
-            base:
-              value:
-                user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
-                refresh_token: f8cea352-6bd3-4944-9523-20b31272bef0
   schemas:
-    logout:
-      type: object
-      properties:
-        refresh_token:
-          type: string
-          format: uuid
-    refreshRequest:
-      type: object
-      required:
-      - refresh_token
-      - user_id
-      properties:
-        refresh_token:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-    rsa:
-      type: object
-      required:
-      - keydata
-      properties:
-        keydata:
-          type: string
-    loginResponse:
-      type: object
-      required:
-      - challenge
-      properties:
-        challenge:
-          type: string
     refreshResponse:
       type: object
       required:
       - access_token
       properties:
         access_token:
+          type: string
+          format: uuid
+    logout:
+      type: object
+      properties:
+        refresh_token:
           type: string
           format: uuid
     loginRequest:
@@ -220,6 +190,25 @@ components:
         challenge:
           type: string
           description: '`gpg_encrypt(gpg_sign(challenge_message, user_key), server_key)`'
+    rsa:
+      type: object
+      required:
+      - keydata
+      properties:
+        keydata:
+          type: string
+    refreshRequest:
+      type: object
+      required:
+      - refresh_token
+      - user_id
+      properties:
+        refresh_token:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
     jwk:
       type: object
       required:
@@ -274,33 +263,14 @@ components:
         code:
           type: integer
           example: 200
+    loginResponse:
+      type: object
+      required:
+      - challenge
+      properties:
+        challenge:
+          type: string
   responses:
-    nullBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: 'null'
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: null
     login:
       description: Operation is successful.
       content:
@@ -328,8 +298,8 @@ components:
                   code: 200
                 body:
                   challenge: '-----BEGIN PGP MESSAGE-----'
-    rsa:
-      description: Operation is successful
+    authenticationRequired:
+      description: Authentication required.
       content:
         application/json:
           schema:
@@ -341,20 +311,19 @@ components:
               header:
                 $ref: '#/components/schemas/header'
               body:
-                $ref: '#/components/schemas/rsa'
+                type: string
           examples:
             base:
               value:
                 header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The operation was successful.
-                  url: /auth/jwt/rsa.json
-                  code: 200
-                body:
-                  keydata: '-----BEGIN PUBLIC KEY-----'
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
     refresh:
       description: Operation is successful. A new refresh token is set via a cookie.
       headers:
@@ -387,32 +356,28 @@ components:
                   code: 200
                 body:
                   access_token: 90c0d69c-a508-4cb6-a26c-799e52147ac0
-    authenticationRequired:
-      description: Authentication required.
+    jwks:
+      description: Operation is successful
       content:
         application/json:
           schema:
             type: object
             required:
-            - header
-            - body
+            - keys
             properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
+              keys:
+                type: array
+                items:
+                  $ref: '#/components/schemas/jwk'
           examples:
             base:
               value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
+                keys:
+                - kty: RSA
+                  alg: RS256
+                  use: sig
+                  e: AQAB
+                  n: sP0CpKdQJF8KgPD9GOLiCssOhi8qHXp0TyyqkWNGWcZD3JTKuuWJhNn...
     badRequest:
       description: Bad request
       content:
@@ -439,6 +404,59 @@ components:
                   url: <API ENDPOINT URL>
                   code: 400
                 body: ''
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+    rsa:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/rsa'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /auth/jwt/rsa.json
+                  code: 200
+                body:
+                  keydata: '-----BEGIN PUBLIC KEY-----'
     notFound:
       description: Not found
       content:
@@ -465,28 +483,6 @@ components:
                   url: <API ENDPOINT URL>
                   code: 404
                 body: ''
-    jwks:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - keys
-            properties:
-              keys:
-                type: array
-                items:
-                  $ref: '#/components/schemas/jwk'
-          examples:
-            base:
-              value:
-                keys:
-                - kty: RSA
-                  alg: RS256
-                  use: sig
-                  e: AQAB
-                  n: sP0CpKdQJF8KgPD9GOLiCssOhi8qHXp0TyyqkWNGWcZD3JTKuuWJhNn...
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   contact:
     email: contact@passbolt.com
@@ -7,7 +7,7 @@ info:
     name: AGPL-3.0
     url: https://www.gnu.org/licenses/agpl-3.0.html
   termsOfService: https://www.passbolt.com/terms
-  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Metadata types settings API
+  title: Passbolt Metadata types settings API
   version: 5.0.0
 servers:
 - url: https://passbolt.local
@@ -107,58 +107,6 @@ paths:
         $ref: '#/components/requestBodies/upgradeMetadataTypesSettings'
 components:
   responses:
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
-    notFound:
-      description: Not found
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The <MODEL> does not exist.
-                  url: <API ENDPOINT URL>
-                  code: 404
-                body: ''
     accessRestrictedToAdministrators:
       description: Access restricted
       content:
@@ -185,8 +133,8 @@ components:
                   url: <API ENDPOINT URL>
                   code: 403
                 body: ''
-    authenticationRequired:
-      description: Authentication required.
+    badRequest:
+      description: Bad request
       content:
         application/json:
           schema:
@@ -200,18 +148,18 @@ components:
               body:
                 type: string
           examples:
-            base:
+            example:
               value:
                 header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
                   status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
                   url: <API ENDPOINT URL>
-                  code: 401
+                  code: 400
                 body: ''
-    viewMetadataTypesSettings:
+    upgradeMetadataTypesSettings:
       description: Operation is successful.
       content:
         application/json:
@@ -251,7 +199,59 @@ components:
                   allow_creation_of_v4_comments: true
                   allow_v5_v4_downgrade: false
                   allow_v4_v5_upgrade: true
-    upgradeMetadataTypesSettings:
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    viewMetadataTypesSettings:
       description: Operation is successful.
       content:
         application/json:

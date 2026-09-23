@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   contact:
     email: contact@passbolt.com
@@ -7,7 +7,7 @@ info:
     name: AGPL-3.0
     url: https://www.gnu.org/licenses/agpl-3.0.html
   termsOfService: https://www.passbolt.com/terms
-  title: Passbolt Authentication (GPGAuth) Authentication (GPGAuth) Tags API
+  title: Passbolt Tags API
   version: 5.0.0
 servers:
 - url: https://passbolt.local
@@ -18,10 +18,8 @@ tags:
 paths:
   /tags.json:
     get:
-      summary: Get personal tags and shared tags.
-      description: '> *Encrypted metadata for tags is available since version 5.1, and is not supported on all clients.*
-
-        '
+      summary: Get personal tags and shared tags
+      description: '> *Encrypted metadata for tags is available since version 5.1, and is not supported on all clients.*'
       operationId: indexTags
       security:
       - bearerHttpAuthentication: []
@@ -43,11 +41,9 @@ paths:
           $ref: '#/components/responses/authenticationRequired'
   /tags/{resourceOrTagId}.json:
     put:
-      summary: Update a tag.
+      summary: Update a tag
       operationId: updateTag
-      description: '> *Encrypted metadata for tags is available since version 5.1, and is not supported on all clients.*
-
-        '
+      description: '> *Encrypted metadata for tags is available since version 5.1, and is not supported on all clients.*'
       security:
       - bearerHttpAuthentication: []
       x-codeSamples:
@@ -71,11 +67,9 @@ paths:
         '401':
           $ref: '#/components/responses/authenticationRequired'
     post:
-      summary: Add tags to a resource.
+      summary: Add tags to a resource
       operationId: addTagsResource
-      description: '> *Encrypted metadata for tags is available since version 5.1, and is not supported on all clients.*
-
-        '
+      description: '> *Encrypted metadata for tags is available since version 5.1, and is not supported on all clients.*'
       security:
       - bearerHttpAuthentication: []
       x-codeSamples:
@@ -99,21 +93,16 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/addResource'
 components:
+  parameters:
+    resourceOrTagId:
+      name: resourceOrTagId
+      description: The tag (for `PUT`) or resource (for `POST`) identifier being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
   schemas:
-    e2eeMetadataBasedId:
-      allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBased'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: string
-            format: uuid
-    tagIndexAndView:
-      anyOf:
-      - $ref: '#/components/schemas/tagLegacy'
-      - $ref: '#/components/schemas/tagV5'
     tagLegacy:
       type: object
       required:
@@ -132,32 +121,6 @@ components:
           type: string
         is_shared:
           type: boolean
-    tagV5:
-      allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBasedId'
-      - type: object
-        required:
-        - is_shared
-        properties:
-          is_shared:
-            type: boolean
-    e2eeMetadataBased:
-      type: object
-      required:
-      - metadata
-      - metadata_key_id
-      - metadata_key_type
-      properties:
-        metadata:
-          type: string
-        metadata_key_id:
-          type: string
-          format: uuid
-        metadata_key_type:
-          type: string
-          enum:
-          - user_key
-          - shared_key
     tagAddResource:
       anyOf:
       - type: object
@@ -204,6 +167,46 @@ components:
         code:
           type: integer
           example: 200
+    tagIndexAndView:
+      anyOf:
+      - $ref: '#/components/schemas/tagLegacy'
+      - $ref: '#/components/schemas/tagV5'
+    e2eeMetadataBased:
+      type: object
+      required:
+      - metadata
+      - metadata_key_id
+      - metadata_key_type
+      properties:
+        metadata:
+          type: string
+        metadata_key_id:
+          type: string
+          format: uuid
+        metadata_key_type:
+          type: string
+          enum:
+          - user_key
+          - shared_key
+    e2eeMetadataBasedId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: uuid
+    tagV5:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedId'
+      - type: object
+        required:
+        - is_shared
+        properties:
+          is_shared:
+            type: boolean
     tagV5Update:
       allOf:
       - $ref: '#/components/schemas/e2eeMetadataBased'
@@ -214,88 +217,6 @@ components:
           is_shared:
             type: boolean
   responses:
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
-    tags_update:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/tagV5'
-          examples:
-            base:
-              value:
-                header:
-                  id: 15a7d119-07c7-4fcb-8afc-ee8eba41fdc0
-                  status: success
-                  servertime: 1721207029
-                  action: 43efcc1ec-5cc1-5d2a-a16e-234f23b70719
-                  message: The operation was successful.
-                  url: /tags/04b87425-160e-4e31-b42f-89c455650331.json
-                body:
-                  id: 04b87425-160e-4e31-b42f-89c455650331
-                  metadata: '-----BEGIN PGP MESSAGE-----'
-                  metadata_key_id: ed94010c-6a97-488c-a60c-cfc6558f3ed7
-                  metadata_key_type: shared_key
-                  is_shared: false
-    authenticationRequired:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
     tags_index:
       description: Operation is successful
       content:
@@ -367,6 +288,88 @@ components:
                   metadata_key_id: null
                   metadata_key_type: user_key
                   is_shared: false
+    tags_update:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/tagV5'
+          examples:
+            base:
+              value:
+                header:
+                  id: 15a7d119-07c7-4fcb-8afc-ee8eba41fdc0
+                  status: success
+                  servertime: 1721207029
+                  action: 43efcc1ec-5cc1-5d2a-a16e-234f23b70719
+                  message: The operation was successful.
+                  url: /tags/04b87425-160e-4e31-b42f-89c455650331.json
+                body:
+                  id: 04b87425-160e-4e31-b42f-89c455650331
+                  metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: ed94010c-6a97-488c-a60c-cfc6558f3ed7
+                  metadata_key_type: shared_key
+                  is_shared: false
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
   requestBodies:
     tags_update:
       description: The tag to update.
@@ -398,15 +401,6 @@ components:
                   metadata_key_type: shared_key
                   is_shared: true
                 - id: 4879d401-c242-458d-91a0-dba864c36535
-  parameters:
-    resourceOrTagId:
-      name: resourceOrTagId
-      description: The tag (for `PUT`) or resource (for `POST`) identifier being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT
