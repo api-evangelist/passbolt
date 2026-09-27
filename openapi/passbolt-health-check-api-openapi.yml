@@ -223,41 +223,6 @@ components:
                   code: 401
                 body: ''
   schemas:
-    header:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
     healthcheck:
       type: object
       required:
@@ -553,6 +518,41 @@ components:
               type: boolean
             defaultContent:
               type: boolean
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

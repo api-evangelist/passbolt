@@ -38,23 +38,7 @@ paths:
         '200':
           $ref: '#/components/responses/view'
 components:
-  responses:
-    view:
-      description: Operation is successful
-      content:
-        image/jpeg:
-          schema:
-            type: string
-            format: binary
   parameters:
-    avatarId:
-      name: avatarId
-      description: ID for the avatar being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
     avatarFormat:
       name: avatarFormat
       description: Format for the avatar being manipulated.
@@ -65,6 +49,22 @@ components:
         enum:
         - medium.jpg
         - small.jpg
+    avatarId:
+      name: avatarId
+      description: ID for the avatar being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    view:
+      description: Operation is successful
+      content:
+        image/jpeg:
+          schema:
+            type: string
+            format: binary
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

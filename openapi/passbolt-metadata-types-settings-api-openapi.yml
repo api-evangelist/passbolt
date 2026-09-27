@@ -107,32 +107,6 @@ paths:
         $ref: '#/components/requestBodies/upgradeMetadataTypesSettings'
 components:
   responses:
-    accessRestrictedToAdministrators:
-      description: Access restricted
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Access restricted to administrators.
-                  url: <API ENDPOINT URL>
-                  code: 403
-                body: ''
     badRequest:
       description: Bad request
       content:
@@ -159,7 +133,33 @@ components:
                   url: <API ENDPOINT URL>
                   code: 400
                 body: ''
-    upgradeMetadataTypesSettings:
+    accessRestrictedToAdministrators:
+      description: Access restricted
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Access restricted to administrators.
+                  url: <API ENDPOINT URL>
+                  code: 403
+                body: ''
+    viewMetadataTypesSettings:
       description: Operation is successful.
       content:
         application/json:
@@ -251,7 +251,7 @@ components:
                   url: <API ENDPOINT URL>
                   code: 401
                 body: ''
-    viewMetadataTypesSettings:
+    upgradeMetadataTypesSettings:
       description: Operation is successful.
       content:
         application/json:

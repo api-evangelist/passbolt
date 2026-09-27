@@ -126,6 +126,32 @@ paths:
           $ref: '#/components/responses/notFound'
 components:
   responses:
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
     add:
       description: Operation is successful.
       content:
@@ -150,94 +176,6 @@ components:
                   action: 4d0c0996-ce30-4bce-9918-9062ab35c542
                   message: The comment was successfully added.
                   url: /comments/resource/42968631-0c51-4405-9f2d-c6700c5057be.json
-                  code: 200
-                body:
-                  id: 41aca4aa-430c-4b60-a1f1-c0de1b52a1ce
-                  parent_id: null
-                  foreign_key: 42968631-0c51-4405-9f2d-c6700c5057be
-                  foreign_model: Resource
-                  content: no comment
-                  created: '2024-09-05T14:15:47+00:00'
-                  modified: '2024-09-05T14:43:22+00:00'
-                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
-                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
-                  user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
-    authenticationRequired:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
-    update:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/commentView'
-          examples:
-            base:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The comment was successfully updated.
-                  url: /comments/41aca4aa-430c-4b60-a1f1-c0de1b52a1ce.json
                   code: 200
                 body:
                   id: 41aca4aa-430c-4b60-a1f1-c0de1b52a1ce
@@ -315,8 +253,8 @@ components:
                   modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
                   user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
                   children: []
-    notFound:
-      description: Not found
+    badRequest:
+      description: Bad request
       content:
         application/json:
           schema:
@@ -337,78 +275,158 @@ components:
                   status: error
                   servertime: 1721207029
                   action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The <MODEL> does not exist.
+                  message: <ERROR MESSAGE>
                   url: <API ENDPOINT URL>
-                  code: 404
+                  code: 400
                 body: ''
+    update:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/commentView'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The comment was successfully updated.
+                  url: /comments/41aca4aa-430c-4b60-a1f1-c0de1b52a1ce.json
+                  code: 200
+                body:
+                  id: 41aca4aa-430c-4b60-a1f1-c0de1b52a1ce
+                  parent_id: null
+                  foreign_key: 42968631-0c51-4405-9f2d-c6700c5057be
+                  foreign_model: Resource
+                  content: no comment
+                  created: '2024-09-05T14:15:47+00:00'
+                  modified: '2024-09-05T14:43:22+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+  parameters:
+    commentId:
+      name: commentId
+      description: ID for the comment being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    resourceId:
+      name: resourceId
+      description: ID for the resource being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    containCreator:
+      name: contain[creator]
+      description: Add creator to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containModifier:
+      name: contain[modifier]
+      description: Add modifier to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+  requestBodies:
+    commentAdd:
+      description: The comment you want to add
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/commentAdd'
+          examples:
+            base:
+              value:
+                content: no comment
+    commentUpdate:
+      description: The comment you want to update
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/commentUpdate'
+          examples:
+            base:
+              value:
+                content: no comment
   schemas:
-    commentView:
+    groupsUsersIndexAndView:
       type: object
       required:
       - id
-      - parent_id
-      - foreign_key
-      - foreign_model
-      - content
-      - created
-      - modified
-      - created_by
-      - modified_by
+      - group_id
       - user_id
+      - is_admin
+      - created
       properties:
         id:
           type: string
           format: uuid
-        parent_id:
-          type: string
-          format: uuid
-        foreign_key:
-          type: string
-          format: uuid
-        foreign_model:
-          type: string
-          enum:
-          - Resource
-        content:
-          type: string
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-        created_by:
-          type: string
-          format: uuid
-        modified_by:
+        group_id:
           type: string
           format: uuid
         user_id:
           type: string
           format: uuid
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/commentView'
-        modifier:
-          $ref: '#/components/schemas/userIndexAndView'
-        creator:
-          $ref: '#/components/schemas/userIndexAndView'
-    commentAdd:
-      allOf:
-      - $ref: '#/components/schemas/commentUpdate'
-      - type: object
-        properties:
-          parent_id:
-            type: string
-            format: uuid
-    commentUpdate:
-      type: object
-      required:
-      - content
-      properties:
-        content:
+        is_admin:
+          type: boolean
+        created:
           type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
     role:
       type: object
       required:
@@ -593,6 +611,73 @@ components:
           type: string
           format: date-time
           x-nullable: true
+    commentView:
+      type: object
+      required:
+      - id
+      - parent_id
+      - foreign_key
+      - foreign_model
+      - content
+      - created
+      - modified
+      - created_by
+      - modified_by
+      - user_id
+      properties:
+        id:
+          type: string
+          format: uuid
+        parent_id:
+          type: string
+          format: uuid
+        foreign_key:
+          type: string
+          format: uuid
+        foreign_model:
+          type: string
+          enum:
+          - Resource
+        content:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/commentView'
+        modifier:
+          $ref: '#/components/schemas/userIndexAndView'
+        creator:
+          $ref: '#/components/schemas/userIndexAndView'
+    commentUpdate:
+      type: object
+      required:
+      - content
+      properties:
+        content:
+          type: string
+    commentAdd:
+      allOf:
+      - $ref: '#/components/schemas/commentUpdate'
+      - type: object
+        properties:
+          parent_id:
+            type: string
+            format: uuid
     header:
       type: object
       required:
@@ -628,91 +713,6 @@ components:
         code:
           type: integer
           example: 200
-    groupsUsersIndexAndView:
-      type: object
-      required:
-      - id
-      - group_id
-      - user_id
-      - is_admin
-      - created
-      properties:
-        id:
-          type: string
-          format: uuid
-        group_id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        is_admin:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        user:
-          $ref: '#/components/schemas/userIndexAndView'
-  parameters:
-    commentId:
-      name: commentId
-      description: ID for the comment being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    containCreator:
-      name: contain[creator]
-      description: Add creator to response body.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-    resourceId:
-      name: resourceId
-      description: ID for the resource being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    containModifier:
-      name: contain[modifier]
-      description: Add modifier to response body.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-  requestBodies:
-    commentUpdate:
-      description: The comment you want to update
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/commentUpdate'
-          examples:
-            base:
-              value:
-                content: no comment
-    commentAdd:
-      description: The comment you want to add
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/commentAdd'
-          examples:
-            base:
-              value:
-                content: no comment
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

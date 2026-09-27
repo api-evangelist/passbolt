@@ -124,261 +124,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/resourceUpdate'
 components:
-  schemas:
-    resourceType:
-      type: object
-      required:
-      - id
-      - slug
-      - name
-      - description
-      - definition
-      - deleted
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        slug:
-          type: string
-          description: '* `password-string` - The original passbolt resource type, where the secret is a non empty string.
-
-            * `password-and-description` - A resource with the password and the description encrypted.
-
-            * `totp` - A resource with standalone TOTP fields.
-
-            * `password-description-totp` - A resource with encrypted password, description and TOTP fields.
-
-            * `v5-default-with-totp` - The new default resource type with a TOTP introduced with v5.
-
-            * `v5-password-string (Deprecated)` - The original passbolt resource type, kept for backward compatibility reasons.
-
-            * `v5-totp-standalone` - The new standalone TOTP resource type introduced with v5.
-
-            * `v5-default` - The new default resource type introduced with v5.
-
-            '
-          enum:
-          - password-string
-          - password-and-description
-          - totp
-          - password-description-totp
-          - v5-default-with-totp
-          - v5-password-string (Deprecated)
-          - v5-totp-standalone
-          - v5-default
-        name:
-          type: string
-        description:
-          type: string
-        definition:
-          type: object
-          description: Schema for the expected data for this kind of resources.
-        deleted:
-          type: string
-          x-nullable: true
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-    resourceTypeIndex:
-      allOf:
-      - $ref: '#/components/schemas/resourceType'
-      - type: object
-        required:
-        - default
-        properties:
-          default:
-            type: boolean
-          resources_count:
-            type: integer
-    header:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
-    resourceTypeUpdate:
-      type: object
-      properties:
-        deleted:
-          type: boolean
-          x-nullable: true
   responses:
-    resourceTypes_view:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/resourceType'
-          examples:
-            resourceType:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The operation was successful.
-                  url: /resource-types/669f8c64-242a-59fb-92fc-81f660975fd3.json
-                  code: 200
-                body:
-                  id: 669f8c64-242a-59fb-92fc-81f660975fd3
-                  slug: password-and-description
-                  name: Password with description
-                  description: A resource with the password and the description encrypted.
-                  definition:
-                    resource:
-                      type: object
-                      required:
-                      - name
-                      properties:
-                        name:
-                          type: string
-                          maxLength: 255
-                        username:
-                          anyOf:
-                          - type: string
-                            maxLength: 255
-                          - type: 'null'
-                        uri:
-                          anyOf:
-                          - type: string
-                            maxLength: 1024
-                          - type: 'null'
-                    secret:
-                      type: object
-                      required:
-                      - password
-                      properties:
-                        password:
-                          type: string
-                          maxLength: 4096
-                        description:
-                          anyOf:
-                          - type: string
-                            maxLength: 10000
-                          - type: null
-                  created: '2024-07-08T08:06:25+00:00'
-                  modified: '2024-07-08T08:06:25+00:00'
-    accessRestrictedToAdministrators:
-      description: Access restricted
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Access restricted to administrators.
-                  url: <API ENDPOINT URL>
-                  code: 403
-                body: ''
-    nullBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: 'null'
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: null
-    emptyStringBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: ''
     resourceTypes_index:
       description: Operation is successful
       content:
@@ -446,6 +192,32 @@ components:
                   deleted: null
                   created: '2024-07-08T08:06:25+00:00'
                   modified: '2024-07-08T08:06:25+00:00'
+    accessRestrictedToAdministrators:
+      description: Access restricted
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Access restricted to administrators.
+                  url: <API ENDPOINT URL>
+                  code: 403
+                body: ''
     badRequest:
       description: Bad request
       content:
@@ -498,6 +270,32 @@ components:
                   url: <API ENDPOINT URL>
                   code: 404
                 body: ''
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
     authenticationRequired:
       description: Authentication required.
       content:
@@ -524,6 +322,208 @@ components:
                   url: <API ENDPOINT URL>
                   code: 401
                 body: ''
+    resourceTypes_view:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/resourceType'
+          examples:
+            resourceType:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /resource-types/669f8c64-242a-59fb-92fc-81f660975fd3.json
+                  code: 200
+                body:
+                  id: 669f8c64-242a-59fb-92fc-81f660975fd3
+                  slug: password-and-description
+                  name: Password with description
+                  description: A resource with the password and the description encrypted.
+                  definition:
+                    resource:
+                      type: object
+                      required:
+                      - name
+                      properties:
+                        name:
+                          type: string
+                          maxLength: 255
+                        username:
+                          anyOf:
+                          - type: string
+                            maxLength: 255
+                          - type: 'null'
+                        uri:
+                          anyOf:
+                          - type: string
+                            maxLength: 1024
+                          - type: 'null'
+                    secret:
+                      type: object
+                      required:
+                      - password
+                      properties:
+                        password:
+                          type: string
+                          maxLength: 4096
+                        description:
+                          anyOf:
+                          - type: string
+                            maxLength: 10000
+                          - type: null
+                  created: '2024-07-08T08:06:25+00:00'
+                  modified: '2024-07-08T08:06:25+00:00'
+    emptyStringBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: ''
+  schemas:
+    resourceType:
+      type: object
+      required:
+      - id
+      - slug
+      - name
+      - description
+      - definition
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        slug:
+          type: string
+          description: '* `password-string` - The original passbolt resource type, where the secret is a non empty string.
+
+            * `password-and-description` - A resource with the password and the description encrypted.
+
+            * `totp` - A resource with standalone TOTP fields.
+
+            * `password-description-totp` - A resource with encrypted password, description and TOTP fields.
+
+            * `v5-default-with-totp` - The new default resource type with a TOTP introduced with v5.
+
+            * `v5-password-string (Deprecated)` - The original passbolt resource type, kept for backward compatibility reasons.
+
+            * `v5-totp-standalone` - The new standalone TOTP resource type introduced with v5.
+
+            * `v5-default` - The new default resource type introduced with v5.
+
+            '
+          enum:
+          - password-string
+          - password-and-description
+          - totp
+          - password-description-totp
+          - v5-default-with-totp
+          - v5-password-string (Deprecated)
+          - v5-totp-standalone
+          - v5-default
+        name:
+          type: string
+        description:
+          type: string
+        definition:
+          type: object
+          description: Schema for the expected data for this kind of resources.
+        deleted:
+          type: string
+          x-nullable: true
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    resourceTypeUpdate:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+          x-nullable: true
+    resourceTypeIndex:
+      allOf:
+      - $ref: '#/components/schemas/resourceType'
+      - type: object
+        required:
+        - default
+        properties:
+          default:
+            type: boolean
+          resources_count:
+            type: integer
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
   parameters:
     filterIsDeleted:
       name: filter[is-deleted]

@@ -170,46 +170,139 @@ paths:
         '404':
           $ref: '#/components/responses/notFound'
 components:
-  parameters:
-    filterExpired:
-      name: filter[expired]
-      description: Filter for expired elements.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-    filterDeleted:
-      name: filter[deleted]
-      description: Filter for deleted elements.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-    containMetadataPrivateKeys:
-      name: contain[metadata_private_keys]
-      description: Add metadata private keys in response.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-    metadataKeyId:
-      name: metadataKeyId
-      description: The metadata key identifier being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
   schemas:
+    metadataPrivateKeysShortIndex:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataUserId'
+      - type: object
+        required:
+        - created_by
+        - modified_by
+        properties:
+          created_by:
+            type: string
+            format: uuid
+            x-nullable: true
+          modified_by:
+            type: string
+            format: uuid
+            x-nullable: true
+          user_id:
+            x-nullable: false
+    metadataKeyAdd:
+      type: object
+      required:
+      - armored_key
+      - fingerprint
+      - metadata_private_keys
+      properties:
+        armored_key:
+          type: string
+        fingerprint:
+          type: string
+        metadata_private_keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/e2eeDataUserId'
+    e2eeIdCreatedDataModifiedUserId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataUserId'
+      - type: object
+        required:
+        - id
+        - created
+        - modified
+        properties:
+          id:
+            type: string
+            format: uuid
+          created:
+            type: string
+            format: date-time
+          modified:
+            type: string
+            format: date-time
+    metadataPrivateKeysIndexAndView:
+      allOf:
+      - $ref: '#/components/schemas/metadataPrivateKeysShortIndex'
+      - type: object
+        required:
+        - id
+        - metadata_key_id
+        - created
+        - modified
+        properties:
+          id:
+            type: string
+            format: uuid
+          metadata_key_id:
+            type: string
+            format: uuid
+          created:
+            type: string
+            format: date-time
+          modified:
+            type: string
+            format: date-time
+    metadataKeysSettingsIndex:
+      type: object
+      required:
+      - allow_usage_of_personal_keys
+      - zero_knowledge_key_share
+      properties:
+        allow_usage_of_personal_keys:
+          type: boolean
+        zero_knowledge_key_share:
+          type: boolean
+    e2eeDataOnly:
+      required:
+      - data
+      properties:
+        data:
+          type: string
+    e2eeDataUserId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataOnly'
+      - type: object
+        required:
+        - user_id
+        properties:
+          user_id:
+            type: string
+            format: uuid
+            x-nullable: true
+    e2eeDataUserIdMetadataKeyId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataUserId'
+      - type: object
+        required:
+        - metadata_key_id
+        properties:
+          metadata_key_id:
+            type: string
+            format: uuid
+    metadataKeysSettingsUpdate:
+      allOf:
+      - $ref: '#/components/schemas/metadataKeysSettingsIndex'
+      - type: object
+        properties:
+          metadata_private_keys:
+            type: array
+            items:
+              $ref: '#/components/schemas/e2eeDataUserIdMetadataKeyId'
+    metadataKeyUpdate:
+      required:
+      - fingerprint
+      - armored_key
+      - expired
+      properties:
+        fingerprint:
+          type: string
+        armored_key:
+          type: string
+        expired:
+          type: string
+          format: date-time
     metadataKeysIndexAndView:
       allOf:
       - $ref: '#/components/schemas/metadataKeyUpdate'
@@ -238,129 +331,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/metadataPrivateKeysIndexAndView'
-    e2eeDataUserId:
-      allOf:
-      - $ref: '#/components/schemas/e2eeDataOnly'
-      - type: object
-        required:
-        - user_id
-        properties:
-          user_id:
-            type: string
-            format: uuid
-            x-nullable: true
-    metadataKeysSettingsIndex:
-      type: object
-      required:
-      - allow_usage_of_personal_keys
-      - zero_knowledge_key_share
-      properties:
-        allow_usage_of_personal_keys:
-          type: boolean
-        zero_knowledge_key_share:
-          type: boolean
-    metadataPrivateKeysIndexAndView:
-      allOf:
-      - $ref: '#/components/schemas/metadataPrivateKeysShortIndex'
-      - type: object
-        required:
-        - id
-        - metadata_key_id
-        - created
-        - modified
-        properties:
-          id:
-            type: string
-            format: uuid
-          metadata_key_id:
-            type: string
-            format: uuid
-          created:
-            type: string
-            format: date-time
-          modified:
-            type: string
-            format: date-time
-    e2eeDataUserIdMetadataKeyId:
-      allOf:
-      - $ref: '#/components/schemas/e2eeDataUserId'
-      - type: object
-        required:
-        - metadata_key_id
-        properties:
-          metadata_key_id:
-            type: string
-            format: uuid
-    e2eeDataOnly:
-      required:
-      - data
-      properties:
-        data:
-          type: string
-    e2eeIdCreatedDataModifiedUserId:
-      allOf:
-      - $ref: '#/components/schemas/e2eeDataUserId'
-      - type: object
-        required:
-        - id
-        - created
-        - modified
-        properties:
-          id:
-            type: string
-            format: uuid
-          created:
-            type: string
-            format: date-time
-          modified:
-            type: string
-            format: date-time
-    metadataKeyUpdate:
-      required:
-      - fingerprint
-      - armored_key
-      - expired
-      properties:
-        fingerprint:
-          type: string
-        armored_key:
-          type: string
-        expired:
-          type: string
-          format: date-time
-    metadataKeyAdd:
-      type: object
-      required:
-      - armored_key
-      - fingerprint
-      - metadata_private_keys
-      properties:
-        armored_key:
-          type: string
-        fingerprint:
-          type: string
-        metadata_private_keys:
-          type: array
-          items:
-            $ref: '#/components/schemas/e2eeDataUserId'
-    metadataPrivateKeysShortIndex:
-      allOf:
-      - $ref: '#/components/schemas/e2eeDataUserId'
-      - type: object
-        required:
-        - created_by
-        - modified_by
-        properties:
-          created_by:
-            type: string
-            format: uuid
-            x-nullable: true
-          modified_by:
-            type: string
-            format: uuid
-            x-nullable: true
-          user_id:
-            x-nullable: false
     header:
       type: object
       required:
@@ -396,72 +366,9 @@ components:
         code:
           type: integer
           example: 200
-    metadataKeysSettingsUpdate:
-      allOf:
-      - $ref: '#/components/schemas/metadataKeysSettingsIndex'
-      - type: object
-        properties:
-          metadata_private_keys:
-            type: array
-            items:
-              $ref: '#/components/schemas/e2eeDataUserIdMetadataKeyId'
   responses:
-    indexAndUpdateSettings:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/metadataKeysSettingsIndex'
-          examples:
-            base:
-              value:
-                header:
-                  id: 1911b18b-cf68-48cf-b69f-ec9dba39aff4
-                  status: success
-                  servertime: 1740413047
-                  action: b20e3cc2-e4ea-5b42-804b-7edc9878ef3d
-                  message: The operation was successful.
-                  url: /metadata/keys/settings.json
-                  code: 200
-                body:
-                  allow_usage_of_personal_keys: true
-                  zero_knowledge_key_share: false
-    authenticationRequired:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
-    badRequest:
-      description: Bad request
+    notFound:
+      description: Not found
       content:
         application/json:
           schema:
@@ -482,10 +389,36 @@ components:
                   status: error
                   servertime: 1721207029
                   action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
+                  message: The <MODEL> does not exist.
                   url: <API ENDPOINT URL>
-                  code: 400
+                  code: 404
                 body: ''
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
     addAndIndex:
       description: Operation is successful
       content:
@@ -537,6 +470,32 @@ components:
                     modified: '2025-02-03T09:10:47+00:00'
                     created_by: 5ea1c453-749b-43ca-8606-b85d63ab137f
                     modified_by: 5ea1c453-749b-43ca-8606-b85d63ab137f
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
     accessRestrictedToAdministrators:
       description: Access restricted
       content:
@@ -563,34 +522,8 @@ components:
                   url: <API ENDPOINT URL>
                   code: 403
                 body: ''
-    nullBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: 'null'
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: null
-    notFound:
-      description: Not found
+    authenticationRequired:
+      description: Authentication required.
       content:
         application/json:
           schema:
@@ -604,35 +537,46 @@ components:
               body:
                 type: string
           examples:
-            example:
+            base:
               value:
                 header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
                   status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The <MODEL> does not exist.
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
                   url: <API ENDPOINT URL>
-                  code: 404
+                  code: 401
                 body: ''
-  requestBodies:
-    metadataKeyAdd:
-      description: The metadata key you want to create
-      required: true
+    indexAndUpdateSettings:
+      description: Operation is successful
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/metadataKeyAdd'
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/metadataKeysSettingsIndex'
           examples:
             base:
               value:
-                fingerprint: 17B5913BC13128674F2A6F31C79A1AB152C3C573
-                armored_key: '-----BEGIN PGP PUBLIC KEY BLOCK-----'
-                metadata_private_keys:
-                - user_id: null
-                  data: '-----BEGIN PGP MESSAGE-----'
-                - user_id: 5ea1c453-749b-43ca-8606-b85d63ab137f
-                  data: '-----BEGIN PGP MESSAGE-----'
+                header:
+                  id: 1911b18b-cf68-48cf-b69f-ec9dba39aff4
+                  status: success
+                  servertime: 1740413047
+                  action: b20e3cc2-e4ea-5b42-804b-7edc9878ef3d
+                  message: The operation was successful.
+                  url: /metadata/keys/settings.json
+                  code: 200
+                body:
+                  allow_usage_of_personal_keys: true
+                  zero_knowledge_key_share: false
+  requestBodies:
     updateMetadataKeysSettings:
       description: The metadata key settings you want to update
       required: true
@@ -658,6 +602,62 @@ components:
                 fingerprint: 17B5913BC13128674F2A6F31C79A1AB152C3C573
                 armored_key: '-----BEGIN PGP PUBLIC KEY BLOCK-----'
                 expired: '2025-02-25T09:00:00+00:00'
+    metadataKeyAdd:
+      description: The metadata key you want to create
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/metadataKeyAdd'
+          examples:
+            base:
+              value:
+                fingerprint: 17B5913BC13128674F2A6F31C79A1AB152C3C573
+                armored_key: '-----BEGIN PGP PUBLIC KEY BLOCK-----'
+                metadata_private_keys:
+                - user_id: null
+                  data: '-----BEGIN PGP MESSAGE-----'
+                - user_id: 5ea1c453-749b-43ca-8606-b85d63ab137f
+                  data: '-----BEGIN PGP MESSAGE-----'
+  parameters:
+    metadataKeyId:
+      name: metadataKeyId
+      description: The metadata key identifier being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    filterExpired:
+      name: filter[expired]
+      description: Filter for expired elements.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containMetadataPrivateKeys:
+      name: contain[metadata_private_keys]
+      description: Add metadata private keys in response.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    filterDeleted:
+      name: filter[deleted]
+      description: Filter for deleted elements.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

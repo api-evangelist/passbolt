@@ -118,32 +118,6 @@ components:
                 body:
                   totp:
                     isValidOtp: This OTP is not valid.
-    nullBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: 'null'
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: null
     badRequest:
       description: Bad request
       content:
@@ -169,32 +143,6 @@ components:
                   message: <ERROR MESSAGE>
                   url: <API ENDPOINT URL>
                   code: 400
-                body: ''
-    authenticationRequired:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
                 body: ''
     error:
       description: MFA is required.
@@ -224,17 +172,85 @@ components:
                 body:
                   mfa_providers:
                   - totp
-  parameters:
-    mfaProviderName:
-      name: mfaProviderName
-      description: Name for the MFA provider.
-      in: path
-      schema:
-        type: string
-        enum:
-        - totp
-        - yubikey
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
   schemas:
+    mfaAttempt:
+      anyOf:
+      - type: object
+        required:
+        - totp
+        properties:
+          totp:
+            type: string
+            description: One-time code for TOTP-based MFA.
+          remember:
+            type: integer
+            enum:
+            - 0
+            - 1
+      - type: object
+        required:
+        - hotp
+        properties:
+          hotp:
+            type: string
+            description: One-time code for Yubikey-based MFA.
+          remember:
+            type: integer
+            enum:
+            - 0
+            - 1
     invalidOtp:
       anyOf:
       - type: object
@@ -261,6 +277,18 @@ components:
                 type: string
               isValidHotp:
                 type: string
+    error:
+      type: object
+      required:
+      - mfa_providers
+      properties:
+        mfa_providers:
+          type: array
+          items:
+            type: string
+            enum:
+            - totp
+            - yubikey
     header:
       type: object
       required:
@@ -296,44 +324,6 @@ components:
         code:
           type: integer
           example: 200
-    mfaAttempt:
-      anyOf:
-      - type: object
-        required:
-        - totp
-        properties:
-          totp:
-            type: string
-            description: One-time code for TOTP-based MFA.
-          remember:
-            type: integer
-            enum:
-            - 0
-            - 1
-      - type: object
-        required:
-        - hotp
-        properties:
-          hotp:
-            type: string
-            description: One-time code for Yubikey-based MFA.
-          remember:
-            type: integer
-            enum:
-            - 0
-            - 1
-    error:
-      type: object
-      required:
-      - mfa_providers
-      properties:
-        mfa_providers:
-          type: array
-          items:
-            type: string
-            enum:
-            - totp
-            - yubikey
   requestBodies:
     attempt:
       description: The code for the MFA attempt.
@@ -347,6 +337,16 @@ components:
               summary: Attempt MFA with TOTP.
               value:
                 totp: '635742'
+  parameters:
+    mfaProviderName:
+      name: mfaProviderName
+      description: Name for the MFA provider.
+      in: path
+      schema:
+        type: string
+        enum:
+        - totp
+        - yubikey
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

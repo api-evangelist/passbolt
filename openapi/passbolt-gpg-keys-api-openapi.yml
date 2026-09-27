@@ -68,169 +68,33 @@ paths:
         '404':
           $ref: '#/components/responses/notFound'
 components:
-  schemas:
-    headerWithPagination:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      - pagination
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
-        pagination:
-          type: object
-          required:
-          - count
-          - page
-          - limit
-          properties:
-            count:
-              type: integer
-            page:
-              type: integer
-            limit:
-              type: integer
-              x-nullable: true
-    gpgkey:
-      type: object
-      required:
-      - id
-      - user_id
-      - armored_key
-      - bits
-      - uid
-      - key_id
-      - fingerprint
-      - type
-      - expires
-      - key_created
-      - deleted
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        armored_key:
-          type: string
-        bits:
-          type: integer
-        uid:
-          type: string
-        key_id:
-          type: string
-        fingerprint:
-          type: string
-        type:
-          type: string
-          enum:
-          - RSA
-          - ECC
-        expires:
-          type: string
-          format: date-time
-          x-nullable: true
-        deleted:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-    header:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
-  parameters:
-    filterIsDeleted:
-      name: filter[is-deleted]
-      description: Only return deleted elements.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-    gpgkeyId:
-      name: gpgkeyId
-      description: ID for the GPG key being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    filterModifiedAfter:
-      name: filter[modified-after]
-      description: Only return elements modified after a timestamp.
-      in: query
-      required: false
-      schema:
-        type: string
   responses:
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
     gpgkeys_index:
       description: Operation is successful
       content:
@@ -315,32 +179,6 @@ components:
                   deleted: false
                   created: '2024-07-03T12:53:52+00:00'
                   modified: '2024-07-03T12:53:52+00:00'
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
     notFound:
       description: Not found
       content:
@@ -393,6 +231,168 @@ components:
                   url: <API ENDPOINT URL>
                   code: 401
                 body: ''
+  parameters:
+    filterModifiedAfter:
+      name: filter[modified-after]
+      description: Only return elements modified after a timestamp.
+      in: query
+      required: false
+      schema:
+        type: string
+    filterIsDeleted:
+      name: filter[is-deleted]
+      description: Only return deleted elements.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    gpgkeyId:
+      name: gpgkeyId
+      description: ID for the GPG key being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    gpgkey:
+      type: object
+      required:
+      - id
+      - user_id
+      - armored_key
+      - bits
+      - uid
+      - key_id
+      - fingerprint
+      - type
+      - expires
+      - key_created
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        armored_key:
+          type: string
+        bits:
+          type: integer
+        uid:
+          type: string
+        key_id:
+          type: string
+        fingerprint:
+          type: string
+        type:
+          type: string
+          enum:
+          - RSA
+          - ECC
+        expires:
+          type: string
+          format: date-time
+          x-nullable: true
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    headerWithPagination:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      - pagination
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+        pagination:
+          type: object
+          required:
+          - count
+          - page
+          - limit
+          properties:
+            count:
+              type: integer
+            page:
+              type: integer
+            limit:
+              type: integer
+              x-nullable: true
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

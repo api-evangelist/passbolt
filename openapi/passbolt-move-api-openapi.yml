@@ -47,32 +47,6 @@ paths:
         $ref: '#/components/requestBodies/move'
 components:
   responses:
-    nullBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: 'null'
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: null
     badRequest:
       description: Bad request
       content:
@@ -125,6 +99,32 @@ components:
                   url: <API ENDPOINT URL>
                   code: 404
                 body: ''
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
     authenticationRequired:
       description: Authentication required.
       content:
@@ -151,7 +151,23 @@ components:
                   url: <API ENDPOINT URL>
                   code: 401
                 body: ''
+  requestBodies:
+    move:
+      description: The target parent folder ID
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/move'
   schemas:
+    move:
+      type: object
+      required:
+      - folder_parent_id
+      properties:
+        folder_parent_id:
+          type: string
+          format: uuid
     header:
       type: object
       required:
@@ -187,14 +203,6 @@ components:
         code:
           type: integer
           example: 200
-    move:
-      type: object
-      required:
-      - folder_parent_id
-      properties:
-        folder_parent_id:
-          type: string
-          format: uuid
   parameters:
     foreignId:
       name: foreignId
@@ -214,14 +222,6 @@ components:
         enum:
         - resource
         - folder
-  requestBodies:
-    move:
-      description: The target parent folder ID
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/move'
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

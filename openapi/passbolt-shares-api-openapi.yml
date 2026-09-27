@@ -104,14 +104,404 @@ paths:
         '404':
           $ref: '#/components/responses/notFound'
 components:
+  schemas:
+    permissionUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        aro:
+          type: string
+          enum:
+          - User
+          - Group
+        aro_foreign_key:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/permissionLevel'
+        delete:
+          type: boolean
+        is_new:
+          type: boolean
+    groupIndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - deleted
+      - created
+      - modified
+      - created_by
+      - modified_by
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        my_group_user:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        groups_users:
+          type: array
+          items:
+            $ref: '#/components/schemas/groupsUsersIndexAndView'
+        user_count:
+          type: integer
+    shareAros:
+      oneOf:
+      - $ref: '#/components/schemas/userIndexAndView'
+      - $ref: '#/components/schemas/groupIndexAndView'
+    groupsUsersIndexAndView:
+      type: object
+      required:
+      - id
+      - group_id
+      - user_id
+      - is_admin
+      - created
+      properties:
+        id:
+          type: string
+          format: uuid
+        group_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        is_admin:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+    role:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          enum:
+          - admin
+          - guest
+          - user
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    gpgkey:
+      type: object
+      required:
+      - id
+      - user_id
+      - armored_key
+      - bits
+      - uid
+      - key_id
+      - fingerprint
+      - type
+      - expires
+      - key_created
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        armored_key:
+          type: string
+        bits:
+          type: integer
+        uid:
+          type: string
+        key_id:
+          type: string
+        fingerprint:
+          type: string
+        type:
+          type: string
+          enum:
+          - RSA
+          - ECC
+        expires:
+          type: string
+          format: date-time
+          x-nullable: true
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    secretAdd:
+      type: object
+      required:
+      - data
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        data:
+          type: string
+        resource_id:
+          type: string
+          format: uuid
+    userIndexAndView:
+      type: object
+      required:
+      - id
+      - role_id
+      - username
+      - active
+      - deleted
+      - created
+      - modified
+      - disabled
+      properties:
+        is_mfa_enabled:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        role_id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        active:
+          type: boolean
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        disabled:
+          type: string
+          format: date-time
+          x-nullable: true
+        profile:
+          type: object
+          required:
+          - id
+          - user_id
+          - first_name
+          - last_name
+          - created
+          - modified
+          - avatar
+          properties:
+            id:
+              type: string
+              format: uuid
+            user_id:
+              type: string
+              format: uuid
+            first_name:
+              type: string
+            last_name:
+              type: string
+            created:
+              type: string
+              format: date-time
+            modified:
+              type: string
+              format: date-time
+            avatar:
+              type: object
+              required:
+              - url
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                profile_id:
+                  type: string
+                  format: uuid
+                created:
+                  type: string
+                  format: date-time
+                modified:
+                  type: string
+                  format: date-time
+                url:
+                  type: object
+                  required:
+                  - medium
+                  - small
+                  properties:
+                    medium:
+                      type: string
+                      format: url
+                    small:
+                      type: string
+                      format: url
+        groups_users:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        gpgkey:
+          $ref: '#/components/schemas/gpgkey'
+          x-nullable: true
+        role:
+          $ref: '#/components/schemas/role'
+        missing_metadata_key_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        last_logged_in:
+          type: string
+          format: date-time
+          x-nullable: true
+    shareUpdateDryRun:
+      type: object
+      required:
+      - added
+      - removed
+      properties:
+        added:
+          type: array
+          items:
+            type: object
+            properties:
+              User:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+        removed:
+          type: array
+          items:
+            type: object
+            properties:
+              User:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+    permissionLevel:
+      description: '* `1` - Read
+
+        * `7` - Update
+
+        * `15` - Owner
+
+        '
+      type: integer
+      enum:
+      - 1
+      - 7
+      - 15
+    shareUpdate:
+      type: object
+      properties:
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/permissionUpdate'
+        secrets:
+          description: Not required on simulation.
+          type: array
+          items:
+            $ref: '#/components/schemas/secretAdd'
+    shareUpdateError:
+      type: object
+      properties:
+        permissions:
+          type: array
+          items:
+            type: object
+            properties:
+              aco_forein_key:
+                type: object
+                properties:
+                  permission_unique:
+                    type: string
+                  aco_exists:
+                    type: string
+                  _existsIn:
+                    type: string
+              aro_forein_key:
+                type: object
+                properties:
+                  aro_exists:
+                    type: string
+                  _existsIn:
+                    type: string
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
   parameters:
-    filterSearch:
-      name: filter[search]
-      description: Filter using a keyword or a string.
-      in: query
-      required: false
-      schema:
-        type: string
     containRole:
       name: contain[role]
       description: Add role to response body.
@@ -122,16 +512,21 @@ components:
         enum:
         - 1
         - 0
-    sharesForeignModel:
-      name: foreignModel
-      description: Type for the foreign model being shared.
+    filterSearch:
+      name: filter[search]
+      description: Filter using a keyword or a string.
+      in: query
+      required: false
+      schema:
+        type: string
+    foreignId:
+      name: foreignId
+      description: ID for the foreign element being manipulated.
       in: path
       required: true
       schema:
         type: string
-        enum:
-        - resource
-        - folder
+        format: uuid
     containGroupsUsers:
       name: contain[groups_users]
       description: Add group users to groups in response body.
@@ -152,14 +547,16 @@ components:
         enum:
         - 1
         - 0
-    foreignId:
-      name: foreignId
-      description: ID for the foreign element being manipulated.
+    sharesForeignModel:
+      name: foreignModel
+      description: Type for the foreign model being shared.
       in: path
       required: true
       schema:
         type: string
-        format: uuid
+        enum:
+        - resource
+        - folder
   responses:
     updateError:
       description: Bad request
@@ -215,6 +612,89 @@ components:
                   message: The <MODEL> does not exist.
                   url: <API ENDPOINT URL>
                   code: 404
+                body: ''
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+    updateDryRun:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/shareUpdateDryRun'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /share/simulate/resource/42968631-0c51-4405-9f2d-c6700c5057be.json
+                  code: 200
+                body:
+                  changes:
+                    added: []
+                    removed:
+                    - User:
+                        id: c48863da-32d3-48cd-9d47-de2891386423
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
                 body: ''
     arosIndex:
       description: Operation is successful
@@ -324,500 +804,7 @@ components:
                   url: <API ENDPOINT URL>
                   code: 401
                 body: ''
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
-    updateDryRun:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/shareUpdateDryRun'
-          examples:
-            base:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The operation was successful.
-                  url: /share/simulate/resource/42968631-0c51-4405-9f2d-c6700c5057be.json
-                  code: 200
-                body:
-                  changes:
-                    added: []
-                    removed:
-                    - User:
-                        id: c48863da-32d3-48cd-9d47-de2891386423
-    nullBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: 'null'
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: null
-  schemas:
-    shareAros:
-      oneOf:
-      - $ref: '#/components/schemas/userIndexAndView'
-      - $ref: '#/components/schemas/groupIndexAndView'
-    role:
-      type: object
-      required:
-      - id
-      - name
-      - description
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-          enum:
-          - admin
-          - guest
-          - user
-        description:
-          type: string
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-    shareUpdateError:
-      type: object
-      properties:
-        permissions:
-          type: array
-          items:
-            type: object
-            properties:
-              aco_forein_key:
-                type: object
-                properties:
-                  permission_unique:
-                    type: string
-                  aco_exists:
-                    type: string
-                  _existsIn:
-                    type: string
-              aro_forein_key:
-                type: object
-                properties:
-                  aro_exists:
-                    type: string
-                  _existsIn:
-                    type: string
-    groupIndexAndView:
-      type: object
-      required:
-      - id
-      - name
-      - deleted
-      - created
-      - modified
-      - created_by
-      - modified_by
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        deleted:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-        created_by:
-          type: string
-          format: uuid
-        modified_by:
-          type: string
-          format: uuid
-        my_group_user:
-          $ref: '#/components/schemas/groupsUsersIndexAndView'
-        groups_users:
-          type: array
-          items:
-            $ref: '#/components/schemas/groupsUsersIndexAndView'
-        user_count:
-          type: integer
-    shareUpdateDryRun:
-      type: object
-      required:
-      - added
-      - removed
-      properties:
-        added:
-          type: array
-          items:
-            type: object
-            properties:
-              User:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-        removed:
-          type: array
-          items:
-            type: object
-            properties:
-              User:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-    gpgkey:
-      type: object
-      required:
-      - id
-      - user_id
-      - armored_key
-      - bits
-      - uid
-      - key_id
-      - fingerprint
-      - type
-      - expires
-      - key_created
-      - deleted
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        armored_key:
-          type: string
-        bits:
-          type: integer
-        uid:
-          type: string
-        key_id:
-          type: string
-        fingerprint:
-          type: string
-        type:
-          type: string
-          enum:
-          - RSA
-          - ECC
-        expires:
-          type: string
-          format: date-time
-          x-nullable: true
-        deleted:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-    shareUpdate:
-      type: object
-      properties:
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/permissionUpdate'
-        secrets:
-          description: Not required on simulation.
-          type: array
-          items:
-            $ref: '#/components/schemas/secretAdd'
-    userIndexAndView:
-      type: object
-      required:
-      - id
-      - role_id
-      - username
-      - active
-      - deleted
-      - created
-      - modified
-      - disabled
-      properties:
-        is_mfa_enabled:
-          type: boolean
-        id:
-          type: string
-          format: uuid
-        role_id:
-          type: string
-          format: uuid
-        username:
-          type: string
-        active:
-          type: boolean
-        deleted:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-        disabled:
-          type: string
-          format: date-time
-          x-nullable: true
-        profile:
-          type: object
-          required:
-          - id
-          - user_id
-          - first_name
-          - last_name
-          - created
-          - modified
-          - avatar
-          properties:
-            id:
-              type: string
-              format: uuid
-            user_id:
-              type: string
-              format: uuid
-            first_name:
-              type: string
-            last_name:
-              type: string
-            created:
-              type: string
-              format: date-time
-            modified:
-              type: string
-              format: date-time
-            avatar:
-              type: object
-              required:
-              - url
-              properties:
-                id:
-                  type: string
-                  format: uuid
-                profile_id:
-                  type: string
-                  format: uuid
-                created:
-                  type: string
-                  format: date-time
-                modified:
-                  type: string
-                  format: date-time
-                url:
-                  type: object
-                  required:
-                  - medium
-                  - small
-                  properties:
-                    medium:
-                      type: string
-                      format: url
-                    small:
-                      type: string
-                      format: url
-        groups_users:
-          $ref: '#/components/schemas/groupsUsersIndexAndView'
-        gpgkey:
-          $ref: '#/components/schemas/gpgkey'
-          x-nullable: true
-        role:
-          $ref: '#/components/schemas/role'
-        missing_metadata_key_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-        last_logged_in:
-          type: string
-          format: date-time
-          x-nullable: true
-    secretAdd:
-      type: object
-      required:
-      - data
-      properties:
-        user_id:
-          type: string
-          format: uuid
-        data:
-          type: string
-        resource_id:
-          type: string
-          format: uuid
-    header:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
-    permissionLevel:
-      description: '* `1` - Read
-
-        * `7` - Update
-
-        * `15` - Owner
-
-        '
-      type: integer
-      enum:
-      - 1
-      - 7
-      - 15
-    permissionUpdate:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        aro:
-          type: string
-          enum:
-          - User
-          - Group
-        aro_foreign_key:
-          type: string
-          format: uuid
-        type:
-          $ref: '#/components/schemas/permissionLevel'
-        delete:
-          type: boolean
-        is_new:
-          type: boolean
-    groupsUsersIndexAndView:
-      type: object
-      required:
-      - id
-      - group_id
-      - user_id
-      - is_admin
-      - created
-      properties:
-        id:
-          type: string
-          format: uuid
-        group_id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        is_admin:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        user:
-          $ref: '#/components/schemas/userIndexAndView'
   requestBodies:
-    shareUpdateDryRun:
-      description: The permissions you want to apply
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/shareUpdate'
-          examples:
-            deleteUser:
-              value:
-                permissions:
-                - id: 540174b9-90db-458c-ae90-e9a1912cc656
-                  delete: true
     shareUpdate:
       description: The permissions you want to apply
       required: true
@@ -864,6 +851,19 @@ components:
                 secrets:
                 - data: '-----BEGIN PGP MESSAGE-----'
                   user_id: c48863da-32d3-48cd-9d47-de2891386423
+    shareUpdateDryRun:
+      description: The permissions you want to apply
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/shareUpdate'
+          examples:
+            deleteUser:
+              value:
+                permissions:
+                - id: 540174b9-90db-458c-ae90-e9a1912cc656
+                  delete: true
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

@@ -40,6 +40,32 @@ paths:
           $ref: '#/components/responses/authenticationRequired'
 components:
   responses:
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
     roles_index:
       description: Operation is successful
       content:
@@ -83,32 +109,6 @@ components:
                   description: Logged in user
                   created: '2012-07-04T13:39:25+00:00'
                   modified: '2012-07-04T13:39:25+00:00'
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
     authenticationRequired:
       description: Authentication required.
       content:
@@ -136,6 +136,32 @@ components:
                   code: 401
                 body: ''
   schemas:
+    role:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          enum:
+          - admin
+          - guest
+          - user
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
     header:
       type: object
       required:
@@ -171,32 +197,6 @@ components:
         code:
           type: integer
           example: 200
-    role:
-      type: object
-      required:
-      - id
-      - name
-      - description
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-          enum:
-          - admin
-          - guest
-          - user
-        description:
-          type: string
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT
