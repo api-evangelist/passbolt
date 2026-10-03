@@ -38,6 +38,14 @@ paths:
         '200':
           $ref: '#/components/responses/view'
 components:
+  responses:
+    view:
+      description: Operation is successful
+      content:
+        image/jpeg:
+          schema:
+            type: string
+            format: binary
   parameters:
     avatarFormat:
       name: avatarFormat
@@ -57,14 +65,6 @@ components:
       schema:
         type: string
         format: uuid
-  responses:
-    view:
-      description: Operation is successful
-      content:
-        image/jpeg:
-          schema:
-            type: string
-            format: binary
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

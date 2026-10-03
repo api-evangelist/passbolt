@@ -114,232 +114,7 @@ paths:
         '404':
           $ref: '#/components/responses/notFound'
 components:
-  schemas:
-    e2eeDataModified:
-      allOf:
-      - $ref: '#/components/schemas/e2eeDataOnly'
-      - type: object
-        required:
-        - modified
-        properties:
-          modified:
-            type: string
-            format: date-time
-    e2eeDataOnly:
-      required:
-      - data
-      properties:
-        data:
-          type: string
-    metadataSessionKeyIndexAndView:
-      allOf:
-      - $ref: '#/components/schemas/e2eeIdCreatedDataModifiedUserId'
-      - type: object
-        properties:
-          user_id:
-            x-nullable: false
-    e2eeIdCreatedDataModifiedUserId:
-      allOf:
-      - $ref: '#/components/schemas/e2eeDataUserId'
-      - type: object
-        required:
-        - id
-        - created
-        - modified
-        properties:
-          id:
-            type: string
-            format: uuid
-          created:
-            type: string
-            format: date-time
-          modified:
-            type: string
-            format: date-time
-    header:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
-    e2eeDataUserId:
-      allOf:
-      - $ref: '#/components/schemas/e2eeDataOnly'
-      - type: object
-        required:
-        - user_id
-        properties:
-          user_id:
-            type: string
-            format: uuid
-            x-nullable: true
-  requestBodies:
-    add:
-      description: The metadata session key you want to add
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/e2eeDataOnly'
-          examples:
-            base:
-              value:
-                data: '-----BEGIN PGP MESSAGE-----'
-    update:
-      description: The metadata session key you want to update
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/e2eeDataModified'
-          examples:
-            base:
-              value:
-                data: '----BEGIN PGP MESSAGE-----'
-                modified: '2025-02-18T15:52:17+00:00'
-  parameters:
-    sessionKeyId:
-      name: sessionKeyId
-      description: ID for the session key being manipulated
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
   responses:
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
-    notFound:
-      description: Not found
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The <MODEL> does not exist.
-                  url: <API ENDPOINT URL>
-                  code: 404
-                body: ''
-    modifiedDateIsNotMatching:
-      description: The modified date is not equal to the persisted session key one
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 409
-                body: ''
-    nullBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: 'null'
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: null
     metadataSessionKey_update:
       description: Operation is successful
       content:
@@ -368,6 +143,89 @@ components:
                 body:
                   data: '----BEGIN PGP MESSAGE-----'
                   modified: '2025-02-18T15:52:17+00:00'
+    metadataSessionKey_add:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/metadataSessionKeyIndexAndView'
+          examples:
+            base:
+              value:
+                header:
+                  id: 26c1344a-22ef-4c49-90a0-130a9c82a648
+                  status: success
+                  servertime: 1740143504
+                  action: c36e894d-ed63-5434-aa70-4b777f9fdf32
+                  message: The operation was successful.
+                  url: /metadata/session-keys.json
+                  code: 200
+                body:
+                  id: 5ea1c453-749b-43ca-8606-b85d63ab137f
+                  user_id: bf5dc039-314d-4ac1-938f-c1ad8331e28a
+                  data: '-----BEGIN PGP MESSAGE-----'
+                  created: '2025-03-05T14:22:33+00:00'
+                  modified: '2025-03-05T14:22:33+00:00'
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
     authenticationRequired:
       description: Authentication required.
       content:
@@ -427,8 +285,8 @@ components:
                   data: '-----BEGIN PGP MESSAGE-----'
                   created: '2025-01-18T15:52:17+00:00'
                   modified: '2025-02-18T15:52:17+00:00'
-    metadataSessionKey_add:
-      description: Operation is successful
+    badRequest:
+      description: Bad request
       content:
         application/json:
           schema:
@@ -440,24 +298,166 @@ components:
               header:
                 $ref: '#/components/schemas/header'
               body:
-                $ref: '#/components/schemas/metadataSessionKeyIndexAndView'
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    modifiedDateIsNotMatching:
+      description: The modified date is not equal to the persisted session key one
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 409
+                body: ''
+  schemas:
+    e2eeDataUserId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataOnly'
+      - type: object
+        required:
+        - user_id
+        properties:
+          user_id:
+            type: string
+            format: uuid
+            x-nullable: true
+    metadataSessionKeyIndexAndView:
+      allOf:
+      - $ref: '#/components/schemas/e2eeIdCreatedDataModifiedUserId'
+      - type: object
+        properties:
+          user_id:
+            x-nullable: false
+    e2eeIdCreatedDataModifiedUserId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataUserId'
+      - type: object
+        required:
+        - id
+        - created
+        - modified
+        properties:
+          id:
+            type: string
+            format: uuid
+          created:
+            type: string
+            format: date-time
+          modified:
+            type: string
+            format: date-time
+    e2eeDataModified:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataOnly'
+      - type: object
+        required:
+        - modified
+        properties:
+          modified:
+            type: string
+            format: date-time
+    e2eeDataOnly:
+      required:
+      - data
+      properties:
+        data:
+          type: string
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+  requestBodies:
+    update:
+      description: The metadata session key you want to update
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/e2eeDataModified'
           examples:
             base:
               value:
-                header:
-                  id: 26c1344a-22ef-4c49-90a0-130a9c82a648
-                  status: success
-                  servertime: 1740143504
-                  action: c36e894d-ed63-5434-aa70-4b777f9fdf32
-                  message: The operation was successful.
-                  url: /metadata/session-keys.json
-                  code: 200
-                body:
-                  id: 5ea1c453-749b-43ca-8606-b85d63ab137f
-                  user_id: bf5dc039-314d-4ac1-938f-c1ad8331e28a
-                  data: '-----BEGIN PGP MESSAGE-----'
-                  created: '2025-03-05T14:22:33+00:00'
-                  modified: '2025-03-05T14:22:33+00:00'
+                data: '----BEGIN PGP MESSAGE-----'
+                modified: '2025-02-18T15:52:17+00:00'
+    add:
+      description: The metadata session key you want to add
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/e2eeDataOnly'
+          examples:
+            base:
+              value:
+                data: '-----BEGIN PGP MESSAGE-----'
+  parameters:
+    sessionKeyId:
+      name: sessionKeyId
+      description: ID for the session key being manipulated
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

@@ -195,8 +195,8 @@ components:
           type: integer
           example: 200
   responses:
-    badRequest:
-      description: Bad request
+    authenticationRequired:
+      description: Authentication required.
       content:
         application/json:
           schema:
@@ -210,16 +210,16 @@ components:
               body:
                 type: string
           examples:
-            example:
+            base:
               value:
                 header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
                   status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
                   url: <API ENDPOINT URL>
-                  code: 400
+                  code: 401
                 body: ''
     settings_index:
       description: Operation is successful
@@ -320,8 +320,8 @@ components:
                           '1800': 30 minutes
                           '3600': 1 hour
                           '-1': Until I log out
-    authenticationRequired:
-      description: Authentication required.
+    badRequest:
+      description: Bad request
       content:
         application/json:
           schema:
@@ -335,16 +335,16 @@ components:
               body:
                 type: string
           examples:
-            base:
+            example:
               value:
                 header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
                   status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
                   url: <API ENDPOINT URL>
-                  code: 401
+                  code: 400
                 body: ''
   securitySchemes:
     bearerHttpAuthentication:

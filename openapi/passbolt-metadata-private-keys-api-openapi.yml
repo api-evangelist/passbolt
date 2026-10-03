@@ -72,98 +72,9 @@ paths:
         '404':
           $ref: '#/components/responses/notFound'
 components:
-  schemas:
-    e2eeDataOnly:
-      required:
-      - data
-      properties:
-        data:
-          type: string
-    e2eeDataUserIdMetadataKeyId:
-      allOf:
-      - $ref: '#/components/schemas/e2eeDataUserId'
-      - type: object
-        required:
-        - metadata_key_id
-        properties:
-          metadata_key_id:
-            type: string
-            format: uuid
-    metadataPrivateKeysShortIndex:
-      allOf:
-      - $ref: '#/components/schemas/e2eeDataUserId'
-      - type: object
-        required:
-        - created_by
-        - modified_by
-        properties:
-          created_by:
-            type: string
-            format: uuid
-            x-nullable: true
-          modified_by:
-            type: string
-            format: uuid
-            x-nullable: true
-          user_id:
-            x-nullable: false
-    metadataPrivateKeysAdd:
-      type: array
-      items:
-        allOf:
-        - $ref: '#/components/schemas/e2eeDataUserIdMetadataKeyId'
-        - properties:
-            user_id:
-              x-nullable: false
-    header:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
-    e2eeDataUserId:
-      allOf:
-      - $ref: '#/components/schemas/e2eeDataOnly'
-      - type: object
-        required:
-        - user_id
-        properties:
-          user_id:
-            type: string
-            format: uuid
-            x-nullable: true
   responses:
-    badRequest:
-      description: Bad request
+    emptyBody:
+      description: Operation is successful.
       content:
         application/json:
           schema:
@@ -175,19 +86,19 @@ components:
               header:
                 $ref: '#/components/schemas/header'
               body:
-                type: string
+                type: object
           examples:
-            example:
+            base:
               value:
                 header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
                   url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
+                  code: 200
+                body: {}
     accessRestrictedToAdministrators:
       description: Access restricted
       content:
@@ -287,8 +198,8 @@ components:
                 data: '-----BEGIN PGP MESSAGE-----'
                 created_by: eca7c94a-02ac-4e08-a7e1-035981c34868
                 modified_by: 4448fee0-2eef-4d47-b221-2101317f60d1
-    emptyBody:
-      description: Operation is successful.
+    badRequest:
+      description: Bad request
       content:
         application/json:
           schema:
@@ -300,40 +211,20 @@ components:
               header:
                 $ref: '#/components/schemas/header'
               body:
-                type: object
+                type: string
           examples:
-            base:
+            example:
               value:
                 header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
                   url: <API ENDPOINT URL>
-                  code: 200
-                body: {}
-  parameters:
-    metadataPrivateKeyId:
-      name: metadataPrivateKeyId
-      description: ID for the metadata private key manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
+                  code: 400
+                body: ''
   requestBodies:
-    metadataPrivateKeysUpdate:
-      description: The metadata private keys that you want to update.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/e2eeDataOnly'
-          examples:
-            base:
-              value:
-                data: '-----BEGIN PGP MESSAGE-----'
     metadataPrivateKeysAdd:
       description: The metadata private keys that you want to create.
       required: true
@@ -350,6 +241,115 @@ components:
               - metadata_key_id: 7d316bc3-0cca-4b5d-9d77-3eb9c408f9df
                 user_id: 4448fee0-2eef-4d47-b221-2101317f60d1
                 data: '-----BEGIN PGP MESSAGE-----'
+    metadataPrivateKeysUpdate:
+      description: The metadata private keys that you want to update.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/e2eeDataOnly'
+          examples:
+            base:
+              value:
+                data: '-----BEGIN PGP MESSAGE-----'
+  schemas:
+    e2eeDataUserId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataOnly'
+      - type: object
+        required:
+        - user_id
+        properties:
+          user_id:
+            type: string
+            format: uuid
+            x-nullable: true
+    e2eeDataUserIdMetadataKeyId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataUserId'
+      - type: object
+        required:
+        - metadata_key_id
+        properties:
+          metadata_key_id:
+            type: string
+            format: uuid
+    metadataPrivateKeysShortIndex:
+      allOf:
+      - $ref: '#/components/schemas/e2eeDataUserId'
+      - type: object
+        required:
+        - created_by
+        - modified_by
+        properties:
+          created_by:
+            type: string
+            format: uuid
+            x-nullable: true
+          modified_by:
+            type: string
+            format: uuid
+            x-nullable: true
+          user_id:
+            x-nullable: false
+    metadataPrivateKeysAdd:
+      type: array
+      items:
+        allOf:
+        - $ref: '#/components/schemas/e2eeDataUserIdMetadataKeyId'
+        - properties:
+            user_id:
+              x-nullable: false
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+    e2eeDataOnly:
+      required:
+      - data
+      properties:
+        data:
+          type: string
+  parameters:
+    metadataPrivateKeyId:
+      name: metadataPrivateKeyId
+      description: ID for the metadata private key manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

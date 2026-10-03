@@ -124,35 +124,8 @@ paths:
           $ref: '#/components/responses/notFound'
 components:
   responses:
-    rsa:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/rsa'
-          examples:
-            base:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The operation was successful.
-                  url: /auth/jwt/rsa.json
-                  code: 200
-                body:
-                  keydata: '-----BEGIN PUBLIC KEY-----'
-    notFound:
-      description: Not found
+    authenticationRequired:
+      description: Authentication required.
       content:
         application/json:
           schema:
@@ -166,17 +139,39 @@ components:
               body:
                 type: string
           examples:
-            example:
+            base:
               value:
                 header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
                   status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The <MODEL> does not exist.
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
                   url: <API ENDPOINT URL>
-                  code: 404
+                  code: 401
                 body: ''
+    jwks:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - keys
+            properties:
+              keys:
+                type: array
+                items:
+                  $ref: '#/components/schemas/jwk'
+          examples:
+            base:
+              value:
+                keys:
+                - kty: RSA
+                  alg: RS256
+                  use: sig
+                  e: AQAB
+                  n: sP0CpKdQJF8KgPD9GOLiCssOhi8qHXp0TyyqkWNGWcZD3JTKuuWJhNn...
     refresh:
       description: Operation is successful. A new refresh token is set via a cookie.
       headers:
@@ -235,6 +230,85 @@ components:
                   url: <API ENDPOINT URL>
                   code: 200
                 body: null
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+    rsa:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/rsa'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /auth/jwt/rsa.json
+                  code: 200
+                body:
+                  keydata: '-----BEGIN PUBLIC KEY-----'
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
     login:
       description: Operation is successful.
       content:
@@ -262,125 +336,21 @@ components:
                   code: 200
                 body:
                   challenge: '-----BEGIN PGP MESSAGE-----'
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
-    authenticationRequired:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
-    jwks:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - keys
-            properties:
-              keys:
-                type: array
-                items:
-                  $ref: '#/components/schemas/jwk'
-          examples:
-            base:
-              value:
-                keys:
-                - kty: RSA
-                  alg: RS256
-                  use: sig
-                  e: AQAB
-                  n: sP0CpKdQJF8KgPD9GOLiCssOhi8qHXp0TyyqkWNGWcZD3JTKuuWJhNn...
   schemas:
-    loginRequest:
+    refreshResponse:
       type: object
       required:
-      - user_id
-      - challenge
+      - access_token
       properties:
-        user_id:
+        access_token:
           type: string
           format: uuid
-        challenge:
-          type: string
-          description: '`gpg_encrypt(gpg_sign(challenge_message, user_key), server_key)`'
     rsa:
       type: object
       required:
       - keydata
       properties:
         keydata:
-          type: string
-    loginResponse:
-      type: object
-      required:
-      - challenge
-      properties:
-        challenge:
-          type: string
-    jwk:
-      type: object
-      required:
-      - kty
-      - alg
-      - use
-      - e
-      - n
-      properties:
-        kty:
-          type: string
-        alg:
-          type: string
-        use:
-          type: string
-        e:
-          type: string
-        n:
           type: string
     refreshRequest:
       type: object
@@ -392,14 +362,6 @@ components:
           type: string
           format: uuid
         user_id:
-          type: string
-          format: uuid
-    refreshResponse:
-      type: object
-      required:
-      - access_token
-      properties:
-        access_token:
           type: string
           format: uuid
     header:
@@ -437,6 +399,44 @@ components:
         code:
           type: integer
           example: 200
+    jwk:
+      type: object
+      required:
+      - kty
+      - alg
+      - use
+      - e
+      - n
+      properties:
+        kty:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        e:
+          type: string
+        n:
+          type: string
+    loginRequest:
+      type: object
+      required:
+      - user_id
+      - challenge
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        challenge:
+          type: string
+          description: '`gpg_encrypt(gpg_sign(challenge_message, user_key), server_key)`'
+    loginResponse:
+      type: object
+      required:
+      - challenge
+      properties:
+        challenge:
+          type: string
     logout:
       type: object
       properties:

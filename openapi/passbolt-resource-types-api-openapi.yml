@@ -125,6 +125,136 @@ paths:
         $ref: '#/components/requestBodies/resourceUpdate'
 components:
   responses:
+    accessRestrictedToAdministrators:
+      description: Access restricted
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Access restricted to administrators.
+                  url: <API ENDPOINT URL>
+                  code: 403
+                body: ''
+    emptyStringBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: ''
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
     resourceTypes_index:
       description: Operation is successful
       content:
@@ -192,136 +322,6 @@ components:
                   deleted: null
                   created: '2024-07-08T08:06:25+00:00'
                   modified: '2024-07-08T08:06:25+00:00'
-    accessRestrictedToAdministrators:
-      description: Access restricted
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Access restricted to administrators.
-                  url: <API ENDPOINT URL>
-                  code: 403
-                body: ''
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
-    notFound:
-      description: Not found
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The <MODEL> does not exist.
-                  url: <API ENDPOINT URL>
-                  code: 404
-                body: ''
-    nullBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: 'null'
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: null
-    authenticationRequired:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
     resourceTypes_view:
       description: Operation is successful
       content:
@@ -386,8 +386,8 @@ components:
                           - type: null
                   created: '2024-07-08T08:06:25+00:00'
                   modified: '2024-07-08T08:06:25+00:00'
-    emptyStringBody:
-      description: Operation is successful.
+    badRequest:
+      description: Bad request
       content:
         application/json:
           schema:
@@ -401,18 +401,29 @@ components:
               body:
                 type: string
           examples:
-            base:
+            example:
               value:
                 header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
                   url: <API ENDPOINT URL>
-                  code: 200
+                  code: 400
                 body: ''
   schemas:
+    resourceTypeIndex:
+      allOf:
+      - $ref: '#/components/schemas/resourceType'
+      - type: object
+        required:
+        - default
+        properties:
+          default:
+            type: boolean
+          resources_count:
+            type: integer
     resourceType:
       type: object
       required:
@@ -472,23 +483,6 @@ components:
         modified:
           type: string
           format: date-time
-    resourceTypeUpdate:
-      type: object
-      properties:
-        deleted:
-          type: boolean
-          x-nullable: true
-    resourceTypeIndex:
-      allOf:
-      - $ref: '#/components/schemas/resourceType'
-      - type: object
-        required:
-        - default
-        properties:
-          default:
-            type: boolean
-          resources_count:
-            type: integer
     header:
       type: object
       required:
@@ -524,7 +518,35 @@ components:
         code:
           type: integer
           example: 200
+    resourceTypeUpdate:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+          x-nullable: true
+  requestBodies:
+    resourceUpdate:
+      description: The resource types you want to update
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/resourceTypeUpdate'
+          examples:
+            base:
+              value:
+                deleted: null
   parameters:
+    containResourcesCount:
+      name: contain[resources_count]
+      description: Get the number of count of resources associated to this type of resource.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
     filterIsDeleted:
       name: filter[is-deleted]
       description: Only return deleted elements.
@@ -543,28 +565,6 @@ components:
       schema:
         type: string
         format: uuid
-    containResourcesCount:
-      name: contain[resources_count]
-      description: Get the number of count of resources associated to this type of resource.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-  requestBodies:
-    resourceUpdate:
-      description: The resource types you want to update
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/resourceTypeUpdate'
-          examples:
-            base:
-              value:
-                deleted: null
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

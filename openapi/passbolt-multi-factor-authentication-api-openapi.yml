@@ -89,168 +89,7 @@ paths:
         '403':
           $ref: '#/components/responses/error'
 components:
-  responses:
-    invalidOtp:
-      description: Invalid OTP code.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/invalidOtp'
-          examples:
-            base:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: Something went wrong when validating the one-time password.
-                  url: /mfa/verify/totp.json
-                  code: 400
-                body:
-                  totp:
-                    isValidOtp: This OTP is not valid.
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
-    error:
-      description: MFA is required.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/error'
-          examples:
-            base:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: MFA authentication is required.
-                  url: /mfa/verify/error.json
-                  code: 403
-                body:
-                  mfa_providers:
-                  - totp
-    nullBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: 'null'
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: null
-    authenticationRequired:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
   schemas:
-    mfaAttempt:
-      anyOf:
-      - type: object
-        required:
-        - totp
-        properties:
-          totp:
-            type: string
-            description: One-time code for TOTP-based MFA.
-          remember:
-            type: integer
-            enum:
-            - 0
-            - 1
-      - type: object
-        required:
-        - hotp
-        properties:
-          hotp:
-            type: string
-            description: One-time code for Yubikey-based MFA.
-          remember:
-            type: integer
-            enum:
-            - 0
-            - 1
     invalidOtp:
       anyOf:
       - type: object
@@ -324,6 +163,177 @@ components:
         code:
           type: integer
           example: 200
+    mfaAttempt:
+      anyOf:
+      - type: object
+        required:
+        - totp
+        properties:
+          totp:
+            type: string
+            description: One-time code for TOTP-based MFA.
+          remember:
+            type: integer
+            enum:
+            - 0
+            - 1
+      - type: object
+        required:
+        - hotp
+        properties:
+          hotp:
+            type: string
+            description: One-time code for Yubikey-based MFA.
+          remember:
+            type: integer
+            enum:
+            - 0
+            - 1
+  parameters:
+    mfaProviderName:
+      name: mfaProviderName
+      description: Name for the MFA provider.
+      in: path
+      schema:
+        type: string
+        enum:
+        - totp
+        - yubikey
+  responses:
+    invalidOtp:
+      description: Invalid OTP code.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/invalidOtp'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: Something went wrong when validating the one-time password.
+                  url: /mfa/verify/totp.json
+                  code: 400
+                body:
+                  totp:
+                    isValidOtp: This OTP is not valid.
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    error:
+      description: MFA is required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/error'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: MFA authentication is required.
+                  url: /mfa/verify/error.json
+                  code: 403
+                body:
+                  mfa_providers:
+                  - totp
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
   requestBodies:
     attempt:
       description: The code for the MFA attempt.
@@ -337,16 +347,6 @@ components:
               summary: Attempt MFA with TOTP.
               value:
                 totp: '635742'
-  parameters:
-    mfaProviderName:
-      name: mfaProviderName
-      description: Name for the MFA provider.
-      in: path
-      schema:
-        type: string
-        enum:
-        - totp
-        - yubikey
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

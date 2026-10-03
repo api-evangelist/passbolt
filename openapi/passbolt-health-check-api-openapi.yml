@@ -56,8 +56,8 @@ paths:
           $ref: '#/components/responses/status'
 components:
   responses:
-    status:
-      description: Operation is successful.
+    authenticationRequired:
+      description: Authentication required.
       content:
         application/json:
           schema:
@@ -74,14 +74,14 @@ components:
             base:
               value:
                 header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: OK
-                  url: /healthcheck/status.json
-                  code: 200
-                body: OK
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
     healthcheck:
       description: Operation is successful.
       content:
@@ -196,8 +196,8 @@ components:
                       tablesCount: 31
                     tablesCount: true
                     defaultContent: true
-    authenticationRequired:
-      description: Authentication required.
+    status:
+      description: Operation is successful.
       content:
         application/json:
           schema:
@@ -214,15 +214,50 @@ components:
             base:
               value:
                 header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: OK
+                  url: /healthcheck/status.json
+                  code: 200
+                body: OK
   schemas:
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
     healthcheck:
       type: object
       required:
@@ -518,41 +553,6 @@ components:
               type: boolean
             defaultContent:
               type: boolean
-    header:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

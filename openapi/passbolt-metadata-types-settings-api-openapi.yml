@@ -107,32 +107,6 @@ paths:
         $ref: '#/components/requestBodies/upgradeMetadataTypesSettings'
 components:
   responses:
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
     accessRestrictedToAdministrators:
       description: Access restricted
       content:
@@ -159,7 +133,7 @@ components:
                   url: <API ENDPOINT URL>
                   code: 403
                 body: ''
-    viewMetadataTypesSettings:
+    upgradeMetadataTypesSettings:
       description: Operation is successful.
       content:
         application/json:
@@ -251,7 +225,7 @@ components:
                   url: <API ENDPOINT URL>
                   code: 401
                 body: ''
-    upgradeMetadataTypesSettings:
+    viewMetadataTypesSettings:
       description: Operation is successful.
       content:
         application/json:
@@ -291,6 +265,32 @@ components:
                   allow_creation_of_v4_comments: true
                   allow_v5_v4_downgrade: false
                   allow_v4_v5_upgrade: true
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
   schemas:
     metadataTypesSettingsIndexAndView:
       type: object

@@ -122,76 +122,51 @@ paths:
         '400':
           $ref: '#/components/responses/badRequest'
 components:
-  schemas:
-    login:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          required:
-          - gpg_auth
-          properties:
-            gpg_auth:
-              type: object
-              required:
-              - keyid
-              properties:
-                keyid:
-                  type: string
-                server_verify_token:
-                  type: string
-                  description: Used for server key verification.
-                user_token_result:
-                  type: string
-                  description: Used for client key verification.
-    verify:
-      type: object
-      required:
-      - fingerprint
-      - keydata
-      properties:
-        fingerprint:
-          type: string
-        keydata:
-          type: string
-    header:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
   responses:
+    authGpg_login:
+      description: Operation is successful. Additional data is sent through cookie and headers.
+      headers:
+        X-GPGAuth-Progress:
+          schema:
+            type: string
+            enum:
+            - stage1
+            - stage2
+            - complete
+        X-GPGAuth-User-Auth-Token:
+          schema:
+            type: string
+        X-GPGAuth-Authenticated:
+          schema:
+            type: boolean
+        Set-Cookie:
+          schema:
+            type: string
+            example: passbolt_session=9vknm8fkbqpgj8i1mnk4st332e; HttpOnly
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /auth/login.json
+                  code: 200
+                body: null
     missingCsrfToken:
       description: CSRF token is missing or invalid.
       content:
@@ -218,60 +193,6 @@ components:
                   url: /auth/logout.json
                   code: 403
                 body: ''
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
-    verify:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/verify'
-          examples:
-            base:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The operation was successful.
-                  url: /auth/verify.json
-                  code: 200
-                body:
-                  fingerprint: 5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59
-                  keydata: '-----BEGIN PUBLIC KEY-----'
     nullBody:
       description: Operation is successful.
       content:
@@ -324,6 +245,32 @@ components:
                   url: <API ENDPOINT URL>
                   code: 401
                 body: ''
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
     stage0:
       description: Operation is successful. The decrypted challenge is sent via a header.
       headers:
@@ -355,26 +302,8 @@ components:
                   url: /auth/verify.json
                   code: 200
                 body: null
-    authGpg_login:
-      description: Operation is successful. Additional data is sent through cookie and headers.
-      headers:
-        X-GPGAuth-Progress:
-          schema:
-            type: string
-            enum:
-            - stage1
-            - stage2
-            - complete
-        X-GPGAuth-User-Auth-Token:
-          schema:
-            type: string
-        X-GPGAuth-Authenticated:
-          schema:
-            type: boolean
-        Set-Cookie:
-          schema:
-            type: string
-            example: passbolt_session=9vknm8fkbqpgj8i1mnk4st332e; HttpOnly
+    verify:
+      description: Operation is successful
       content:
         application/json:
           schema:
@@ -386,7 +315,7 @@ components:
               header:
                 $ref: '#/components/schemas/header'
               body:
-                type: 'null'
+                $ref: '#/components/schemas/verify'
           examples:
             base:
               value:
@@ -396,10 +325,95 @@ components:
                   servertime: 1721207029
                   action: 4d0c0996-ce30-4bce-9918-9062ab35c542
                   message: The operation was successful.
-                  url: /auth/login.json
+                  url: /auth/verify.json
                   code: 200
-                body: null
+                body:
+                  fingerprint: 5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59
+                  keydata: '-----BEGIN PUBLIC KEY-----'
+  schemas:
+    verify:
+      type: object
+      required:
+      - fingerprint
+      - keydata
+      properties:
+        fingerprint:
+          type: string
+        keydata:
+          type: string
+    login:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - gpg_auth
+          properties:
+            gpg_auth:
+              type: object
+              required:
+              - keyid
+              properties:
+                keyid:
+                  type: string
+                server_verify_token:
+                  type: string
+                  description: Used for server key verification.
+                user_token_result:
+                  type: string
+                  description: Used for client key verification.
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
   requestBodies:
+    verify:
+      description: The user's key fingerprint and an encrypted challenge token.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/login'
+          examples:
+            base:
+              value:
+                data:
+                  gpg_auth:
+                    keyid: 5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59
+                    server_verify_token: '-----BEGIN PGP MESSAGE-----'
     authGpg_login:
       description: The user's key fingerprint and challenge data when required.
       required: true
@@ -421,20 +435,6 @@ components:
                   gpg_auth:
                     keyid: 5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59
                     user_token_result: gpgauthv1.3.0|36|10e2074b-f610-42be-8525-100d4e68c481|gpgauthv1.3.0
-    verify:
-      description: The user's key fingerprint and an encrypted challenge token.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/login'
-          examples:
-            base:
-              value:
-                data:
-                  gpg_auth:
-                    keyid: 5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59
-                    server_verify_token: '-----BEGIN PGP MESSAGE-----'
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

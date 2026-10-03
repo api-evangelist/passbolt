@@ -94,19 +94,13 @@ paths:
         $ref: '#/components/requestBodies/addResource'
 components:
   schemas:
-    e2eeMetadataBasedId:
+    tagIndexAndView:
+      anyOf:
+      - $ref: '#/components/schemas/tagLegacy'
+      - $ref: '#/components/schemas/tagV5'
+    tagV5:
       allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBased'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: string
-            format: uuid
-    tagV5Update:
-      allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - $ref: '#/components/schemas/e2eeMetadataBasedId'
       - type: object
         required:
         - is_shared
@@ -130,10 +124,6 @@ components:
           enum:
           - user_key
           - shared_key
-    tagIndexAndView:
-      anyOf:
-      - $ref: '#/components/schemas/tagLegacy'
-      - $ref: '#/components/schemas/tagV5'
     tagAddResource:
       anyOf:
       - type: object
@@ -145,24 +135,15 @@ components:
             format: uuid
       - $ref: '#/components/schemas/tagV5Update'
       - type: string
-    tagLegacy:
-      type: object
-      required:
-      - id
-      - slug
-      - is_shared
-      properties:
-        id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-          x-nullable: true
-        slug:
-          type: string
-        is_shared:
-          type: boolean
+    tagV5Update:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - type: object
+        required:
+        - is_shared
+        properties:
+          is_shared:
+            type: boolean
     header:
       type: object
       required:
@@ -198,72 +179,35 @@ components:
         code:
           type: integer
           example: 200
-    tagV5:
+    e2eeMetadataBasedId:
       allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBasedId'
+      - $ref: '#/components/schemas/e2eeMetadataBased'
       - type: object
         required:
-        - is_shared
+        - id
         properties:
-          is_shared:
-            type: boolean
+          id:
+            type: string
+            format: uuid
+    tagLegacy:
+      type: object
+      required:
+      - id
+      - slug
+      - is_shared
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+          x-nullable: true
+        slug:
+          type: string
+        is_shared:
+          type: boolean
   responses:
-    tags_update:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/tagV5'
-          examples:
-            base:
-              value:
-                header:
-                  id: 15a7d119-07c7-4fcb-8afc-ee8eba41fdc0
-                  status: success
-                  servertime: 1721207029
-                  action: 43efcc1ec-5cc1-5d2a-a16e-234f23b70719
-                  message: The operation was successful.
-                  url: /tags/04b87425-160e-4e31-b42f-89c455650331.json
-                body:
-                  id: 04b87425-160e-4e31-b42f-89c455650331
-                  metadata: '-----BEGIN PGP MESSAGE-----'
-                  metadata_key_id: ed94010c-6a97-488c-a60c-cfc6558f3ed7
-                  metadata_key_type: shared_key
-                  is_shared: false
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
     addResource:
       description: Operation is successful
       content:
@@ -325,6 +269,36 @@ components:
                   url: <API ENDPOINT URL>
                   code: 401
                 body: ''
+    tags_update:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/tagV5'
+          examples:
+            base:
+              value:
+                header:
+                  id: 15a7d119-07c7-4fcb-8afc-ee8eba41fdc0
+                  status: success
+                  servertime: 1721207029
+                  action: 43efcc1ec-5cc1-5d2a-a16e-234f23b70719
+                  message: The operation was successful.
+                  url: /tags/04b87425-160e-4e31-b42f-89c455650331.json
+                body:
+                  id: 04b87425-160e-4e31-b42f-89c455650331
+                  metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: ed94010c-6a97-488c-a60c-cfc6558f3ed7
+                  metadata_key_type: shared_key
+                  is_shared: false
     tags_index:
       description: Operation is successful
       content:
@@ -361,21 +335,33 @@ components:
                   metadata_key_id: ed94010c-6a97-488c-a60c-cfc6558f3ed7
                   metadata_key_type: shared_key
                   is_shared: false
-  requestBodies:
-    tags_update:
-      description: The tag to update.
-      required: true
+    badRequest:
+      description: Bad request
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/tagV5Update'
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
           examples:
-            base:
+            example:
               value:
-                metadata: '-----BEGIN PGP MESSAGE-----'
-                metadata_key_id: ed94010c-6a97-488c-a60c-cfc6558f3ed7
-                metadata_key_type: shared_key
-                is_shared: false
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+  requestBodies:
     addResource:
       description: The tags to set for the resource.
       required: true
@@ -392,6 +378,20 @@ components:
                   metadata_key_type: shared_key
                   is_shared: true
                 - id: 4879d401-c242-458d-91a0-dba864c36535
+    tags_update:
+      description: The tag to update.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tagV5Update'
+          examples:
+            base:
+              value:
+                metadata: '-----BEGIN PGP MESSAGE-----'
+                metadata_key_id: ed94010c-6a97-488c-a60c-cfc6558f3ed7
+                metadata_key_type: shared_key
+                is_shared: false
   parameters:
     resourceOrTagId:
       name: resourceOrTagId

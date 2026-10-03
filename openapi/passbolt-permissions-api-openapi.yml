@@ -47,32 +47,6 @@ paths:
           $ref: '#/components/responses/notFound'
 components:
   responses:
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
     permissions_index:
       description: Operation is successful
       content:
@@ -167,70 +141,72 @@ components:
                   url: <API ENDPOINT URL>
                   code: 401
                 body: ''
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+  parameters:
+    containGroup:
+      name: contain[group]
+      description: Add group to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containUser:
+      name: contain[user]
+      description: Add user to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    resourceId:
+      name: resourceId
+      description: ID for the resource being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    containUserProfile:
+      name: contain[user.profile]
+      description: Add user profile to user data in response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
   schemas:
-    groupIndexAndView:
-      type: object
-      required:
-      - id
-      - name
-      - deleted
-      - created
-      - modified
-      - created_by
-      - modified_by
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        deleted:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-        created_by:
-          type: string
-          format: uuid
-        modified_by:
-          type: string
-          format: uuid
-        my_group_user:
-          $ref: '#/components/schemas/groupsUsersIndexAndView'
-        groups_users:
-          type: array
-          items:
-            $ref: '#/components/schemas/groupsUsersIndexAndView'
-        user_count:
-          type: integer
-    groupsUsersIndexAndView:
-      type: object
-      required:
-      - id
-      - group_id
-      - user_id
-      - is_admin
-      - created
-      properties:
-        id:
-          type: string
-          format: uuid
-        group_id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        is_admin:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        user:
-          $ref: '#/components/schemas/userIndexAndView'
     gpgkey:
       type: object
       required:
@@ -275,32 +251,6 @@ components:
           x-nullable: true
         deleted:
           type: boolean
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-    role:
-      type: object
-      required:
-      - id
-      - name
-      - description
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-          enum:
-          - admin
-          - guest
-          - user
-        description:
-          type: string
         created:
           type: string
           format: date-time
@@ -365,6 +315,32 @@ components:
         group:
           $ref: '#/components/schemas/groupIndexAndView'
           x-nullable: true
+    role:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          enum:
+          - admin
+          - guest
+          - user
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
     header:
       type: object
       required:
@@ -400,6 +376,44 @@ components:
         code:
           type: integer
           example: 200
+    groupIndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - deleted
+      - created
+      - modified
+      - created_by
+      - modified_by
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        my_group_user:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        groups_users:
+          type: array
+          items:
+            $ref: '#/components/schemas/groupsUsersIndexAndView'
+        user_count:
+          type: integer
     userIndexAndView:
       type: object
       required:
@@ -508,45 +522,31 @@ components:
           type: string
           format: date-time
           x-nullable: true
-  parameters:
-    resourceId:
-      name: resourceId
-      description: ID for the resource being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    containUserProfile:
-      name: contain[user.profile]
-      description: Add user profile to user data in response body.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-    containGroup:
-      name: contain[group]
-      description: Add group to response body.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-    containUser:
-      name: contain[user]
-      description: Add user to response body.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
+    groupsUsersIndexAndView:
+      type: object
+      required:
+      - id
+      - group_id
+      - user_id
+      - is_admin
+      - created
+      properties:
+        id:
+          type: string
+          format: uuid
+        group_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        is_admin:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT
