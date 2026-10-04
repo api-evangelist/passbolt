@@ -47,6 +47,14 @@ components:
             type: string
             format: binary
   parameters:
+    avatarId:
+      name: avatarId
+      description: ID for the avatar being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
     avatarFormat:
       name: avatarFormat
       description: Format for the avatar being manipulated.
@@ -57,14 +65,6 @@ components:
         enum:
         - medium.jpg
         - small.jpg
-    avatarId:
-      name: avatarId
-      description: ID for the avatar being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

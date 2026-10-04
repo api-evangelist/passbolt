@@ -259,46 +259,108 @@ paths:
         $ref: '#/components/requestBodies/rotateMetadataKeyUpgradeTags'
 components:
   schemas:
-    e2eeMetadataBased:
-      type: object
-      required:
-      - metadata
-      - metadata_key_id
-      - metadata_key_type
-      properties:
-        metadata:
-          type: string
-        metadata_key_id:
-          type: string
-          format: uuid
-        metadata_key_type:
-          type: string
-          enum:
-          - user_key
-          - shared_key
-    permissionLevel:
-      description: '* `1` - Read
-
-        * `7` - Update
-
-        * `15` - Owner
-
-        '
-      type: integer
-      enum:
-      - 1
-      - 7
-      - 15
-    e2eeMetadataBasedId:
+    e2eeMetadataBasedIdModifiedModifiedBy:
       allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - $ref: '#/components/schemas/e2eeMetadataBasedId'
       - type: object
         required:
-        - id
+        - modified
+        - modified_by
         properties:
-          id:
+          modified:
+            type: string
+            format: date-time
+          modified_by:
             type: string
             format: uuid
+    headerWithPagination:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      - pagination
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+        pagination:
+          type: object
+          required:
+          - count
+          - page
+          - limit
+          properties:
+            count:
+              type: integer
+            page:
+              type: integer
+            limit:
+              type: integer
+              x-nullable: true
+    groupIndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - deleted
+      - created
+      - modified
+      - created_by
+      - modified_by
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        my_group_user:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        groups_users:
+          type: array
+          items:
+            $ref: '#/components/schemas/groupsUsersIndexAndView'
+        user_count:
+          type: integer
     userIndexAndView:
       type: object
       required:
@@ -407,66 +469,6 @@ components:
           type: string
           format: date-time
           x-nullable: true
-    resourceMetadataRotateKey:
-      allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
-      - type: object
-        required:
-        - resource_type_id
-        properties:
-          resource_type_id:
-            type: string
-            format: uuid
-    headerWithPagination:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      - pagination
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
-        pagination:
-          type: object
-          required:
-          - count
-          - page
-          - limit
-          properties:
-            count:
-              type: integer
-            page:
-              type: integer
-            limit:
-              type: integer
-              x-nullable: true
     header:
       type: object
       required:
@@ -502,44 +504,103 @@ components:
         code:
           type: integer
           example: 200
-    groupIndexAndView:
+    tagV5MetadataRotateKey:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: uuid
+    error:
+      type: object
+      required:
+      - mfa_providers
+      properties:
+        mfa_providers:
+          type: array
+          items:
+            type: string
+            enum:
+            - totp
+            - yubikey
+    permissionLevel:
+      description: '* `1` - Read
+
+        * `7` - Update
+
+        * `15` - Owner
+
+        '
+      type: integer
+      enum:
+      - 1
+      - 7
+      - 15
+    e2eeMetadataBasedId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: uuid
+    groupsUsersIndexAndView:
       type: object
       required:
       - id
-      - name
-      - deleted
+      - group_id
+      - user_id
+      - is_admin
       - created
-      - modified
-      - created_by
-      - modified_by
       properties:
         id:
           type: string
           format: uuid
-        name:
+        group_id:
           type: string
-        deleted:
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        is_admin:
           type: boolean
         created:
           type: string
           format: date-time
-        modified:
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+    resourceMetadataRotateKey:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
+      - type: object
+        required:
+        - resource_type_id
+        properties:
+          resource_type_id:
+            type: string
+            format: uuid
+    e2eeMetadataBased:
+      type: object
+      required:
+      - metadata
+      - metadata_key_id
+      - metadata_key_type
+      properties:
+        metadata:
           type: string
-          format: date-time
-        created_by:
+        metadata_key_id:
           type: string
           format: uuid
-        modified_by:
+        metadata_key_type:
           type: string
-          format: uuid
-        my_group_user:
-          $ref: '#/components/schemas/groupsUsersIndexAndView'
-        groups_users:
-          type: array
-          items:
-            $ref: '#/components/schemas/groupsUsersIndexAndView'
-        user_count:
-          type: integer
+          enum:
+          - user_key
+          - shared_key
     gpgkey:
       type: object
       required:
@@ -635,28 +696,6 @@ components:
         group:
           $ref: '#/components/schemas/groupIndexAndView'
           x-nullable: true
-    error:
-      type: object
-      required:
-      - mfa_providers
-      properties:
-        mfa_providers:
-          type: array
-          items:
-            type: string
-            enum:
-            - totp
-            - yubikey
-    tagV5MetadataRotateKey:
-      allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBased'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: string
-            format: uuid
     role:
       type: object
       required:
@@ -683,45 +722,6 @@ components:
         modified:
           type: string
           format: date-time
-    e2eeMetadataBasedIdModifiedModifiedBy:
-      allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBasedId'
-      - type: object
-        required:
-        - modified
-        - modified_by
-        properties:
-          modified:
-            type: string
-            format: date-time
-          modified_by:
-            type: string
-            format: uuid
-    groupsUsersIndexAndView:
-      type: object
-      required:
-      - id
-      - group_id
-      - user_id
-      - is_admin
-      - created
-      properties:
-        id:
-          type: string
-          format: uuid
-        group_id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        is_admin:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        user:
-          $ref: '#/components/schemas/userIndexAndView'
     e2eeMetadataBasedCommon:
       allOf:
       - $ref: '#/components/schemas/e2eeMetadataBasedId'
@@ -789,51 +789,6 @@ components:
                   url: <API ENDPOINT URL>
                   code: 401
                 body: ''
-    indexAndAddMetadataRotateKeyResources:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/headerWithPagination'
-              body:
-                type: array
-                items:
-                  $ref: '#/components/schemas/resourceMetadataRotateKey'
-          examples:
-            base:
-              value:
-                header:
-                  id: 26c1344a-22ef-4c49-90a0-130a9c82a648
-                  status: success
-                  servertime: 1740143504
-                  action: c5969bdd-018f-552b-b20d-01636766a81f
-                  message: The operation was successful.
-                  url: /metadata/rotate-key/resources.json
-                  code: 200
-                  pagination:
-                    count: 0
-                    page: 1
-                    limit: 20
-                body:
-                - id: ae60d89c-f13b-4fb1-b2dc-c8dc806cac88
-                  metadata: '-----BEGIN PGP MESSAGE-----'
-                  metadata_key_id: 0194fec1-65fa-7b6f-935a-9541c1c13281
-                  metadata_key_type: shared_key
-                  modified: '2024-07-08T08:06:25+00:00'
-                  created: '2024-07-08T08:06:25+00:00'
-                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
-                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
-                  resource_type_id: a28a04cd-6f53-518a-967c-9963bf9cec51
-                  deleted: false
-                  expired: null
-                  folder_parent_id: null
-                  personal: true
     indexAndAddMetadataRotateKeyTags:
       description: Operation is successful.
       content:
@@ -870,58 +825,6 @@ components:
                   metadata: '-----BEGIN PGP MESSAGE-----'
                   metadata_key_id: 0194fec1-65fa-7b6f-935a-9541c1c13281
                   metadata_key_type: shared_key
-    accessRestrictedToAdministrators:
-      description: Access restricted
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Access restricted to administrators.
-                  url: <API ENDPOINT URL>
-                  code: 403
-                body: ''
-    notFound:
-      description: Not found
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The <MODEL> does not exist.
-                  url: <API ENDPOINT URL>
-                  code: 404
-                body: ''
     tooManyUpdatedEntities:
       description: One or more entities were updated
       content:
@@ -947,6 +850,60 @@ components:
                   message: One or more entities were updated.
                   url: <API ENDPOINT URL>
                   code: 409
+                body: ''
+    error:
+      description: MFA is required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/error'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: MFA authentication is required.
+                  url: /mfa/verify/error.json
+                  code: 403
+                body:
+                  mfa_providers:
+                  - totp
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
                 body: ''
     indexAndAddMetadataRotateKey:
       description: Operation is successful.
@@ -992,8 +949,8 @@ components:
                   expired: null
                   folder_parent_id: null
                   personal: true
-    error:
-      description: MFA is required.
+    indexAndAddMetadataRotateKeyResources:
+      description: Operation is successful.
       content:
         application/json:
           schema:
@@ -1003,23 +960,40 @@ components:
             - body
             properties:
               header:
-                $ref: '#/components/schemas/header'
+                $ref: '#/components/schemas/headerWithPagination'
               body:
-                $ref: '#/components/schemas/error'
+                type: array
+                items:
+                  $ref: '#/components/schemas/resourceMetadataRotateKey'
           examples:
             base:
               value:
                 header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: MFA authentication is required.
-                  url: /mfa/verify/error.json
-                  code: 403
+                  id: 26c1344a-22ef-4c49-90a0-130a9c82a648
+                  status: success
+                  servertime: 1740143504
+                  action: c5969bdd-018f-552b-b20d-01636766a81f
+                  message: The operation was successful.
+                  url: /metadata/rotate-key/resources.json
+                  code: 200
+                  pagination:
+                    count: 0
+                    page: 1
+                    limit: 20
                 body:
-                  mfa_providers:
-                  - totp
+                - id: ae60d89c-f13b-4fb1-b2dc-c8dc806cac88
+                  metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: 0194fec1-65fa-7b6f-935a-9541c1c13281
+                  metadata_key_type: shared_key
+                  modified: '2024-07-08T08:06:25+00:00'
+                  created: '2024-07-08T08:06:25+00:00'
+                  created_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  modified_by: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  resource_type_id: a28a04cd-6f53-518a-967c-9963bf9cec51
+                  deleted: false
+                  expired: null
+                  folder_parent_id: null
+                  personal: true
     badRequest:
       description: Bad request
       content:
@@ -1045,6 +1019,32 @@ components:
                   message: <ERROR MESSAGE>
                   url: <API ENDPOINT URL>
                   code: 400
+                body: ''
+    accessRestrictedToAdministrators:
+      description: Access restricted
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Access restricted to administrators.
+                  url: <API ENDPOINT URL>
+                  code: 403
                 body: ''
   requestBodies:
     rotateMetadataKeyUpgradeTags:

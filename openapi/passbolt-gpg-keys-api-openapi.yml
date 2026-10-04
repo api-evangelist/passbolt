@@ -68,57 +68,33 @@ paths:
         '404':
           $ref: '#/components/responses/notFound'
 components:
+  parameters:
+    filterModifiedAfter:
+      name: filter[modified-after]
+      description: Only return elements modified after a timestamp.
+      in: query
+      required: false
+      schema:
+        type: string
+    gpgkeyId:
+      name: gpgkeyId
+      description: ID for the GPG key being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    filterIsDeleted:
+      name: filter[is-deleted]
+      description: Only return deleted elements.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
   schemas:
-    gpgkey:
-      type: object
-      required:
-      - id
-      - user_id
-      - armored_key
-      - bits
-      - uid
-      - key_id
-      - fingerprint
-      - type
-      - expires
-      - key_created
-      - deleted
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        armored_key:
-          type: string
-        bits:
-          type: integer
-        uid:
-          type: string
-        key_id:
-          type: string
-        fingerprint:
-          type: string
-        type:
-          type: string
-          enum:
-          - RSA
-          - ECC
-        expires:
-          type: string
-          format: date-time
-          x-nullable: true
-        deleted:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
     headerWithPagination:
       type: object
       required:
@@ -169,6 +145,56 @@ components:
             limit:
               type: integer
               x-nullable: true
+    gpgkey:
+      type: object
+      required:
+      - id
+      - user_id
+      - armored_key
+      - bits
+      - uid
+      - key_id
+      - fingerprint
+      - type
+      - expires
+      - key_created
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        armored_key:
+          type: string
+        bits:
+          type: integer
+        uid:
+          type: string
+        key_id:
+          type: string
+        fingerprint:
+          type: string
+        type:
+          type: string
+          enum:
+          - RSA
+          - ECC
+        expires:
+          type: string
+          format: date-time
+          x-nullable: true
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
     header:
       type: object
       required:
@@ -204,35 +230,9 @@ components:
         code:
           type: integer
           example: 200
-  parameters:
-    gpgkeyId:
-      name: gpgkeyId
-      description: ID for the GPG key being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    filterIsDeleted:
-      name: filter[is-deleted]
-      description: Only return deleted elements.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-    filterModifiedAfter:
-      name: filter[modified-after]
-      description: Only return elements modified after a timestamp.
-      in: query
-      required: false
-      schema:
-        type: string
   responses:
-    gpgkeys_view:
-      description: Operation is successful
+    notFound:
+      description: Not found
       content:
         application/json:
           schema:
@@ -244,32 +244,71 @@ components:
               header:
                 $ref: '#/components/schemas/header'
               body:
-                $ref: '#/components/schemas/gpgkey'
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
           examples:
             base:
               value:
                 header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The operation was successful.
-                  url: /gpgkeys/ed4d9ea6-f354-4a74-ad09-4e1dd69041ec.json
-                  code: 200
-                body:
-                  id: ed4d9ea6-f354-4a74-ad09-4e1dd69041ec
-                  user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
-                  armored_key: '-----BEGIN PGP PUBLIC KEY BLOCK-----'
-                  bits: 3072
-                  uid: Ada Lovelace <ada@passbolt.com>
-                  key_id: D277E7A2E45418A0
-                  fingerprint: 850C6BDE59E9F126BFB4683BD277E7A2E45418A0
-                  type: RSA
-                  expires: null
-                  key_created: '2024-07-03T12:53:13+00:00'
-                  deleted: false
-                  created: '2024-07-03T12:53:52+00:00'
-                  modified: '2024-07-03T12:53:52+00:00'
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
     gpgkeys_index:
       description: Operation is successful
       content:
@@ -315,8 +354,8 @@ components:
                   deleted: false
                   created: '2024-07-03T12:53:52+00:00'
                   modified: '2024-07-03T12:53:52+00:00'
-    notFound:
-      description: Not found
+    gpgkeys_view:
+      description: Operation is successful
       content:
         application/json:
           schema:
@@ -328,71 +367,32 @@ components:
               header:
                 $ref: '#/components/schemas/header'
               body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The <MODEL> does not exist.
-                  url: <API ENDPOINT URL>
-                  code: 404
-                body: ''
-    authenticationRequired:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
+                $ref: '#/components/schemas/gpgkey'
           examples:
             base:
               value:
                 header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
                   id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
+                  status: success
                   servertime: 1721207029
                   action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
+                  message: The operation was successful.
+                  url: /gpgkeys/ed4d9ea6-f354-4a74-ad09-4e1dd69041ec.json
+                  code: 200
+                body:
+                  id: ed4d9ea6-f354-4a74-ad09-4e1dd69041ec
+                  user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  armored_key: '-----BEGIN PGP PUBLIC KEY BLOCK-----'
+                  bits: 3072
+                  uid: Ada Lovelace <ada@passbolt.com>
+                  key_id: D277E7A2E45418A0
+                  fingerprint: 850C6BDE59E9F126BFB4683BD277E7A2E45418A0
+                  type: RSA
+                  expires: null
+                  key_created: '2024-07-03T12:53:13+00:00'
+                  deleted: false
+                  created: '2024-07-03T12:53:52+00:00'
+                  modified: '2024-07-03T12:53:52+00:00'
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

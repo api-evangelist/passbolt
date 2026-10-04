@@ -93,11 +93,34 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/addResource'
 components:
+  parameters:
+    resourceOrTagId:
+      name: resourceOrTagId
+      description: The tag (for `PUT`) or resource (for `POST`) identifier being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
   schemas:
-    tagIndexAndView:
-      anyOf:
-      - $ref: '#/components/schemas/tagLegacy'
-      - $ref: '#/components/schemas/tagV5'
+    tagLegacy:
+      type: object
+      required:
+      - id
+      - slug
+      - is_shared
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+          x-nullable: true
+        slug:
+          type: string
+        is_shared:
+          type: boolean
     tagV5:
       allOf:
       - $ref: '#/components/schemas/e2eeMetadataBasedId'
@@ -124,17 +147,6 @@ components:
           enum:
           - user_key
           - shared_key
-    tagAddResource:
-      anyOf:
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: string
-            format: uuid
-      - $ref: '#/components/schemas/tagV5Update'
-      - type: string
     tagV5Update:
       allOf:
       - $ref: '#/components/schemas/e2eeMetadataBased'
@@ -144,6 +156,10 @@ components:
         properties:
           is_shared:
             type: boolean
+    tagIndexAndView:
+      anyOf:
+      - $ref: '#/components/schemas/tagLegacy'
+      - $ref: '#/components/schemas/tagV5'
     header:
       type: object
       required:
@@ -179,6 +195,17 @@ components:
         code:
           type: integer
           example: 200
+    tagAddResource:
+      anyOf:
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: uuid
+      - $ref: '#/components/schemas/tagV5Update'
+      - type: string
     e2eeMetadataBasedId:
       allOf:
       - $ref: '#/components/schemas/e2eeMetadataBased'
@@ -189,62 +216,9 @@ components:
           id:
             type: string
             format: uuid
-    tagLegacy:
-      type: object
-      required:
-      - id
-      - slug
-      - is_shared
-      properties:
-        id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-          x-nullable: true
-        slug:
-          type: string
-        is_shared:
-          type: boolean
   responses:
-    addResource:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: array
-                items:
-                  $ref: '#/components/schemas/tagIndexAndView'
-          examples:
-            base:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1740497420
-                  action: acef8942-0c23-5de8-92e8-76ed8c5664f2
-                  message: The operation was successful.
-                  url: /tags/b4651f60-392d-4af7-b204-0f8d26798b9b.json
-                  code: 200
-                body:
-                - id: 52ca9f92-4115-4759-a965-89e6b41b36fd
-                  slug: important
-                  is_shared: false
-                - metadata: '-----BEGIN PGP MESSAGE-----'
-                  metadata_key_id: null
-                  metadata_key_type: user_key
-                  is_shared: false
-    authenticationRequired:
-      description: Authentication required.
+    badRequest:
+      description: Bad request
       content:
         application/json:
           schema:
@@ -258,16 +232,16 @@ components:
               body:
                 type: string
           examples:
-            base:
+            example:
               value:
                 header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
                   status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
                   url: <API ENDPOINT URL>
-                  code: 401
+                  code: 400
                 body: ''
     tags_update:
       description: Operation is successful
@@ -299,6 +273,32 @@ components:
                   metadata_key_id: ed94010c-6a97-488c-a60c-cfc6558f3ed7
                   metadata_key_type: shared_key
                   is_shared: false
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
     tags_index:
       description: Operation is successful
       content:
@@ -335,8 +335,8 @@ components:
                   metadata_key_id: ed94010c-6a97-488c-a60c-cfc6558f3ed7
                   metadata_key_type: shared_key
                   is_shared: false
-    badRequest:
-      description: Bad request
+    addResource:
+      description: Operation is successful
       content:
         application/json:
           schema:
@@ -348,19 +348,28 @@ components:
               header:
                 $ref: '#/components/schemas/header'
               body:
-                type: string
+                type: array
+                items:
+                  $ref: '#/components/schemas/tagIndexAndView'
           examples:
-            example:
+            base:
               value:
                 header:
                   id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
+                  status: success
+                  servertime: 1740497420
+                  action: acef8942-0c23-5de8-92e8-76ed8c5664f2
+                  message: The operation was successful.
+                  url: /tags/b4651f60-392d-4af7-b204-0f8d26798b9b.json
+                  code: 200
+                body:
+                - id: 52ca9f92-4115-4759-a965-89e6b41b36fd
+                  slug: important
+                  is_shared: false
+                - metadata: '-----BEGIN PGP MESSAGE-----'
+                  metadata_key_id: null
+                  metadata_key_type: user_key
+                  is_shared: false
   requestBodies:
     addResource:
       description: The tags to set for the resource.
@@ -392,15 +401,6 @@ components:
                 metadata_key_id: ed94010c-6a97-488c-a60c-cfc6558f3ed7
                 metadata_key_type: shared_key
                 is_shared: false
-  parameters:
-    resourceOrTagId:
-      name: resourceOrTagId
-      description: The tag (for `PUT`) or resource (for `POST`) identifier being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

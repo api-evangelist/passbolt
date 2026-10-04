@@ -194,69 +194,73 @@ paths:
         '404':
           $ref: '#/components/responses/notFound'
 components:
-  schemas:
-    e2eeMetadataBased:
-      type: object
-      required:
-      - metadata
-      - metadata_key_id
-      - metadata_key_type
-      properties:
-        metadata:
-          type: string
-        metadata_key_id:
-          type: string
-          format: uuid
-        metadata_key_type:
-          type: string
-          enum:
-          - user_key
-          - shared_key
-    permissionLevel:
-      description: '* `1` - Read
-
-        * `7` - Update
-
-        * `15` - Owner
-
-        '
-      type: integer
-      enum:
-      - 1
-      - 7
-      - 15
-    e2eeMetadataBasedId:
-      allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBased'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: string
-            format: uuid
+  requestBodies:
     userAdd:
+      description: The user you want to create
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/userAdd'
+          examples:
+            base:
+              value:
+                username: ada@passbolt.com
+                profile:
+                  first_name: Ada
+                  last_name: Lovelace
+    userUpdate:
+      description: The user you want to update
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/userUpdate'
+          examples:
+            base:
+              value:
+                profile:
+                  first_name: Freddie
+                  last_name: Mercury
+  schemas:
+    groupIndexAndView:
       type: object
       required:
-      - username
-      - profile
+      - id
+      - name
+      - deleted
+      - created
+      - modified
+      - created_by
+      - modified_by
       properties:
-        username:
-          type: string
-          format: email
-        role_id:
+        id:
           type: string
           format: uuid
-        profile:
-          type: object
-          required:
-          - first_name
-          - last_name
-          properties:
-            first_name:
-              type: string
-            last_name:
-              type: string
+        name:
+          type: string
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        my_group_user:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        groups_users:
+          type: array
+          items:
+            $ref: '#/components/schemas/groupsUsersIndexAndView'
+        user_count:
+          type: integer
     headerWithPagination:
       type: object
       required:
@@ -307,618 +311,6 @@ components:
             limit:
               type: integer
               x-nullable: true
-    header:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
-    groupIndexAndView:
-      type: object
-      required:
-      - id
-      - name
-      - deleted
-      - created
-      - modified
-      - created_by
-      - modified_by
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        deleted:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-        created_by:
-          type: string
-          format: uuid
-        modified_by:
-          type: string
-          format: uuid
-        my_group_user:
-          $ref: '#/components/schemas/groupsUsersIndexAndView'
-        groups_users:
-          type: array
-          items:
-            $ref: '#/components/schemas/groupsUsersIndexAndView'
-        user_count:
-          type: integer
-    e2eeMetadataBasedCommon:
-      allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBasedId'
-      - type: object
-        required:
-        - created
-        - modified
-        - created_by
-        - modified_by
-        - personal
-        - folder_parent_id
-        properties:
-          created:
-            type: string
-            format: date-time
-          modified:
-            type: string
-            format: date-time
-          created_by:
-            type: string
-            format: uuid
-          modified_by:
-            type: string
-            format: uuid
-          personal:
-            type: boolean
-          folder_parent_id:
-            type: string
-            format: uuid
-            x-nullable: true
-          modifier:
-            $ref: '#/components/schemas/userIndexAndView'
-          creator:
-            $ref: '#/components/schemas/userIndexAndView'
-          permission:
-            $ref: '#/components/schemas/permissionIndexAndView'
-          permissions:
-            type: array
-            items:
-              $ref: '#/components/schemas/permissionIndexAndView'
-    gpgkey:
-      type: object
-      required:
-      - id
-      - user_id
-      - armored_key
-      - bits
-      - uid
-      - key_id
-      - fingerprint
-      - type
-      - expires
-      - key_created
-      - deleted
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        armored_key:
-          type: string
-        bits:
-          type: integer
-        uid:
-          type: string
-        key_id:
-          type: string
-        fingerprint:
-          type: string
-        type:
-          type: string
-          enum:
-          - RSA
-          - ECC
-        expires:
-          type: string
-          format: date-time
-          x-nullable: true
-        deleted:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-    permissionIndexAndView:
-      type: object
-      required:
-      - id
-      - aco
-      - aco_foreign_key
-      - aro
-      - aro_foreign_key
-      - type
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        aco:
-          type: string
-          enum:
-          - Resource
-          - Folder
-        aco_foreign_key:
-          type: string
-          format: uuid
-        aro:
-          type: string
-          enum:
-          - User
-          - Group
-        aro_foreign_key:
-          type: string
-          format: uuid
-        type:
-          $ref: '#/components/schemas/permissionLevel'
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-        user:
-          $ref: '#/components/schemas/userIndexAndView'
-          x-nullable: true
-        group:
-          $ref: '#/components/schemas/groupIndexAndView'
-          x-nullable: true
-    folderV5IndexAndView:
-      allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
-      - type: object
-        properties:
-          children_resources:
-            type: array
-            items:
-              anyOf:
-              - $ref: '#/components/schemas/resourceV4IndexAndView'
-              - $ref: '#/components/schemas/resourceV5IndexAndView'
-          children_folders:
-            type: array
-            items:
-              anyOf:
-              - $ref: '#/components/schemas/folderV4IndexAndView'
-              - $ref: '#/components/schemas/folderV5IndexAndView'
-    userDeleteDryRun:
-      type: object
-      properties:
-        errors:
-          type: object
-          properties:
-            groups:
-              type: object
-              properties:
-                sole_manager:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/groupIndexAndView'
-            folders:
-              type: object
-              properties:
-                sole_owner:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/folderV5IndexAndView'
-            resources:
-              type: object
-              properties:
-                sole_owner:
-                  type: array
-                  items:
-                    anyOf:
-                    - $ref: '#/components/schemas/resourceV4IndexAndView'
-                    - $ref: '#/components/schemas/resourceV5IndexAndView'
-            groups_to_delete:
-              type: array
-              items:
-                $ref: '#/components/schemas/groupIndexAndView'
-    secretIndex:
-      type: object
-      required:
-      - id
-      - user_id
-      - resource_id
-      - data
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        resource_id:
-          type: string
-          format: uuid
-        data:
-          type: string
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-    userUpdate:
-      type: object
-      properties:
-        role_id:
-          type: string
-          format: uuid
-        disabled:
-          type: boolean
-        profile:
-          type: object
-          properties:
-            first_name:
-              type: string
-            last_name:
-              type: string
-            avatar:
-              type: object
-              required:
-              - file
-              properties:
-                file:
-                  type: string
-                  description: Image file in binary format.
-    resourceV4IndexAndView:
-      type: object
-      required:
-      - id
-      - name
-      - username
-      - uri
-      - description
-      - deleted
-      - created
-      - created_by
-      - modified_by
-      - resource_type_id
-      - expired
-      - folder_parent_id
-      - personal
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        username:
-          type: string
-        uri:
-          type: string
-        description:
-          type: string
-        deleted:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        created_by:
-          type: string
-          format: uuid
-        modified_by:
-          type: string
-          format: uuid
-        resource_type_id:
-          type: string
-          format: uuid
-        expired:
-          type: string
-          format: date-time
-          x-nullable: true
-        folder_parent_id:
-          type: string
-          format: uuid
-          x-nullable: true
-        personal:
-          type: boolean
-        favorite:
-          $ref: '#/components/schemas/favorite'
-        modifier:
-          $ref: '#/components/schemas/userIndexAndView'
-        creator:
-          $ref: '#/components/schemas/userIndexAndView'
-        secrets:
-          type: array
-          items:
-            $ref: '#/components/schemas/secretIndex'
-        resource_type:
-          $ref: '#/components/schemas/resourceType'
-        permission:
-          $ref: '#/components/schemas/permissionIndexAndView'
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/permissionIndexAndView'
-    userDelete:
-      type: object
-      properties:
-        errors:
-          type: object
-          properties:
-            resources:
-              type: object
-              properties:
-                sole_owner:
-                  type: array
-                  items:
-                    anyOf:
-                    - $ref: '#/components/schemas/resourceV4IndexAndView'
-                    - $ref: '#/components/schemas/resourceV5IndexAndView'
-    resourceV5IndexAndView:
-      allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
-      - type: object
-        required:
-        - resource_type_id
-        - expired
-        properties:
-          resource_type_id:
-            type: string
-            format: uuid
-          expired:
-            type: string
-            format: date-time
-            x-nullable: true
-          favorite:
-            $ref: '#/components/schemas/favorite'
-          secrets:
-            type: array
-            items:
-              type: string
-          resource_type:
-            $ref: '#/components/schemas/resourceType'
-    favorite:
-      type: object
-      required:
-      - id
-      - user_id
-      - foreign_key
-      - foreign_model
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        foreign_key:
-          type: string
-          format: uuid
-        foreign_model:
-          type: string
-          enum:
-          - Resource
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-    resourceType:
-      type: object
-      required:
-      - id
-      - slug
-      - name
-      - description
-      - definition
-      - deleted
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        slug:
-          type: string
-          description: '* `password-string` - The original passbolt resource type, where the secret is a non empty string.
-
-            * `password-and-description` - A resource with the password and the description encrypted.
-
-            * `totp` - A resource with standalone TOTP fields.
-
-            * `password-description-totp` - A resource with encrypted password, description and TOTP fields.
-
-            * `v5-default-with-totp` - The new default resource type with a TOTP introduced with v5.
-
-            * `v5-password-string (Deprecated)` - The original passbolt resource type, kept for backward compatibility reasons.
-
-            * `v5-totp-standalone` - The new standalone TOTP resource type introduced with v5.
-
-            * `v5-default` - The new default resource type introduced with v5.
-
-            '
-          enum:
-          - password-string
-          - password-and-description
-          - totp
-          - password-description-totp
-          - v5-default-with-totp
-          - v5-password-string (Deprecated)
-          - v5-totp-standalone
-          - v5-default
-        name:
-          type: string
-        description:
-          type: string
-        definition:
-          type: object
-          description: Schema for the expected data for this kind of resources.
-        deleted:
-          type: string
-          x-nullable: true
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-    role:
-      type: object
-      required:
-      - id
-      - name
-      - description
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-          enum:
-          - admin
-          - guest
-          - user
-        description:
-          type: string
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-    folderV4IndexAndView:
-      type: object
-      required:
-      - id
-      - name
-      - created
-      - modified
-      - created_by
-      - modified_by
-      - folder_parent_id
-      - personal
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-        created_by:
-          type: string
-          format: uuid
-        modified_by:
-          type: string
-          format: uuid
-        folder_parent_id:
-          type: string
-          format: uuid
-          x-nullable: true
-        personal:
-          type: boolean
-        modifier:
-          $ref: '#/components/schemas/userIndexAndView'
-        creator:
-          $ref: '#/components/schemas/userIndexAndView'
-        permission:
-          $ref: '#/components/schemas/permissionIndexAndView'
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/permissionIndexAndView'
-        children_resources:
-          type: array
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/resourceV4IndexAndView'
-            - $ref: '#/components/schemas/resourceV5IndexAndView'
-        children_folders:
-          type: array
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/folderV4IndexAndView'
-            - $ref: '#/components/schemas/folderV5IndexAndView'
-    groupsUsersIndexAndView:
-      type: object
-      required:
-      - id
-      - group_id
-      - user_id
-      - is_admin
-      - created
-      properties:
-        id:
-          type: string
-          format: uuid
-        group_id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        is_admin:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        user:
-          $ref: '#/components/schemas/userIndexAndView'
     userIndexAndView:
       type: object
       required:
@@ -1027,72 +419,643 @@ components:
           type: string
           format: date-time
           x-nullable: true
-  parameters:
-    containGroupsUsers:
-      name: contain[groups_users]
-      description: Add group users to groups in response body.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-    filterIsActive:
-      name: filter[is-active]
-      description: Only return active elements.
-      in: query
-      required: false
-      schema:
-        type: boolean
-    containProfile:
-      name: contain[profile]
-      description: Add profile to response body.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-    containLastLoggedIn:
-      name: contain[last_logged_in]
-      description: Add last logged in to response body.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-    filterHasGroups:
-      name: filter[has-groups]
-      description: Only return elements filtered by groups.
-      in: query
-      required: false
-      schema:
-        type: array
-        items:
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
           type: string
           format: uuid
-          description: Group UUID
-    filterIsAdmin:
-      name: filter[is-admin]
-      description: Only return admin users.
-      in: query
-      required: false
-      schema:
-        type: boolean
-    containRole:
-      name: contain[role]
-      description: Add role to response body.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+    folderV4IndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - created
+      - modified
+      - created_by
+      - modified_by
+      - folder_parent_id
+      - personal
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        folder_parent_id:
+          type: string
+          format: uuid
+          x-nullable: true
+        personal:
+          type: boolean
+        modifier:
+          $ref: '#/components/schemas/userIndexAndView'
+        creator:
+          $ref: '#/components/schemas/userIndexAndView'
+        permission:
+          $ref: '#/components/schemas/permissionIndexAndView'
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/permissionIndexAndView'
+        children_resources:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/resourceV4IndexAndView'
+            - $ref: '#/components/schemas/resourceV5IndexAndView'
+        children_folders:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/folderV4IndexAndView'
+            - $ref: '#/components/schemas/folderV5IndexAndView'
+    userAdd:
+      type: object
+      required:
+      - username
+      - profile
+      properties:
+        username:
+          type: string
+          format: email
+        role_id:
+          type: string
+          format: uuid
+        profile:
+          type: object
+          required:
+          - first_name
+          - last_name
+          properties:
+            first_name:
+              type: string
+            last_name:
+              type: string
+    userDelete:
+      type: object
+      properties:
+        errors:
+          type: object
+          properties:
+            resources:
+              type: object
+              properties:
+                sole_owner:
+                  type: array
+                  items:
+                    anyOf:
+                    - $ref: '#/components/schemas/resourceV4IndexAndView'
+                    - $ref: '#/components/schemas/resourceV5IndexAndView'
+    permissionLevel:
+      description: '* `1` - Read
+
+        * `7` - Update
+
+        * `15` - Owner
+
+        '
+      type: integer
+      enum:
+      - 1
+      - 7
+      - 15
+    e2eeMetadataBasedId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: uuid
+    secretIndex:
+      type: object
+      required:
+      - id
+      - user_id
+      - resource_id
+      - data
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        resource_id:
+          type: string
+          format: uuid
+        data:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    groupsUsersIndexAndView:
+      type: object
+      required:
+      - id
+      - group_id
+      - user_id
+      - is_admin
+      - created
+      properties:
+        id:
+          type: string
+          format: uuid
+        group_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        is_admin:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+    e2eeMetadataBased:
+      type: object
+      required:
+      - metadata
+      - metadata_key_id
+      - metadata_key_type
+      properties:
+        metadata:
+          type: string
+        metadata_key_id:
+          type: string
+          format: uuid
+        metadata_key_type:
+          type: string
+          enum:
+          - user_key
+          - shared_key
+    favorite:
+      type: object
+      required:
+      - id
+      - user_id
+      - foreign_key
+      - foreign_model
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        foreign_key:
+          type: string
+          format: uuid
+        foreign_model:
+          type: string
+          enum:
+          - Resource
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    userDeleteDryRun:
+      type: object
+      properties:
+        errors:
+          type: object
+          properties:
+            groups:
+              type: object
+              properties:
+                sole_manager:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/groupIndexAndView'
+            folders:
+              type: object
+              properties:
+                sole_owner:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/folderV5IndexAndView'
+            resources:
+              type: object
+              properties:
+                sole_owner:
+                  type: array
+                  items:
+                    anyOf:
+                    - $ref: '#/components/schemas/resourceV4IndexAndView'
+                    - $ref: '#/components/schemas/resourceV5IndexAndView'
+            groups_to_delete:
+              type: array
+              items:
+                $ref: '#/components/schemas/groupIndexAndView'
+    resourceV5IndexAndView:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
+      - type: object
+        required:
+        - resource_type_id
+        - expired
+        properties:
+          resource_type_id:
+            type: string
+            format: uuid
+          expired:
+            type: string
+            format: date-time
+            x-nullable: true
+          favorite:
+            $ref: '#/components/schemas/favorite'
+          secrets:
+            type: array
+            items:
+              type: string
+          resource_type:
+            $ref: '#/components/schemas/resourceType'
+    gpgkey:
+      type: object
+      required:
+      - id
+      - user_id
+      - armored_key
+      - bits
+      - uid
+      - key_id
+      - fingerprint
+      - type
+      - expires
+      - key_created
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        armored_key:
+          type: string
+        bits:
+          type: integer
+        uid:
+          type: string
+        key_id:
+          type: string
+        fingerprint:
+          type: string
+        type:
+          type: string
+          enum:
+          - RSA
+          - ECC
+        expires:
+          type: string
+          format: date-time
+          x-nullable: true
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    resourceV4IndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - username
+      - uri
+      - description
+      - deleted
+      - created
+      - created_by
+      - modified_by
+      - resource_type_id
+      - expired
+      - folder_parent_id
+      - personal
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        username:
+          type: string
+        uri:
+          type: string
+        description:
+          type: string
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        resource_type_id:
+          type: string
+          format: uuid
+        expired:
+          type: string
+          format: date-time
+          x-nullable: true
+        folder_parent_id:
+          type: string
+          format: uuid
+          x-nullable: true
+        personal:
+          type: boolean
+        favorite:
+          $ref: '#/components/schemas/favorite'
+        modifier:
+          $ref: '#/components/schemas/userIndexAndView'
+        creator:
+          $ref: '#/components/schemas/userIndexAndView'
+        secrets:
+          type: array
+          items:
+            $ref: '#/components/schemas/secretIndex'
+        resource_type:
+          $ref: '#/components/schemas/resourceType'
+        permission:
+          $ref: '#/components/schemas/permissionIndexAndView'
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/permissionIndexAndView'
+    userUpdate:
+      type: object
+      properties:
+        role_id:
+          type: string
+          format: uuid
+        disabled:
+          type: boolean
+        profile:
+          type: object
+          properties:
+            first_name:
+              type: string
+            last_name:
+              type: string
+            avatar:
+              type: object
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                  description: Image file in binary format.
+    role:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          enum:
+          - admin
+          - guest
+          - user
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    permissionIndexAndView:
+      type: object
+      required:
+      - id
+      - aco
+      - aco_foreign_key
+      - aro
+      - aro_foreign_key
+      - type
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        aco:
+          type: string
+          enum:
+          - Resource
+          - Folder
+        aco_foreign_key:
+          type: string
+          format: uuid
+        aro:
+          type: string
+          enum:
+          - User
+          - Group
+        aro_foreign_key:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/permissionLevel'
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+          x-nullable: true
+        group:
+          $ref: '#/components/schemas/groupIndexAndView'
+          x-nullable: true
+    folderV5IndexAndView:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
+      - type: object
+        properties:
+          children_resources:
+            type: array
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/resourceV4IndexAndView'
+              - $ref: '#/components/schemas/resourceV5IndexAndView'
+          children_folders:
+            type: array
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/folderV4IndexAndView'
+              - $ref: '#/components/schemas/folderV5IndexAndView'
+    e2eeMetadataBasedCommon:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedId'
+      - type: object
+        required:
+        - created
+        - modified
+        - created_by
+        - modified_by
+        - personal
+        - folder_parent_id
+        properties:
+          created:
+            type: string
+            format: date-time
+          modified:
+            type: string
+            format: date-time
+          created_by:
+            type: string
+            format: uuid
+          modified_by:
+            type: string
+            format: uuid
+          personal:
+            type: boolean
+          folder_parent_id:
+            type: string
+            format: uuid
+            x-nullable: true
+          modifier:
+            $ref: '#/components/schemas/userIndexAndView'
+          creator:
+            $ref: '#/components/schemas/userIndexAndView'
+          permission:
+            $ref: '#/components/schemas/permissionIndexAndView'
+          permissions:
+            type: array
+            items:
+              $ref: '#/components/schemas/permissionIndexAndView'
+    resourceType:
+      type: object
+      required:
+      - id
+      - slug
+      - name
+      - description
+      - definition
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        slug:
+          type: string
+          description: '* `password-string` - The original passbolt resource type, where the secret is a non empty string.
+
+            * `password-and-description` - A resource with the password and the description encrypted.
+
+            * `totp` - A resource with standalone TOTP fields.
+
+            * `password-description-totp` - A resource with encrypted password, description and TOTP fields.
+
+            * `v5-default-with-totp` - The new default resource type with a TOTP introduced with v5.
+
+            * `v5-password-string (Deprecated)` - The original passbolt resource type, kept for backward compatibility reasons.
+
+            * `v5-totp-standalone` - The new standalone TOTP resource type introduced with v5.
+
+            * `v5-default` - The new default resource type introduced with v5.
+
+            '
+          enum:
+          - password-string
+          - password-and-description
+          - totp
+          - password-description-totp
+          - v5-default-with-totp
+          - v5-password-string (Deprecated)
+          - v5-totp-standalone
+          - v5-default
+        name:
+          type: string
+        description:
+          type: string
+        definition:
+          type: object
+          description: Schema for the expected data for this kind of resources.
+        deleted:
+          type: string
+          x-nullable: true
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+  parameters:
     containMissingMetadataKeyIds:
       name: contain[missing_metadata_key_ids]
       description: Add missing metadata key IDs to response body.
@@ -1103,21 +1066,6 @@ components:
         enum:
         - 1
         - 0
-    userId:
-      name: userId
-      description: ID for the user being manipulated. Can be set to `me` when viewing a user.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    filterSearch:
-      name: filter[search]
-      description: Filter using a keyword or a string.
-      in: query
-      required: false
-      schema:
-        type: string
     containGpgkey:
       name: contain[gpgkey]
       description: Add GPG key data to response body.
@@ -1139,6 +1087,86 @@ components:
           type: string
           format: uuid
           description: User UUID
+    filterIsAdmin:
+      name: filter[is-admin]
+      description: Only return admin users.
+      in: query
+      required: false
+      schema:
+        type: boolean
+    containGroupsUsers:
+      name: contain[groups_users]
+      description: Add group users to groups in response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containLastLoggedIn:
+      name: contain[last_logged_in]
+      description: Add last logged in to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    filterIsActive:
+      name: filter[is-active]
+      description: Only return active elements.
+      in: query
+      required: false
+      schema:
+        type: boolean
+    filterHasGroups:
+      name: filter[has-groups]
+      description: Only return elements filtered by groups.
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          format: uuid
+          description: Group UUID
+    containProfile:
+      name: contain[profile]
+      description: Add profile to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    filterSearch:
+      name: filter[search]
+      description: Filter using a keyword or a string.
+      in: query
+      required: false
+      schema:
+        type: string
+    userId:
+      name: userId
+      description: ID for the user being manipulated. Can be set to `me` when viewing a user.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    containRole:
+      name: contain[role]
+      description: Add role to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
   responses:
     users_update:
       description: Operation is successful
@@ -1213,6 +1241,110 @@ components:
                     created: '2012-07-04T13:39:25+00:00'
                     modified: '2012-07-04T13:39:25+00:00'
                   last_logged_in: null
+    users_index:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/headerWithPagination'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/userIndexAndView'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /users.json
+                  code: 200
+                  pagination:
+                    count: 1
+                    page: 1
+                    limit: null
+                body:
+                - id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  role_id: 639b50cf-66f9-4b23-8d55-d0609710cd9d
+                  active: true
+                  deleted: false
+                  created: '2024-07-03T12:52:06+00:00'
+                  modified: '2024-07-03T12:53:52+00:00'
+                  disabled: null
+                  groups_users:
+                  - id: 3b9b9757-1ccb-444a-a3cf-4090364fac4f
+                    group_id: 8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc
+                    user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                    is_admin: true
+                    created: '2024-07-22T16:01:07+00:00'
+                  profile:
+                    id: 920edf1e-5ce8-4da4-a8fc-21040fe78d09
+                    user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                    first_name: Ada
+                    last_name: Lovelace
+                    created: '2024-07-03T12:52:06+00:00'
+                    modified: '2024-07-03T12:52:06+00:00'
+                    avatar:
+                      url:
+                        medium: https://passbolt.local/img/avatar/user_medium.png
+                        small: https://passbolt.local/img/avatar/use.png
+                  gpgkey:
+                    id: ed4d9ea6-f354-4a74-ad09-4e1dd69041ec
+                    user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                    armored_key: '-----BEGIN PGP PUBLIC KEY BLOCK-----'
+                    bits: 3072
+                    uid: Ada Lovelace <ada@passbolt.com>
+                    key_id: D277E7A2E45418A0
+                    fingerprint: 850C6BDE59E9F126BFB4683BD277E7A2E45418A0
+                    type: RSA
+                    expires: null
+                    key_created: '2024-07-03T12:53:13+00:00'
+                    deleted: false
+                    created: '2024-07-03T12:53:52+00:00'
+                    modified: '2024-07-03T12:53:52+00:00'
+                  role:
+                    id: 639b50cf-66f9-4b23-8d55-d0609710cd9d
+                    name: admin
+                    description: Organization administrator
+                    created: '2012-07-04T13:39:25+00:00'
+                    modified: '2012-07-04T13:39:25+00:00'
+                  last_logged_in: null
+                  missing_metadata_key_ids: []
+    nullBody:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: 'null'
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: success
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 200
+                body: null
     authenticationRequired:
       description: Authentication required.
       content:
@@ -1312,187 +1444,6 @@ components:
                     modified: '2012-07-04T13:39:25+00:00'
                   last_logged_in: null
                   missing_metadata_key_ids: []
-    delete:
-      description: The deletion failed.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/userDelete'
-                description: Could also be a `string` if the issue is not related to resources or groups.
-          examples:
-            base:
-              value:
-                header:
-                  id: e21690a1-c494-4bdc-ad9d-84552a26bf68
-                  status: error
-                  servertime: 1740020945
-                  action: 4a1f3ff7-02ff-5120-b08b-e13f4369df3f
-                  message: The user cannot be deleted. The user should not be sole owner of shared content, transfer the ownership to other users.
-                  url: /users/f08012ca-4e2b-3f39-a35c-23d41c10fc20.json
-                  code: 400
-                body:
-                  errors:
-                    resources:
-                      sole_owner:
-                      - id: 8e3874ae-4b40-590b-968a-418f704b9d9a
-                        metadata: '-----BEGIN PGP MESSAGE-----'
-                        metadata_key_id: 9d9a6672-35d6-4d0f-a807-b90edf25c275
-                        metadata_key_type: shared_key
-                        expired: null
-                        deleted: false
-                        created: '2019-04-02T12:05:58+00:00'
-                        modified: '2019-04-03T12:05:58+00:00'
-                        created_by: f848277c-5398-58f8-a82a-72397af2d450
-                        modified_by: f848277c-5398-58f8-a82a-72397af2d450
-                        permissions:
-                        - id: 898ce1d0-601f-5194-976b-147a680dd472
-                          aco: Resource
-                          aco_foreign_key: 8e3874ae-4b40-590b-968a-418f704b9d9a
-                          aro: User
-                          aro_foreign_key: 640ebc06-5ec1-5322-a1ae-6120ed2f3a74
-                          type: 1
-                          created: '2019-04-04T12:06:00+00:00'
-                          modified: '2019-04-04T12:06:00+00:00'
-                          group: null
-                          user:
-                            id: 640ebc06-5ec1-5322-a1ae-6120ed2f3a74
-                            role_id: a58de6d3-f52c-5080-b79b-a601a647ac85
-                            username: carol@passbolt.com
-                            active: true
-                            deleted: false
-                            created: '2019-04-02T12:05:44+00:00'
-                            modified: '2019-04-03T12:05:44+00:00'
-                            profile:
-                              id: 48bcd9ac-a520-53e0-b3a4-9da7e57b91aa
-                              user_id: 640ebc06-5ec1-5322-a1ae-6120ed2f3a74
-                              first_name: Carol
-                              last_name: Shaw
-                              created: '2019-04-04T12:05:45+00:00'
-                              modified: '2019-04-04T12:05:45+00:00'
-                              avatar:
-                                id: 8ef95b32-e2a3-4b58-827c-dd67e68cfb48
-                                profile_id: 920edf1e-5ce8-4da4-a8fc-21040fe78d09
-                                created: '2024-08-06T14:58:09+00:00'
-                                modified: '2024-08-06T14:58:09+00:00'
-                                url:
-                                  medium: https://passbolt.local/avatars/view/8ef95b32-e2a3-4b58-827c-dd67e68cfb48/medium.jpg
-                                  small: https://passbolt.local/avatars/view/8ef95b32-e2a3-4b58-827c-dd67e68cfb48/small.jpg
-                            last_logged_in: null
-    users_add:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: array
-                items:
-                  $ref: '#/components/schemas/userIndexAndView'
-          examples:
-            base:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The user was successfully added. This user now need to complete the setup.
-                  url: /users.json
-                  code: 200
-                body:
-                  id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
-                  role_id: 639b50cf-66f9-4b23-8d55-d0609710cd9d
-                  active: false
-                  deleted: false
-                  created: '2024-07-03T12:52:06+00:00'
-                  modified: '2024-07-03T12:53:52+00:00'
-                  disabled: null
-                  groups_users: []
-                  profile:
-                    id: 920edf1e-5ce8-4da4-a8fc-21040fe78d09
-                    user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
-                    first_name: Ada
-                    last_name: Lovelace
-                    created: '2024-07-03T12:52:06+00:00'
-                    modified: '2024-07-03T12:52:06+00:00'
-                    avatar:
-                      url:
-                        medium: https://passbolt.local/img/avatar/user_medium.png
-                        small: https://passbolt.local/img/avatar/use.png
-                  gpgkey: null
-                  role:
-                    id: c2f96fb1-611d-466d-80fb-e82beba5ed87
-                    name: user
-                    description: Logged in user
-                    created: '2012-07-04T13:39:25+00:00'
-                    modified: '2012-07-04T13:39:25+00:00'
-                  last_logged_in: null
-    accessRestrictedToAdministrators:
-      description: Access restricted
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Access restricted to administrators.
-                  url: <API ENDPOINT URL>
-                  code: 403
-                body: ''
-    nullBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: 'null'
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: null
     notFound:
       description: Not found
       content:
@@ -1519,84 +1470,6 @@ components:
                   url: <API ENDPOINT URL>
                   code: 404
                 body: ''
-    users_index:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/headerWithPagination'
-              body:
-                type: array
-                items:
-                  $ref: '#/components/schemas/userIndexAndView'
-          examples:
-            base:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The operation was successful.
-                  url: /users.json
-                  code: 200
-                  pagination:
-                    count: 1
-                    page: 1
-                    limit: null
-                body:
-                - id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
-                  role_id: 639b50cf-66f9-4b23-8d55-d0609710cd9d
-                  active: true
-                  deleted: false
-                  created: '2024-07-03T12:52:06+00:00'
-                  modified: '2024-07-03T12:53:52+00:00'
-                  disabled: null
-                  groups_users:
-                  - id: 3b9b9757-1ccb-444a-a3cf-4090364fac4f
-                    group_id: 8a3c5c4e-e931-4e6b-854a-9b2e9afcd3bc
-                    user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
-                    is_admin: true
-                    created: '2024-07-22T16:01:07+00:00'
-                  profile:
-                    id: 920edf1e-5ce8-4da4-a8fc-21040fe78d09
-                    user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
-                    first_name: Ada
-                    last_name: Lovelace
-                    created: '2024-07-03T12:52:06+00:00'
-                    modified: '2024-07-03T12:52:06+00:00'
-                    avatar:
-                      url:
-                        medium: https://passbolt.local/img/avatar/user_medium.png
-                        small: https://passbolt.local/img/avatar/use.png
-                  gpgkey:
-                    id: ed4d9ea6-f354-4a74-ad09-4e1dd69041ec
-                    user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
-                    armored_key: '-----BEGIN PGP PUBLIC KEY BLOCK-----'
-                    bits: 3072
-                    uid: Ada Lovelace <ada@passbolt.com>
-                    key_id: D277E7A2E45418A0
-                    fingerprint: 850C6BDE59E9F126BFB4683BD277E7A2E45418A0
-                    type: RSA
-                    expires: null
-                    key_created: '2024-07-03T12:53:13+00:00'
-                    deleted: false
-                    created: '2024-07-03T12:53:52+00:00'
-                    modified: '2024-07-03T12:53:52+00:00'
-                  role:
-                    id: 639b50cf-66f9-4b23-8d55-d0609710cd9d
-                    name: admin
-                    description: Organization administrator
-                    created: '2012-07-04T13:39:25+00:00'
-                    modified: '2012-07-04T13:39:25+00:00'
-                  last_logged_in: null
-                  missing_metadata_key_ids: []
     badRequest:
       description: Bad request
       content:
@@ -1736,34 +1609,161 @@ components:
                       modified: '2019-04-08T12:44:44+00:00'
                       created_by: d57c10f5-639d-5160-9c81-8a0c6c4ec856
                       modified_by: d57c10f5-639d-5160-9c81-8a0c6c4ec856
-  requestBodies:
-    userUpdate:
-      description: The user you want to update
-      required: true
+    accessRestrictedToAdministrators:
+      description: Access restricted
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/userUpdate'
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
           examples:
-            base:
+            example:
               value:
-                profile:
-                  first_name: Freddie
-                  last_name: Mercury
-    userAdd:
-      description: The user you want to create
-      required: true
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Access restricted to administrators.
+                  url: <API ENDPOINT URL>
+                  code: 403
+                body: ''
+    users_add:
+      description: Operation is successful
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/userAdd'
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/userIndexAndView'
           examples:
             base:
               value:
-                username: ada@passbolt.com
-                profile:
-                  first_name: Ada
-                  last_name: Lovelace
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The user was successfully added. This user now need to complete the setup.
+                  url: /users.json
+                  code: 200
+                body:
+                  id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                  role_id: 639b50cf-66f9-4b23-8d55-d0609710cd9d
+                  active: false
+                  deleted: false
+                  created: '2024-07-03T12:52:06+00:00'
+                  modified: '2024-07-03T12:53:52+00:00'
+                  disabled: null
+                  groups_users: []
+                  profile:
+                    id: 920edf1e-5ce8-4da4-a8fc-21040fe78d09
+                    user_id: 8bb80df5-700c-48ce-b568-85a60fc3c8f2
+                    first_name: Ada
+                    last_name: Lovelace
+                    created: '2024-07-03T12:52:06+00:00'
+                    modified: '2024-07-03T12:52:06+00:00'
+                    avatar:
+                      url:
+                        medium: https://passbolt.local/img/avatar/user_medium.png
+                        small: https://passbolt.local/img/avatar/use.png
+                  gpgkey: null
+                  role:
+                    id: c2f96fb1-611d-466d-80fb-e82beba5ed87
+                    name: user
+                    description: Logged in user
+                    created: '2012-07-04T13:39:25+00:00'
+                    modified: '2012-07-04T13:39:25+00:00'
+                  last_logged_in: null
+    delete:
+      description: The deletion failed.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/userDelete'
+                description: Could also be a `string` if the issue is not related to resources or groups.
+          examples:
+            base:
+              value:
+                header:
+                  id: e21690a1-c494-4bdc-ad9d-84552a26bf68
+                  status: error
+                  servertime: 1740020945
+                  action: 4a1f3ff7-02ff-5120-b08b-e13f4369df3f
+                  message: The user cannot be deleted. The user should not be sole owner of shared content, transfer the ownership to other users.
+                  url: /users/f08012ca-4e2b-3f39-a35c-23d41c10fc20.json
+                  code: 400
+                body:
+                  errors:
+                    resources:
+                      sole_owner:
+                      - id: 8e3874ae-4b40-590b-968a-418f704b9d9a
+                        metadata: '-----BEGIN PGP MESSAGE-----'
+                        metadata_key_id: 9d9a6672-35d6-4d0f-a807-b90edf25c275
+                        metadata_key_type: shared_key
+                        expired: null
+                        deleted: false
+                        created: '2019-04-02T12:05:58+00:00'
+                        modified: '2019-04-03T12:05:58+00:00'
+                        created_by: f848277c-5398-58f8-a82a-72397af2d450
+                        modified_by: f848277c-5398-58f8-a82a-72397af2d450
+                        permissions:
+                        - id: 898ce1d0-601f-5194-976b-147a680dd472
+                          aco: Resource
+                          aco_foreign_key: 8e3874ae-4b40-590b-968a-418f704b9d9a
+                          aro: User
+                          aro_foreign_key: 640ebc06-5ec1-5322-a1ae-6120ed2f3a74
+                          type: 1
+                          created: '2019-04-04T12:06:00+00:00'
+                          modified: '2019-04-04T12:06:00+00:00'
+                          group: null
+                          user:
+                            id: 640ebc06-5ec1-5322-a1ae-6120ed2f3a74
+                            role_id: a58de6d3-f52c-5080-b79b-a601a647ac85
+                            username: carol@passbolt.com
+                            active: true
+                            deleted: false
+                            created: '2019-04-02T12:05:44+00:00'
+                            modified: '2019-04-03T12:05:44+00:00'
+                            profile:
+                              id: 48bcd9ac-a520-53e0-b3a4-9da7e57b91aa
+                              user_id: 640ebc06-5ec1-5322-a1ae-6120ed2f3a74
+                              first_name: Carol
+                              last_name: Shaw
+                              created: '2019-04-04T12:05:45+00:00'
+                              modified: '2019-04-04T12:05:45+00:00'
+                              avatar:
+                                id: 8ef95b32-e2a3-4b58-827c-dd67e68cfb48
+                                profile_id: 920edf1e-5ce8-4da4-a8fc-21040fe78d09
+                                created: '2024-08-06T14:58:09+00:00'
+                                modified: '2024-08-06T14:58:09+00:00'
+                                url:
+                                  medium: https://passbolt.local/avatars/view/8ef95b32-e2a3-4b58-827c-dd67e68cfb48/medium.jpg
+                                  small: https://passbolt.local/avatars/view/8ef95b32-e2a3-4b58-827c-dd67e68cfb48/small.jpg
+                            last_logged_in: null
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

@@ -89,116 +89,6 @@ paths:
         '403':
           $ref: '#/components/responses/error'
 components:
-  schemas:
-    invalidOtp:
-      anyOf:
-      - type: object
-        required:
-        - totp
-        properties:
-          totp:
-            type: object
-            properties:
-              numeric:
-                type: string
-              minLength:
-                type: string
-              isValidOtp:
-                type: string
-      - type: object
-        required:
-        - hotp
-        properties:
-          hotp:
-            type: object
-            properties:
-              isValidModhex:
-                type: string
-              isValidHotp:
-                type: string
-    error:
-      type: object
-      required:
-      - mfa_providers
-      properties:
-        mfa_providers:
-          type: array
-          items:
-            type: string
-            enum:
-            - totp
-            - yubikey
-    header:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
-    mfaAttempt:
-      anyOf:
-      - type: object
-        required:
-        - totp
-        properties:
-          totp:
-            type: string
-            description: One-time code for TOTP-based MFA.
-          remember:
-            type: integer
-            enum:
-            - 0
-            - 1
-      - type: object
-        required:
-        - hotp
-        properties:
-          hotp:
-            type: string
-            description: One-time code for Yubikey-based MFA.
-          remember:
-            type: integer
-            enum:
-            - 0
-            - 1
-  parameters:
-    mfaProviderName:
-      name: mfaProviderName
-      description: Name for the MFA provider.
-      in: path
-      schema:
-        type: string
-        enum:
-        - totp
-        - yubikey
   responses:
     invalidOtp:
       description: Invalid OTP code.
@@ -228,6 +118,32 @@ components:
                 body:
                   totp:
                     isValidOtp: This OTP is not valid.
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
     nullBody:
       description: Operation is successful.
       content:
@@ -308,32 +224,106 @@ components:
                 body:
                   mfa_providers:
                   - totp
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
+  schemas:
+    invalidOtp:
+      anyOf:
+      - type: object
+        required:
+        - totp
+        properties:
+          totp:
             type: object
-            required:
-            - header
-            - body
             properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
+              numeric:
                 type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
+              minLength:
+                type: string
+              isValidOtp:
+                type: string
+      - type: object
+        required:
+        - hotp
+        properties:
+          hotp:
+            type: object
+            properties:
+              isValidModhex:
+                type: string
+              isValidHotp:
+                type: string
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+    error:
+      type: object
+      required:
+      - mfa_providers
+      properties:
+        mfa_providers:
+          type: array
+          items:
+            type: string
+            enum:
+            - totp
+            - yubikey
+    mfaAttempt:
+      anyOf:
+      - type: object
+        required:
+        - totp
+        properties:
+          totp:
+            type: string
+            description: One-time code for TOTP-based MFA.
+          remember:
+            type: integer
+            enum:
+            - 0
+            - 1
+      - type: object
+        required:
+        - hotp
+        properties:
+          hotp:
+            type: string
+            description: One-time code for Yubikey-based MFA.
+          remember:
+            type: integer
+            enum:
+            - 0
+            - 1
   requestBodies:
     attempt:
       description: The code for the MFA attempt.
@@ -347,6 +337,16 @@ components:
               summary: Attempt MFA with TOTP.
               value:
                 totp: '635742'
+  parameters:
+    mfaProviderName:
+      name: mfaProviderName
+      description: Name for the MFA provider.
+      in: path
+      schema:
+        type: string
+        enum:
+        - totp
+        - yubikey
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

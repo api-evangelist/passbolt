@@ -213,44 +213,18 @@ paths:
         $ref: '#/components/requestBodies/upgradeMetadataTags'
 components:
   schemas:
-    e2eeMetadataBased:
-      type: object
-      required:
-      - metadata
-      - metadata_key_id
-      - metadata_key_type
-      properties:
-        metadata:
-          type: string
-        metadata_key_id:
-          type: string
-          format: uuid
-        metadata_key_type:
-          type: string
-          enum:
-          - user_key
-          - shared_key
-    permissionLevel:
-      description: '* `1` - Read
-
-        * `7` - Update
-
-        * `15` - Owner
-
-        '
-      type: integer
-      enum:
-      - 1
-      - 7
-      - 15
-    e2eeMetadataBasedId:
+    e2eeMetadataBasedIdModifiedModifiedBy:
       allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - $ref: '#/components/schemas/e2eeMetadataBasedId'
       - type: object
         required:
-        - id
+        - modified
+        - modified_by
         properties:
-          id:
+          modified:
+            type: string
+            format: date-time
+          modified_by:
             type: string
             format: uuid
     headerWithPagination:
@@ -303,41 +277,6 @@ components:
             limit:
               type: integer
               x-nullable: true
-    header:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
     groupIndexAndView:
       type: object
       required:
@@ -376,56 +315,6 @@ components:
             $ref: '#/components/schemas/groupsUsersIndexAndView'
         user_count:
           type: integer
-    gpgkey:
-      type: object
-      required:
-      - id
-      - user_id
-      - armored_key
-      - bits
-      - uid
-      - key_id
-      - fingerprint
-      - type
-      - expires
-      - key_created
-      - deleted
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        armored_key:
-          type: string
-        bits:
-          type: integer
-        uid:
-          type: string
-        key_id:
-          type: string
-        fingerprint:
-          type: string
-        type:
-          type: string
-          enum:
-          - RSA
-          - ECC
-        expires:
-          type: string
-          format: date-time
-          x-nullable: true
-        deleted:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
     tagV5:
       allOf:
       - $ref: '#/components/schemas/e2eeMetadataBasedId'
@@ -435,416 +324,6 @@ components:
         properties:
           is_shared:
             type: boolean
-    permissionIndexAndView:
-      type: object
-      required:
-      - id
-      - aco
-      - aco_foreign_key
-      - aro
-      - aro_foreign_key
-      - type
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        aco:
-          type: string
-          enum:
-          - Resource
-          - Folder
-        aco_foreign_key:
-          type: string
-          format: uuid
-        aro:
-          type: string
-          enum:
-          - User
-          - Group
-        aro_foreign_key:
-          type: string
-          format: uuid
-        type:
-          $ref: '#/components/schemas/permissionLevel'
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-        user:
-          $ref: '#/components/schemas/userIndexAndView'
-          x-nullable: true
-        group:
-          $ref: '#/components/schemas/groupIndexAndView'
-          x-nullable: true
-    folderV5IndexAndView:
-      allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
-      - type: object
-        properties:
-          children_resources:
-            type: array
-            items:
-              anyOf:
-              - $ref: '#/components/schemas/resourceV4IndexAndView'
-              - $ref: '#/components/schemas/resourceV5IndexAndView'
-          children_folders:
-            type: array
-            items:
-              anyOf:
-              - $ref: '#/components/schemas/folderV4IndexAndView'
-              - $ref: '#/components/schemas/folderV5IndexAndView'
-    tagLegacy:
-      type: object
-      required:
-      - id
-      - slug
-      - is_shared
-      properties:
-        id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-          x-nullable: true
-        slug:
-          type: string
-        is_shared:
-          type: boolean
-    secretIndex:
-      type: object
-      required:
-      - id
-      - user_id
-      - resource_id
-      - data
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        resource_id:
-          type: string
-          format: uuid
-        data:
-          type: string
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-    resourceV4IndexAndView:
-      type: object
-      required:
-      - id
-      - name
-      - username
-      - uri
-      - description
-      - deleted
-      - created
-      - created_by
-      - modified_by
-      - resource_type_id
-      - expired
-      - folder_parent_id
-      - personal
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        username:
-          type: string
-        uri:
-          type: string
-        description:
-          type: string
-        deleted:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        created_by:
-          type: string
-          format: uuid
-        modified_by:
-          type: string
-          format: uuid
-        resource_type_id:
-          type: string
-          format: uuid
-        expired:
-          type: string
-          format: date-time
-          x-nullable: true
-        folder_parent_id:
-          type: string
-          format: uuid
-          x-nullable: true
-        personal:
-          type: boolean
-        favorite:
-          $ref: '#/components/schemas/favorite'
-        modifier:
-          $ref: '#/components/schemas/userIndexAndView'
-        creator:
-          $ref: '#/components/schemas/userIndexAndView'
-        secrets:
-          type: array
-          items:
-            $ref: '#/components/schemas/secretIndex'
-        resource_type:
-          $ref: '#/components/schemas/resourceType'
-        permission:
-          $ref: '#/components/schemas/permissionIndexAndView'
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/permissionIndexAndView'
-    resourceV5IndexAndView:
-      allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
-      - type: object
-        required:
-        - resource_type_id
-        - expired
-        properties:
-          resource_type_id:
-            type: string
-            format: uuid
-          expired:
-            type: string
-            format: date-time
-            x-nullable: true
-          favorite:
-            $ref: '#/components/schemas/favorite'
-          secrets:
-            type: array
-            items:
-              type: string
-          resource_type:
-            $ref: '#/components/schemas/resourceType'
-    favorite:
-      type: object
-      required:
-      - id
-      - user_id
-      - foreign_key
-      - foreign_model
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        foreign_key:
-          type: string
-          format: uuid
-        foreign_model:
-          type: string
-          enum:
-          - Resource
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-    resourceType:
-      type: object
-      required:
-      - id
-      - slug
-      - name
-      - description
-      - definition
-      - deleted
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        slug:
-          type: string
-          description: '* `password-string` - The original passbolt resource type, where the secret is a non empty string.
-
-            * `password-and-description` - A resource with the password and the description encrypted.
-
-            * `totp` - A resource with standalone TOTP fields.
-
-            * `password-description-totp` - A resource with encrypted password, description and TOTP fields.
-
-            * `v5-default-with-totp` - The new default resource type with a TOTP introduced with v5.
-
-            * `v5-password-string (Deprecated)` - The original passbolt resource type, kept for backward compatibility reasons.
-
-            * `v5-totp-standalone` - The new standalone TOTP resource type introduced with v5.
-
-            * `v5-default` - The new default resource type introduced with v5.
-
-            '
-          enum:
-          - password-string
-          - password-and-description
-          - totp
-          - password-description-totp
-          - v5-default-with-totp
-          - v5-password-string (Deprecated)
-          - v5-totp-standalone
-          - v5-default
-        name:
-          type: string
-        description:
-          type: string
-        definition:
-          type: object
-          description: Schema for the expected data for this kind of resources.
-        deleted:
-          type: string
-          x-nullable: true
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-    role:
-      type: object
-      required:
-      - id
-      - name
-      - description
-      - created
-      - modified
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-          enum:
-          - admin
-          - guest
-          - user
-        description:
-          type: string
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-    folderV4IndexAndView:
-      type: object
-      required:
-      - id
-      - name
-      - created
-      - modified
-      - created_by
-      - modified_by
-      - folder_parent_id
-      - personal
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        created:
-          type: string
-          format: date-time
-        modified:
-          type: string
-          format: date-time
-        created_by:
-          type: string
-          format: uuid
-        modified_by:
-          type: string
-          format: uuid
-        folder_parent_id:
-          type: string
-          format: uuid
-          x-nullable: true
-        personal:
-          type: boolean
-        modifier:
-          $ref: '#/components/schemas/userIndexAndView'
-        creator:
-          $ref: '#/components/schemas/userIndexAndView'
-        permission:
-          $ref: '#/components/schemas/permissionIndexAndView'
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/permissionIndexAndView'
-        children_resources:
-          type: array
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/resourceV4IndexAndView'
-            - $ref: '#/components/schemas/resourceV5IndexAndView'
-        children_folders:
-          type: array
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/folderV4IndexAndView'
-            - $ref: '#/components/schemas/folderV5IndexAndView'
-    e2eeMetadataBasedIdModifiedModifiedBy:
-      allOf:
-      - $ref: '#/components/schemas/e2eeMetadataBasedId'
-      - type: object
-        required:
-        - modified
-        - modified_by
-        properties:
-          modified:
-            type: string
-            format: date-time
-          modified_by:
-            type: string
-            format: uuid
-    groupsUsersIndexAndView:
-      type: object
-      required:
-      - id
-      - group_id
-      - user_id
-      - is_admin
-      - created
-      properties:
-        id:
-          type: string
-          format: uuid
-        group_id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        is_admin:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        user:
-          $ref: '#/components/schemas/userIndexAndView'
     userIndexAndView:
       type: object
       required:
@@ -953,6 +432,468 @@ components:
           type: string
           format: date-time
           x-nullable: true
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+    folderV4IndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - created
+      - modified
+      - created_by
+      - modified_by
+      - folder_parent_id
+      - personal
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        folder_parent_id:
+          type: string
+          format: uuid
+          x-nullable: true
+        personal:
+          type: boolean
+        modifier:
+          $ref: '#/components/schemas/userIndexAndView'
+        creator:
+          $ref: '#/components/schemas/userIndexAndView'
+        permission:
+          $ref: '#/components/schemas/permissionIndexAndView'
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/permissionIndexAndView'
+        children_resources:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/resourceV4IndexAndView'
+            - $ref: '#/components/schemas/resourceV5IndexAndView'
+        children_folders:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/folderV4IndexAndView'
+            - $ref: '#/components/schemas/folderV5IndexAndView'
+    permissionLevel:
+      description: '* `1` - Read
+
+        * `7` - Update
+
+        * `15` - Owner
+
+        '
+      type: integer
+      enum:
+      - 1
+      - 7
+      - 15
+    e2eeMetadataBasedId:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBased'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: uuid
+    secretIndex:
+      type: object
+      required:
+      - id
+      - user_id
+      - resource_id
+      - data
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        resource_id:
+          type: string
+          format: uuid
+        data:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    groupsUsersIndexAndView:
+      type: object
+      required:
+      - id
+      - group_id
+      - user_id
+      - is_admin
+      - created
+      properties:
+        id:
+          type: string
+          format: uuid
+        group_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        is_admin:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+    tagLegacy:
+      type: object
+      required:
+      - id
+      - slug
+      - is_shared
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+          x-nullable: true
+        slug:
+          type: string
+        is_shared:
+          type: boolean
+    e2eeMetadataBased:
+      type: object
+      required:
+      - metadata
+      - metadata_key_id
+      - metadata_key_type
+      properties:
+        metadata:
+          type: string
+        metadata_key_id:
+          type: string
+          format: uuid
+        metadata_key_type:
+          type: string
+          enum:
+          - user_key
+          - shared_key
+    favorite:
+      type: object
+      required:
+      - id
+      - user_id
+      - foreign_key
+      - foreign_model
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        foreign_key:
+          type: string
+          format: uuid
+        foreign_model:
+          type: string
+          enum:
+          - Resource
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    resourceV5IndexAndView:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
+      - type: object
+        required:
+        - resource_type_id
+        - expired
+        properties:
+          resource_type_id:
+            type: string
+            format: uuid
+          expired:
+            type: string
+            format: date-time
+            x-nullable: true
+          favorite:
+            $ref: '#/components/schemas/favorite'
+          secrets:
+            type: array
+            items:
+              type: string
+          resource_type:
+            $ref: '#/components/schemas/resourceType'
+    gpgkey:
+      type: object
+      required:
+      - id
+      - user_id
+      - armored_key
+      - bits
+      - uid
+      - key_id
+      - fingerprint
+      - type
+      - expires
+      - key_created
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        armored_key:
+          type: string
+        bits:
+          type: integer
+        uid:
+          type: string
+        key_id:
+          type: string
+        fingerprint:
+          type: string
+        type:
+          type: string
+          enum:
+          - RSA
+          - ECC
+        expires:
+          type: string
+          format: date-time
+          x-nullable: true
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    resourceV4IndexAndView:
+      type: object
+      required:
+      - id
+      - name
+      - username
+      - uri
+      - description
+      - deleted
+      - created
+      - created_by
+      - modified_by
+      - resource_type_id
+      - expired
+      - folder_parent_id
+      - personal
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        username:
+          type: string
+        uri:
+          type: string
+        description:
+          type: string
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        resource_type_id:
+          type: string
+          format: uuid
+        expired:
+          type: string
+          format: date-time
+          x-nullable: true
+        folder_parent_id:
+          type: string
+          format: uuid
+          x-nullable: true
+        personal:
+          type: boolean
+        favorite:
+          $ref: '#/components/schemas/favorite'
+        modifier:
+          $ref: '#/components/schemas/userIndexAndView'
+        creator:
+          $ref: '#/components/schemas/userIndexAndView'
+        secrets:
+          type: array
+          items:
+            $ref: '#/components/schemas/secretIndex'
+        resource_type:
+          $ref: '#/components/schemas/resourceType'
+        permission:
+          $ref: '#/components/schemas/permissionIndexAndView'
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/permissionIndexAndView'
+    role:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          enum:
+          - admin
+          - guest
+          - user
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    permissionIndexAndView:
+      type: object
+      required:
+      - id
+      - aco
+      - aco_foreign_key
+      - aro
+      - aro_foreign_key
+      - type
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        aco:
+          type: string
+          enum:
+          - Resource
+          - Folder
+        aco_foreign_key:
+          type: string
+          format: uuid
+        aro:
+          type: string
+          enum:
+          - User
+          - Group
+        aro_foreign_key:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/permissionLevel'
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
+          x-nullable: true
+        group:
+          $ref: '#/components/schemas/groupIndexAndView'
+          x-nullable: true
+    folderV5IndexAndView:
+      allOf:
+      - $ref: '#/components/schemas/e2eeMetadataBasedCommon'
+      - type: object
+        properties:
+          children_resources:
+            type: array
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/resourceV4IndexAndView'
+              - $ref: '#/components/schemas/resourceV5IndexAndView'
+          children_folders:
+            type: array
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/folderV4IndexAndView'
+              - $ref: '#/components/schemas/folderV5IndexAndView'
     e2eeMetadataBasedCommon:
       allOf:
       - $ref: '#/components/schemas/e2eeMetadataBasedId'
@@ -993,283 +934,65 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/permissionIndexAndView'
-  responses:
-    entityWasUpdated:
-      description: Entity was updated
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: Entity <MODEL> was updated.
-                  url: <API ENDPOINT URL>
-                  code: 409
-                body: ''
-    dateDoesntMatch:
-      description: Not found
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The provided modified date does not match.
-                  url: <API ENDPOINT URL>
-                  code: 409
-                body: ''
-    authenticationRequired:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
-    upgradeMetadataFolders:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/headerWithPagination'
-              body:
-                type: array
-                items:
-                  $ref: '#/components/schemas/folderV4IndexAndView'
-          examples:
-            base:
-              value:
-                header:
-                  id: 2b6024fb-2915-47e6-84e6-8988217b14e7
-                  status: success
-                  servertime: 1740046035
-                  action: 8d061841-cef0-509a-8ee3-de91c7390d99
-                  message: The operation was successful.
-                  url: /metadata/upgrade/folders.json
-                  code: 200
-                  pagination:
-                    count: 2
-                    page: 1
-                    limit: null
-                body:
-                - personal: true
-                  id: 27605bac-8aa8-4fe4-a80b-486d8b76c748
-                  name: folder v4 format
-                  created: '2025-02-19T13:50:53+00:00'
-                  modified: '2025-02-19T14:36:51+00:00'
-                  created_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
-                  modified_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
-                  folder_parent_id: null
-    accessRestrictedToAdministrators:
-      description: Access restricted
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Access restricted to administrators.
-                  url: <API ENDPOINT URL>
-                  code: 403
-                body: ''
-    notFound:
-      description: Not found
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The <MODEL> does not exist.
-                  url: <API ENDPOINT URL>
-                  code: 404
-                body: ''
-    upgradeMetadataResources:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/headerWithPagination'
-              body:
-                type: array
-                items:
-                  $ref: '#/components/schemas/resourceV4IndexAndView'
-          examples:
-            base:
-              value:
-                header:
-                  id: 2b6024fb-2915-47e6-84e6-8988217b14e7
-                  status: success
-                  servertime: 1740046035
-                  action: 8d061841-cef0-509a-8ee3-de91c7390d99
-                  message: The operation was successful.
-                  url: /metadata/upgrade/resources.json
-                  code: 200
-                  pagination:
-                    count: 2
-                    page: 1
-                    limit: 20
-                body:
-                - id: 97f5415f-2e09-4171-a99e-1908e876662a
-                  name: password v4 format
-                  username: anakin
-                  uri: https://passbolt.com
-                  description: null
-                  deleted: false
-                  expired: null
-                  created: '2025-02-19T10:34:07+00:00'
-                  modified: '2025-02-19T10:34:07+00:00'
-                  created_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
-                  modified_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
-                  resource_type_id: a28a04cd-6f53-518a-967c-9963bf9cec51
-    upgradeMetadataTags:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/headerWithPagination'
-              body:
-                type: array
-                items:
-                  $ref: '#/components/schemas/tagLegacy'
-          examples:
-            base:
-              value:
-                header:
-                  id: 2b6024fb-2915-47e6-84e6-8988217b14e7
-                  status: success
-                  servertime: 1740046035
-                  action: 8d061841-cef0-509a-8ee3-de91c7390d99
-                  message: The operation was successful.
-                  url: /metadata/upgrade/resources.json
-                  code: 200
-                  pagination:
-                    count: 1
-                    page: 1
-                    limit: 20
-                body:
-                - id: 97f5415f-2e09-4171-a99e-1908e876662b
-                  user_id: null
-                  slug: important tag in v4 format
-                  is_shared: true
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
+    resourceType:
+      type: object
+      required:
+      - id
+      - slug
+      - name
+      - description
+      - definition
+      - deleted
+      - created
+      - modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        slug:
+          type: string
+          description: '* `password-string` - The original passbolt resource type, where the secret is a non empty string.
+
+            * `password-and-description` - A resource with the password and the description encrypted.
+
+            * `totp` - A resource with standalone TOTP fields.
+
+            * `password-description-totp` - A resource with encrypted password, description and TOTP fields.
+
+            * `v5-default-with-totp` - The new default resource type with a TOTP introduced with v5.
+
+            * `v5-password-string (Deprecated)` - The original passbolt resource type, kept for backward compatibility reasons.
+
+            * `v5-totp-standalone` - The new standalone TOTP resource type introduced with v5.
+
+            * `v5-default` - The new default resource type introduced with v5.
+
+            '
+          enum:
+          - password-string
+          - password-and-description
+          - totp
+          - password-description-totp
+          - v5-default-with-totp
+          - v5-password-string (Deprecated)
+          - v5-totp-standalone
+          - v5-default
+        name:
+          type: string
+        description:
+          type: string
+        definition:
+          type: object
+          description: Schema for the expected data for this kind of resources.
+        deleted:
+          type: string
+          x-nullable: true
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
   requestBodies:
     upgradeMetadataTags:
       description: The tags you want to upgrade the metadata for to v5 format
@@ -1323,14 +1046,284 @@ components:
                 metadata: '-----BEGIN PGP MESSAGE-----'
                 modified: '2025-02-18T15:52:17+00:00'
                 modified_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
+  responses:
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    entityWasUpdated:
+      description: Entity was updated
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: Entity <MODEL> was updated.
+                  url: <API ENDPOINT URL>
+                  code: 409
+                body: ''
+    upgradeMetadataFolders:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/headerWithPagination'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/folderV4IndexAndView'
+          examples:
+            base:
+              value:
+                header:
+                  id: 2b6024fb-2915-47e6-84e6-8988217b14e7
+                  status: success
+                  servertime: 1740046035
+                  action: 8d061841-cef0-509a-8ee3-de91c7390d99
+                  message: The operation was successful.
+                  url: /metadata/upgrade/folders.json
+                  code: 200
+                  pagination:
+                    count: 2
+                    page: 1
+                    limit: null
+                body:
+                - personal: true
+                  id: 27605bac-8aa8-4fe4-a80b-486d8b76c748
+                  name: folder v4 format
+                  created: '2025-02-19T13:50:53+00:00'
+                  modified: '2025-02-19T14:36:51+00:00'
+                  created_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
+                  modified_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
+                  folder_parent_id: null
+    upgradeMetadataResources:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/headerWithPagination'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/resourceV4IndexAndView'
+          examples:
+            base:
+              value:
+                header:
+                  id: 2b6024fb-2915-47e6-84e6-8988217b14e7
+                  status: success
+                  servertime: 1740046035
+                  action: 8d061841-cef0-509a-8ee3-de91c7390d99
+                  message: The operation was successful.
+                  url: /metadata/upgrade/resources.json
+                  code: 200
+                  pagination:
+                    count: 2
+                    page: 1
+                    limit: 20
+                body:
+                - id: 97f5415f-2e09-4171-a99e-1908e876662a
+                  name: password v4 format
+                  username: anakin
+                  uri: https://passbolt.com
+                  description: null
+                  deleted: false
+                  expired: null
+                  created: '2025-02-19T10:34:07+00:00'
+                  modified: '2025-02-19T10:34:07+00:00'
+                  created_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
+                  modified_by: ae48ed02-54ea-4be4-9ae8-229bf8c04739
+                  resource_type_id: a28a04cd-6f53-518a-967c-9963bf9cec51
+    notFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The <MODEL> does not exist.
+                  url: <API ENDPOINT URL>
+                  code: 404
+                body: ''
+    dateDoesntMatch:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The provided modified date does not match.
+                  url: <API ENDPOINT URL>
+                  code: 409
+                body: ''
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+    upgradeMetadataTags:
+      description: Operation is successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/headerWithPagination'
+              body:
+                type: array
+                items:
+                  $ref: '#/components/schemas/tagLegacy'
+          examples:
+            base:
+              value:
+                header:
+                  id: 2b6024fb-2915-47e6-84e6-8988217b14e7
+                  status: success
+                  servertime: 1740046035
+                  action: 8d061841-cef0-509a-8ee3-de91c7390d99
+                  message: The operation was successful.
+                  url: /metadata/upgrade/resources.json
+                  code: 200
+                  pagination:
+                    count: 1
+                    page: 1
+                    limit: 20
+                body:
+                - id: 97f5415f-2e09-4171-a99e-1908e876662b
+                  user_id: null
+                  slug: important tag in v4 format
+                  is_shared: true
+    accessRestrictedToAdministrators:
+      description: Access restricted
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Access restricted to administrators.
+                  url: <API ENDPOINT URL>
+                  code: 403
+                body: ''
   parameters:
-    filterIsShared:
-      name: filter[is-shared]
-      description: Only return shared items.
-      in: query
-      required: false
-      schema:
-        type: boolean
     containPermission:
       name: contain[permission]
       description: Add permission to response body.
@@ -1341,6 +1334,13 @@ components:
         enum:
         - 1
         - 0
+    filterIsShared:
+      name: filter[is-shared]
+      description: Only return shared items.
+      in: query
+      required: false
+      schema:
+        type: boolean
     containPermissions:
       name: contain[permissions]
       description: Add permissions to response body.

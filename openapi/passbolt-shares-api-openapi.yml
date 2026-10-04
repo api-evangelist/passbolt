@@ -104,89 +104,45 @@ paths:
         '404':
           $ref: '#/components/responses/notFound'
 components:
-  parameters:
-    containGroupsUsers:
-      name: contain[groups_users]
-      description: Add group users to groups in response body.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-    sharesForeignModel:
-      name: foreignModel
-      description: Type for the foreign model being shared.
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - resource
-        - folder
-    foreignId:
-      name: foreignId
-      description: ID for the foreign element being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    containRole:
-      name: contain[role]
-      description: Add role to response body.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
-    filterSearch:
-      name: filter[search]
-      description: Filter using a keyword or a string.
-      in: query
-      required: false
-      schema:
-        type: string
-    containGpgkey:
-      name: contain[gpgkey]
-      description: Add GPG key data to response body.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
   schemas:
-    permissionLevel:
-      description: '* `1` - Read
-
-        * `7` - Update
-
-        * `15` - Owner
-
-        '
-      type: integer
-      enum:
-      - 1
-      - 7
-      - 15
-    secretAdd:
+    groupIndexAndView:
       type: object
       required:
-      - data
+      - id
+      - name
+      - deleted
+      - created
+      - modified
+      - created_by
+      - modified_by
       properties:
-        user_id:
+        id:
           type: string
           format: uuid
-        data:
+        name:
           type: string
-        resource_id:
+        deleted:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        created_by:
           type: string
           format: uuid
+        modified_by:
+          type: string
+          format: uuid
+        my_group_user:
+          $ref: '#/components/schemas/groupsUsersIndexAndView'
+        groups_users:
+          type: array
+          items:
+            $ref: '#/components/schemas/groupsUsersIndexAndView'
+        user_count:
+          type: integer
     userIndexAndView:
       type: object
       required:
@@ -295,58 +251,6 @@ components:
           type: string
           format: date-time
           x-nullable: true
-    permissionUpdate:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        aro:
-          type: string
-          enum:
-          - User
-          - Group
-        aro_foreign_key:
-          type: string
-          format: uuid
-        type:
-          $ref: '#/components/schemas/permissionLevel'
-        delete:
-          type: boolean
-        is_new:
-          type: boolean
-    shareUpdateDryRun:
-      type: object
-      required:
-      - added
-      - removed
-      properties:
-        added:
-          type: array
-          items:
-            type: object
-            properties:
-              User:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-        removed:
-          type: array
-          items:
-            type: object
-            properties:
-              User:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-    shareAros:
-      oneOf:
-      - $ref: '#/components/schemas/userIndexAndView'
-      - $ref: '#/components/schemas/groupIndexAndView'
     header:
       type: object
       required:
@@ -382,44 +286,48 @@ components:
         code:
           type: integer
           example: 200
-    groupIndexAndView:
+    shareAros:
+      oneOf:
+      - $ref: '#/components/schemas/userIndexAndView'
+      - $ref: '#/components/schemas/groupIndexAndView'
+    permissionLevel:
+      description: '* `1` - Read
+
+        * `7` - Update
+
+        * `15` - Owner
+
+        '
+      type: integer
+      enum:
+      - 1
+      - 7
+      - 15
+    groupsUsersIndexAndView:
       type: object
       required:
       - id
-      - name
-      - deleted
+      - group_id
+      - user_id
+      - is_admin
       - created
-      - modified
-      - created_by
-      - modified_by
       properties:
         id:
           type: string
           format: uuid
-        name:
+        group_id:
           type: string
-        deleted:
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        is_admin:
           type: boolean
         created:
           type: string
           format: date-time
-        modified:
-          type: string
-          format: date-time
-        created_by:
-          type: string
-          format: uuid
-        modified_by:
-          type: string
-          format: uuid
-        my_group_user:
-          $ref: '#/components/schemas/groupsUsersIndexAndView'
-        groups_users:
-          type: array
-          items:
-            $ref: '#/components/schemas/groupsUsersIndexAndView'
-        user_count:
-          type: integer
+        user:
+          $ref: '#/components/schemas/userIndexAndView'
     shareUpdateError:
       type: object
       properties:
@@ -444,6 +352,54 @@ components:
                     type: string
                   _existsIn:
                     type: string
+    shareUpdateDryRun:
+      type: object
+      required:
+      - added
+      - removed
+      properties:
+        added:
+          type: array
+          items:
+            type: object
+            properties:
+              User:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+        removed:
+          type: array
+          items:
+            type: object
+            properties:
+              User:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+    permissionUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        aro:
+          type: string
+          enum:
+          - User
+          - Group
+        aro_foreign_key:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/permissionLevel'
+        delete:
+          type: boolean
+        is_new:
+          type: boolean
     gpgkey:
       type: object
       required:
@@ -494,18 +450,6 @@ components:
         modified:
           type: string
           format: date-time
-    shareUpdate:
-      type: object
-      properties:
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/permissionUpdate'
-        secrets:
-          description: Not required on simulation.
-          type: array
-          items:
-            $ref: '#/components/schemas/secretAdd'
     role:
       type: object
       required:
@@ -532,89 +476,88 @@ components:
         modified:
           type: string
           format: date-time
-    groupsUsersIndexAndView:
+    secretAdd:
       type: object
       required:
-      - id
-      - group_id
-      - user_id
-      - is_admin
-      - created
+      - data
       properties:
-        id:
-          type: string
-          format: uuid
-        group_id:
-          type: string
-          format: uuid
         user_id:
           type: string
           format: uuid
-        is_admin:
-          type: boolean
-        created:
+        data:
           type: string
-          format: date-time
-        user:
-          $ref: '#/components/schemas/userIndexAndView'
+        resource_id:
+          type: string
+          format: uuid
+    shareUpdate:
+      type: object
+      properties:
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/permissionUpdate'
+        secrets:
+          description: Not required on simulation.
+          type: array
+          items:
+            $ref: '#/components/schemas/secretAdd'
+  parameters:
+    containGpgkey:
+      name: contain[gpgkey]
+      description: Add GPG key data to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containGroupsUsers:
+      name: contain[groups_users]
+      description: Add group users to groups in response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    sharesForeignModel:
+      name: foreignModel
+      description: Type for the foreign model being shared.
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - resource
+        - folder
+    foreignId:
+      name: foreignId
+      description: ID for the foreign element being manipulated.
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    filterSearch:
+      name: filter[search]
+      description: Filter using a keyword or a string.
+      in: query
+      required: false
+      schema:
+        type: string
+    containRole:
+      name: contain[role]
+      description: Add role to response body.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
   responses:
-    authenticationRequired:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
-    updateDryRun:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/shareUpdateDryRun'
-          examples:
-            base:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The operation was successful.
-                  url: /share/simulate/resource/42968631-0c51-4405-9f2d-c6700c5057be.json
-                  code: 200
-                body:
-                  changes:
-                    added: []
-                    removed:
-                    - User:
-                        id: c48863da-32d3-48cd-9d47-de2891386423
     nullBody:
       description: Operation is successful.
       content:
@@ -641,6 +584,32 @@ components:
                   url: <API ENDPOINT URL>
                   code: 200
                 body: null
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
     notFound:
       description: Not found
       content:
@@ -804,20 +773,38 @@ components:
                   url: <API ENDPOINT URL>
                   code: 400
                 body: ''
-  requestBodies:
-    shareUpdateDryRun:
-      description: The permissions you want to apply
-      required: true
+    updateDryRun:
+      description: Operation is successful
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/shareUpdate'
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/shareUpdateDryRun'
           examples:
-            deleteUser:
+            base:
               value:
-                permissions:
-                - id: 540174b9-90db-458c-ae90-e9a1912cc656
-                  delete: true
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /share/simulate/resource/42968631-0c51-4405-9f2d-c6700c5057be.json
+                  code: 200
+                body:
+                  changes:
+                    added: []
+                    removed:
+                    - User:
+                        id: c48863da-32d3-48cd-9d47-de2891386423
+  requestBodies:
     shareUpdate:
       description: The permissions you want to apply
       required: true
@@ -864,6 +851,19 @@ components:
                 secrets:
                 - data: '-----BEGIN PGP MESSAGE-----'
                   user_id: c48863da-32d3-48cd-9d47-de2891386423
+    shareUpdateDryRun:
+      description: The permissions you want to apply
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/shareUpdate'
+          examples:
+            deleteUser:
+              value:
+                permissions:
+                - id: 540174b9-90db-458c-ae90-e9a1912cc656
+                  delete: true
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT
