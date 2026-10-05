@@ -1,0 +1,80 @@
+slug: passbolt
+provider: Passbolt
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 7
+edges:
+- tag: Multi-Factor Authentication
+  spec_file: passbolt-multi-factor-authentication-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: POST /mfa/verify/{mfaProviderName}.json mfaVerifyAttempt Attempt multi-factor authentication
+  reason: MFA verification is explicitly an authentication/access control capability.
+- tag: Permissions
+  spec_file: passbolt-permissions-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: GET /permissions/resource/{resourceId}.json indexPermissionsResource Get permissions for a
+    resource; schema permissionLevel
+  reason: Resource-level permission inspection in a shared password manager is access rights management.
+- tag: Directory Sync
+  spec_file: passbolt-directory-sync-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /directorysync/synchronize.json runSync Run the directory synchronization
+  reason: Synchronising users and groups from a corporate directory into the password manager is directory-driven
+    identity provisioning (joiners-movers-leavers).
+- tag: Groups
+  spec_file: passbolt-groups-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /groups.json addGroup Create a group; schemas permissionLevel, role, groupsUsersIndexAndView
+  reason: Group management governing access to shared secrets in a password manager is access management,
+    not HR org structure.
+- tag: Shares
+  spec_file: passbolt-shares-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: 'PUT /share/{foreignModel}/{foreignId}.json  updateShare  Share a resource or folder; schemas:
+    permissionLevel, permissionUpdate, shareAros'
+  reason: Granting and simulating permissions (ARO/permission levels) over password resources is access
+    control administration.
+- tag: Resources
+  spec_file: passbolt-resources-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: 'Passbolt is an open source password manager for teams ... manage resources (passwords); operations:
+    addResource, updateResource, deleteResource with schemas ''secretIndex'', ''permissionLevel'''
+  reason: Resources here are stored password/credential records in a password manager; managing credentials
+    and their permissions falls under Identity & Access Management.
+- tag: Secrets
+  spec_file: passbolt-secrets-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: GET /secrets/resource/{resourceId}.json  viewSecret  View user's secret for a resource
+  reason: Retrieval of a user's encrypted password secret in a team password manager — credential/secret
+    management under IAM. (Arguably configuration & secrets management, but this is an enterprise password
+    vault, not a deployment pipeline.)
