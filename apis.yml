@@ -548,6 +548,12 @@ apis:
   - type: License
     url: https://www.gnu.org/licenses/agpl-3.0.html
 common:
+- type: Plans
+  url: plans/passbolt-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/passbolt-rate-limits.yml
+- type: FinOps
+  url: finops/passbolt-finops.yml
 - type: CapabilityMap
   url: capabilities/passbolt-capability-edges.yml
   name: Passbolt Business Capability Map
