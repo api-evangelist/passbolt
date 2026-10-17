@@ -125,6 +125,32 @@ paths:
         $ref: '#/components/requestBodies/resourceUpdate'
 components:
   responses:
+    accessRestrictedToAdministrators:
+      description: Access restricted
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Access restricted to administrators.
+                  url: <API ENDPOINT URL>
+                  code: 403
+                body: ''
     notFound:
       description: Not found
       content:
@@ -150,58 +176,6 @@ components:
                   message: The <MODEL> does not exist.
                   url: <API ENDPOINT URL>
                   code: 404
-                body: ''
-    emptyStringBody:
-      description: Operation is successful.
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 200
-                body: ''
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
                 body: ''
     nullBody:
       description: Operation is successful.
@@ -229,6 +203,122 @@ components:
                   url: <API ENDPOINT URL>
                   code: 200
                 body: null
+    resourceTypes_view:
+      description: Operation is successful
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/resourceType'
+          examples:
+            resourceType:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /resource-types/669f8c64-242a-59fb-92fc-81f660975fd3.json
+                  code: 200
+                body:
+                  id: 669f8c64-242a-59fb-92fc-81f660975fd3
+                  slug: password-and-description
+                  name: Password with description
+                  description: A resource with the password and the description encrypted.
+                  definition:
+                    resource:
+                      type: object
+                      required:
+                      - name
+                      properties:
+                        name:
+                          type: string
+                          maxLength: 255
+                        username:
+                          anyOf:
+                          - type: string
+                            maxLength: 255
+                          - type: 'null'
+                        uri:
+                          anyOf:
+                          - type: string
+                            maxLength: 1024
+                          - type: 'null'
+                    secret:
+                      type: object
+                      required:
+                      - password
+                      properties:
+                        password:
+                          type: string
+                          maxLength: 4096
+                        description:
+                          anyOf:
+                          - type: string
+                            maxLength: 10000
+                          - type: null
+                  created: '2024-07-08T08:06:25+00:00'
+                  modified: '2024-07-08T08:06:25+00:00'
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
     resourceTypes_index:
       description: Operation is successful
       content:
@@ -296,98 +386,8 @@ components:
                   deleted: null
                   created: '2024-07-08T08:06:25+00:00'
                   modified: '2024-07-08T08:06:25+00:00'
-    resourceTypes_view:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/resourceType'
-          examples:
-            resourceType:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The operation was successful.
-                  url: /resource-types/669f8c64-242a-59fb-92fc-81f660975fd3.json
-                  code: 200
-                body:
-                  id: 669f8c64-242a-59fb-92fc-81f660975fd3
-                  slug: password-and-description
-                  name: Password with description
-                  description: A resource with the password and the description encrypted.
-                  definition:
-                    resource:
-                      type: object
-                      required:
-                      - name
-                      properties:
-                        name:
-                          type: string
-                          maxLength: 255
-                        username:
-                          anyOf:
-                          - type: string
-                            maxLength: 255
-                          - type: 'null'
-                        uri:
-                          anyOf:
-                          - type: string
-                            maxLength: 1024
-                          - type: 'null'
-                    secret:
-                      type: object
-                      required:
-                      - password
-                      properties:
-                        password:
-                          type: string
-                          maxLength: 4096
-                        description:
-                          anyOf:
-                          - type: string
-                            maxLength: 10000
-                          - type: null
-                  created: '2024-07-08T08:06:25+00:00'
-                  modified: '2024-07-08T08:06:25+00:00'
-    accessRestrictedToAdministrators:
-      description: Access restricted
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Access restricted to administrators.
-                  url: <API ENDPOINT URL>
-                  code: 403
-                body: ''
-    authenticationRequired:
-      description: Authentication required.
+    emptyStringBody:
+      description: Operation is successful.
       content:
         application/json:
           schema:
@@ -405,17 +405,27 @@ components:
               value:
                 header:
                   id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
+                  status: success
                   servertime: 1721727753
                   action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
+                  message: <SUCCESS MESSAGE>
                   url: <API ENDPOINT URL>
-                  code: 401
+                  code: 200
                 body: ''
   parameters:
     filterIsDeleted:
       name: filter[is-deleted]
       description: Only return deleted elements.
+      in: query
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+        - 0
+    containResourcesCount:
+      name: contain[resources_count]
+      description: Get the number of count of resources associated to this type of resource.
       in: query
       required: false
       schema:
@@ -431,23 +441,7 @@ components:
       schema:
         type: string
         format: uuid
-    containResourcesCount:
-      name: contain[resources_count]
-      description: Get the number of count of resources associated to this type of resource.
-      in: query
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-        - 0
   schemas:
-    resourceTypeUpdate:
-      type: object
-      properties:
-        deleted:
-          type: boolean
-          x-nullable: true
     header:
       type: object
       required:
@@ -553,6 +547,12 @@ components:
             type: boolean
           resources_count:
             type: integer
+    resourceTypeUpdate:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+          x-nullable: true
   requestBodies:
     resourceUpdate:
       description: The resource types you want to update

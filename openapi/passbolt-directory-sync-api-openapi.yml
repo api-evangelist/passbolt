@@ -65,107 +65,33 @@ paths:
         '404':
           $ref: '#/components/responses/notFound'
 components:
-  schemas:
-    synchronizeAndSimulate:
-      type: object
-      required:
-      - users
-      properties:
-        users:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              model:
-                type: string
-              data:
-                type: object
-                properties:
-                  username:
-                    type: string
-                  profile:
-                    type: object
-                    properties:
-                      first_name:
-                        type: string
-                      last_name:
-                        type: string
-                      user_id:
-                        type: string
-                      created:
-                        type: string
-                        format: date-time
-                      modified:
-                        type: string
-                        format: date-time
-                      id:
-                        type: string
-                        format: uuid
-                  role_id:
-                    type: string
-                    format: uuid
-                  deleted:
-                    type: boolean
-                  created:
-                    type: string
-                    format: date-time
-                  modified:
-                    type: string
-                    format: date-time
-                  id:
-                    type: string
-                    format: uuid
-                  last_logged_in:
-                    type: string
-                    format: date-time
-                    x-nullable: true
-              action:
-                type: string
-              status:
-                type: string
-              created:
-                type: string
-                format: date-time
-              version:
-                type: string
-    header:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
   responses:
+    accessRestrictedToAdministrators:
+      description: Access restricted
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Access restricted to administrators.
+                  url: <API ENDPOINT URL>
+                  code: 403
+                body: ''
     notFound:
       description: Not found
       content:
@@ -191,6 +117,32 @@ components:
                   message: The <MODEL> does not exist.
                   url: <API ENDPOINT URL>
                   code: 404
+                body: ''
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
                 body: ''
     synchronizeAndSimulate:
       description: Operation is successful
@@ -262,58 +214,106 @@ components:
                     created: '2025-07-21T14:03:58+00:00'
                     version: '2'
                 groups: []
-    authenticationRequired:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
+  schemas:
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+    synchronizeAndSimulate:
+      type: object
+      required:
+      - users
+      properties:
+        users:
+          type: array
+          items:
             type: object
-            required:
-            - header
-            - body
             properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
+              message:
                 type: string
-          examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
-    accessRestrictedToAdministrators:
-      description: Access restricted
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
+              model:
                 type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Access restricted to administrators.
-                  url: <API ENDPOINT URL>
-                  code: 403
-                body: ''
+              data:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  profile:
+                    type: object
+                    properties:
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      user_id:
+                        type: string
+                      created:
+                        type: string
+                        format: date-time
+                      modified:
+                        type: string
+                        format: date-time
+                      id:
+                        type: string
+                        format: uuid
+                  role_id:
+                    type: string
+                    format: uuid
+                  deleted:
+                    type: boolean
+                  created:
+                    type: string
+                    format: date-time
+                  modified:
+                    type: string
+                    format: date-time
+                  id:
+                    type: string
+                    format: uuid
+                  last_logged_in:
+                    type: string
+                    format: date-time
+                    x-nullable: true
+              action:
+                type: string
+              status:
+                type: string
+              created:
+                type: string
+                format: date-time
+              version:
+                type: string
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

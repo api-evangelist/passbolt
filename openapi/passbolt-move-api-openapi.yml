@@ -46,14 +46,69 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/move'
 components:
-  requestBodies:
-    move:
-      description: The target parent folder ID
+  parameters:
+    foreignId:
+      name: foreignId
+      description: ID for the foreign element being manipulated.
+      in: path
       required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/move'
+      schema:
+        type: string
+        format: uuid
+    moveForeignModel:
+      name: foreignModel
+      description: Type for the foreign model being moved.
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - resource
+        - folder
+  schemas:
+    header:
+      type: object
+      required:
+      - id
+      - status
+      - servertime
+      - action
+      - message
+      - url
+      - code
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        servertime:
+          type: integer
+          example: 1720702619
+        action:
+          type: string
+          format: uuid
+        message:
+          type: string
+          example: The operation was successful.
+        url:
+          type: string
+          format: uri
+          example: /auth/verify.json
+        code:
+          type: integer
+          example: 200
+    move:
+      type: object
+      required:
+      - folder_parent_id
+      properties:
+        folder_parent_id:
+          type: string
+          format: uuid
   responses:
     notFound:
       description: Not found
@@ -80,32 +135,6 @@ components:
                   message: The <MODEL> does not exist.
                   url: <API ENDPOINT URL>
                   code: 404
-                body: ''
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
                 body: ''
     nullBody:
       description: Operation is successful.
@@ -159,69 +188,40 @@ components:
                   url: <API ENDPOINT URL>
                   code: 401
                 body: ''
-  schemas:
-    header:
-      type: object
-      required:
-      - id
-      - status
-      - servertime
-      - action
-      - message
-      - url
-      - code
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        servertime:
-          type: integer
-          example: 1720702619
-        action:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: The operation was successful.
-        url:
-          type: string
-          format: uri
-          example: /auth/verify.json
-        code:
-          type: integer
-          example: 200
+    badRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            example:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: error
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
+  requestBodies:
     move:
-      type: object
-      required:
-      - folder_parent_id
-      properties:
-        folder_parent_id:
-          type: string
-          format: uuid
-  parameters:
-    moveForeignModel:
-      name: foreignModel
-      description: Type for the foreign model being moved.
-      in: path
+      description: The target parent folder ID
       required: true
-      schema:
-        type: string
-        enum:
-        - resource
-        - folder
-    foreignId:
-      name: foreignId
-      description: ID for the foreign element being manipulated.
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/move'
   securitySchemes:
     bearerHttpAuthentication:
       description: Bearer token using a JWT

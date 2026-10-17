@@ -123,13 +123,36 @@ paths:
           $ref: '#/components/responses/badRequest'
 components:
   responses:
-    stage0:
-      description: Operation is successful. The decrypted challenge is sent via a header.
-      headers:
-        X-GPGAuth-Verify-Response:
+    verify:
+      description: Operation is successful
+      content:
+        application/json:
           schema:
-            type: string
-            example: gpgauthv1.3.0|36|10e2074b-f610-42be-8525-100d4e68c481|gpgauthv1.3.0
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                $ref: '#/components/schemas/verify'
+          examples:
+            base:
+              value:
+                header:
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  status: success
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /auth/verify.json
+                  code: 200
+                body:
+                  fingerprint: 5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59
+                  keydata: '-----BEGIN PUBLIC KEY-----'
+    nullBody:
+      description: Operation is successful.
       content:
         application/json:
           schema:
@@ -146,14 +169,40 @@ components:
             base:
               value:
                 header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
                   status: success
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The operation was successful.
-                  url: /auth/verify.json
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: <SUCCESS MESSAGE>
+                  url: <API ENDPOINT URL>
                   code: 200
                 body: null
+    authenticationRequired:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - header
+            - body
+            properties:
+              header:
+                $ref: '#/components/schemas/header'
+              body:
+                type: string
+          examples:
+            base:
+              value:
+                header:
+                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  status: error
+                  servertime: 1721727753
+                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
+                  message: Authentication is required to continue.
+                  url: <API ENDPOINT URL>
+                  code: 401
+                body: ''
     authGpg_login:
       description: Operation is successful. Additional data is sent through cookie and headers.
       headers:
@@ -198,34 +247,13 @@ components:
                   url: /auth/login.json
                   code: 200
                 body: null
-    badRequest:
-      description: Bad request
-      content:
-        application/json:
+    stage0:
+      description: Operation is successful. The decrypted challenge is sent via a header.
+      headers:
+        X-GPGAuth-Verify-Response:
           schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                type: string
-          examples:
-            example:
-              value:
-                header:
-                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: error
-                  servertime: 1721207029
-                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: <ERROR MESSAGE>
-                  url: <API ENDPOINT URL>
-                  code: 400
-                body: ''
-    nullBody:
-      description: Operation is successful.
+            type: string
+            example: gpgauthv1.3.0|36|10e2074b-f610-42be-8525-100d4e68c481|gpgauthv1.3.0
       content:
         application/json:
           schema:
@@ -242,12 +270,12 @@ components:
             base:
               value:
                 header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
+                  id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
                   status: success
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: <SUCCESS MESSAGE>
-                  url: <API ENDPOINT URL>
+                  servertime: 1721207029
+                  action: 4d0c0996-ce30-4bce-9918-9062ab35c542
+                  message: The operation was successful.
+                  url: /auth/verify.json
                   code: 200
                 body: null
     missingCsrfToken:
@@ -276,8 +304,8 @@ components:
                   url: /auth/logout.json
                   code: 403
                 body: ''
-    authenticationRequired:
-      description: Authentication required.
+    badRequest:
+      description: Bad request
       content:
         application/json:
           schema:
@@ -291,56 +319,18 @@ components:
               body:
                 type: string
           examples:
-            base:
-              value:
-                header:
-                  id: f7be85c0-afb1-4d8e-a9e1-e05abb0bb71a
-                  status: error
-                  servertime: 1721727753
-                  action: e2aa01a9-84ec-55f8-aaed-24ee23259339
-                  message: Authentication is required to continue.
-                  url: <API ENDPOINT URL>
-                  code: 401
-                body: ''
-    verify:
-      description: Operation is successful
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - header
-            - body
-            properties:
-              header:
-                $ref: '#/components/schemas/header'
-              body:
-                $ref: '#/components/schemas/verify'
-          examples:
-            base:
+            example:
               value:
                 header:
                   id: 7ff2828c-1092-4897-8e0a-1dc64ada889f
-                  status: success
+                  status: error
                   servertime: 1721207029
                   action: 4d0c0996-ce30-4bce-9918-9062ab35c542
-                  message: The operation was successful.
-                  url: /auth/verify.json
-                  code: 200
-                body:
-                  fingerprint: 5FB36DE5C8E69DD4DB185DF2BC9F2749E432CB59
-                  keydata: '-----BEGIN PUBLIC KEY-----'
+                  message: <ERROR MESSAGE>
+                  url: <API ENDPOINT URL>
+                  code: 400
+                body: ''
   schemas:
-    verify:
-      type: object
-      required:
-      - fingerprint
-      - keydata
-      properties:
-        fingerprint:
-          type: string
-        keydata:
-          type: string
     header:
       type: object
       required:
@@ -399,6 +389,16 @@ components:
                 user_token_result:
                   type: string
                   description: Used for client key verification.
+    verify:
+      type: object
+      required:
+      - fingerprint
+      - keydata
+      properties:
+        fingerprint:
+          type: string
+        keydata:
+          type: string
   requestBodies:
     authGpg_login:
       description: The user's key fingerprint and challenge data when required.
